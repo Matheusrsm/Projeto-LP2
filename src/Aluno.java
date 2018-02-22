@@ -1,22 +1,58 @@
-
+/**
+ * Representação de um aluno, todo aluno deve ter um nome, código do curso e email.
+ * O telefone é opcional.
+ * Todo aluno possui uma nota de avaliação entre 0 e 5, que se inicia com 5 e muda de acordo com as avaliações.
+ * 
+ * @author Wesley Monte
+ *
+ */
 public class Aluno {
 	
 	String matricula, nome, email, telefone;
 	int codigoCurso;
 	double notaDeAvaliacao;
-	
-	public Aluno(String matricula, String nome, int codigoCurso, String email) {
-		this.matricula = matricula;
+		
+	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		this.nome = nome;
-		this.codigoCurso = codigoCurso;
-		this.email = email;
-	}
-	
-	public Aluno(String matricula, String nome, int codigoCurso, String email, String telefone) {
 		this.matricula = matricula;
-		this.nome = nome;
 		this.codigoCurso = codigoCurso;
 		this.email = email;
 		this.telefone = telefone;
+		this.notaDeAvaliacao = 5.0;
 	}
+
+	@Override
+	public String toString() {
+		if (telefone == null) return matricula + " " + nome + " " + codigoCurso + " " +  email;
+		else return matricula + " " + nome + " " + codigoCurso + " " + telefone + " " +  email;
+	}
+
+	public String getMatricula() {
+		return matricula;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public int getCodigoCurso() {
+		return codigoCurso;
+	}
+
+	public double getNotaDeAvaliacao() {
+		return notaDeAvaliacao;
+	}
+	
+	
+	
+	
+	
 }
