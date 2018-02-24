@@ -11,17 +11,17 @@ public class Sistema {
 	private Map<String, Aluno> alunos = new HashMap<>();
 	
 	/**
-	 * Cadastra um aluno no sistema que será identificado por sua matrícula.
+	 * Cadastra um Aluno no sistema que será identificado por sua matrícula.
 	 * @param nome 
-	 * 		nome do aluno, no formato String.
+	 * 		nome do Aluno, no formato String.
 	 * @param matricula 
-	 * 		matricula do aluno, no formato String.
+	 * 		matricula do Aluno, no formato String.
 	 * @param codigoCurso 
 	 * 		inteiro que representa o código do curso.
 	 * @param telefone 
-	 * 		telefone do aluno, no formato String.
+	 * 		telefone do Aluno, no formato String.
 	 * @param email 
-	 * 		email do aluno, no formato String.
+	 * 		email do Aluno, no formato String.
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));
@@ -29,15 +29,15 @@ public class Sistema {
 	
 	/**
 	 * @param matricula 
-	 * 		matricula do aluno, no formato String.
-	 * @return Representação textual do aluno.
+	 * 		matricula do Aluno, no formato String.
+	 * @return Representação textual do Aluno.
 	 */
 	public String recuperaAluno(String matricula) {
 		return alunos.get(matricula).toString();
 	}
 	
 	/**
-	 * @return representação textual de todos os alunos cadastrados.
+	 * @return representação textual de todos os Alunos cadastrados.
 	 */
 	public String listarAlunos() {
 		String listaAlunos = "";
@@ -50,10 +50,10 @@ public class Sistema {
 	
 	/**
 	 * @param matricula 
-	 * 		matricula do aluno, no formato String.
+	 * 		matricula do Aluno, no formato String.
 	 * @param atributo 
-	 * 		atributo desejado do aluno, no formato String.
-	 * @return representação textual do atributo do aluno.
+	 * 		atributo desejado do Aluno, no formato String.
+	 * @return representação textual do atributo do Aluno.
 	 */
 	public String getInfoAluno(String matricula, String atributo) {
 		switch (atributo.toLowerCase()){
@@ -73,11 +73,11 @@ public class Sistema {
 	/**
 	 * Torna o Aluno um Tutor
 	 * @param matricula
-	 * 		matricula do aluno que se tornará Tutor, no formato String.
+	 * 		matricula do Aluno que se tornará Tutor, no formato String.
 	 * @param disciplina
-	 * 		disciplina que o aluno será o Tutor, no formato String.
+	 * 		disciplina que o Aluno será o Tutor, no formato String.
 	 * @param proficiencia
-	 * 		valor inteiro que define o quão hábil na disciplina o aluno é.
+	 * 		valor inteiro que define o quão hábil na disciplina o Aluno é.
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
 		Aluno alunoViraTutor = alunos.get(matricula);
@@ -87,10 +87,19 @@ public class Sistema {
 		alunos.put(matricula, alunoTutor);
 	}
 	
+	/**
+	 * 
+	 * @param matricula
+	 * 		matricula do Tutor procurado, no formato String.
+	 * @return o Tutor procurado.
+	 */
 	public Aluno recuperaTutor(String matricula) {
 		return alunos.get(matricula);
 	}
 	
+	/**
+	 * @return representação textual de todos os Tutores cadastrados.
+	 */
 	public String listarTutores() {
 		String listaTutores = "";
 		for(Aluno a: alunos.values()) {
