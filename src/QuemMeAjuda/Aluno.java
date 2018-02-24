@@ -1,3 +1,5 @@
+package QuemMeAjuda; 
+
 /**
  * Representação de um aluno, todo aluno deve ter um nome, código do curso e email.
  * O telefone é opcional.
@@ -51,8 +53,7 @@ public class Aluno {
 		return notaDeAvaliacao;
 	}
 	
-	
-	
-	
-	
+	public void setNotaDeAvaliacao(double novaNota) {
+		this.notaDeAvaliacao = novaNota;
+	}
 }
