@@ -164,7 +164,7 @@ public class Sistema {
 	}
 	
 	/**
-	 * Consulta de um local de Atendimento de um Tutor
+	 * Consulta de um local de atendimento de um Tutor
 	 * @param email
 	 * 		String email do Tutor
 	 * @param local
