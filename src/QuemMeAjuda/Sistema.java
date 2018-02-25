@@ -32,7 +32,12 @@ public class Sistema {
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email)
 			throws DadoInvalidoException {
-		ValidaAluno.testNome(nome);
+		try{
+			ValidaAluno.validaNome(nome);
+			ValidaAluno.validaEmail(email);
+		}catch(DadoInvalidoException e) {
+			throw new DadoInvalidoException("Erro no cadastro de aluno: " + e.getMessage());
+		}
 		alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));
 	}
 	

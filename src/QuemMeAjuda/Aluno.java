@@ -1,6 +1,7 @@
 package QuemMeAjuda;
 
 import exceptions.DadoInvalidoException;
+import validacao.ValidaAluno;
 
 /**
  * Representação de um aluno, todo aluno deve ter um nome, código do curso e email.
@@ -11,13 +12,13 @@ import exceptions.DadoInvalidoException;
  *
  */
 public class Aluno {
-	private DadoInvalidoException exc;
 	private String matricula, nome, email, telefone;
 	private int codigoCurso;
 	protected double notaDeAvaliacao;
 		
-	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
-		
+	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws DadoInvalidoException {
+		ValidaAluno.validaNome(nome);
+		ValidaAluno.validaEmail(email);
 		this.nome = nome;
 		this.matricula = matricula;
 		this.codigoCurso = codigoCurso;
@@ -28,9 +29,9 @@ public class Aluno {
 
 	@Override
 	public String toString() {
-		if (telefone == null) return matricula + " " + nome + " " + codigoCurso + " " +  email;
-		else return matricula + " " + nome + " " + codigoCurso + " " + telefone + " " +  email;
-	}
+		if (telefone.trim().isEmpty()) return matricula + " - " + nome + " - " + codigoCurso + " - " +  email;
+		else return matricula + " - " + nome + " - " + codigoCurso + " - " + telefone + " - " +  email;
+	}//115260904 - Matthew Melio - 10000 - matthew.met@ccc.ufcg.edu.br
 
 	public String getMatricula() {
 		return matricula;
