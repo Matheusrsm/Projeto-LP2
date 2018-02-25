@@ -1,4 +1,6 @@
-package QuemMeAjuda; 
+package QuemMeAjuda;
+
+import exceptions.DadoInvalidoException;
 
 /**
  * Representação de um aluno, todo aluno deve ter um nome, código do curso e email.
@@ -9,12 +11,13 @@ package QuemMeAjuda;
  *
  */
 public class Aluno {
-	
+	private DadoInvalidoException exc;
 	private String matricula, nome, email, telefone;
 	private int codigoCurso;
 	protected double notaDeAvaliacao;
 		
 	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
+		
 		this.nome = nome;
 		this.matricula = matricula;
 		this.codigoCurso = codigoCurso;

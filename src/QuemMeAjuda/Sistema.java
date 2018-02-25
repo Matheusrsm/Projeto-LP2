@@ -1,6 +1,12 @@
 package QuemMeAjuda;
 import java.util.HashMap;
 import java.util.Map;
+
+import exceptions.DadoInvalidoException;
+import validacao.ValidaAluno;
+import validacao.ValidaTutor;
+
+
 /**
  * Sistema Central
  * 
@@ -22,8 +28,11 @@ public class Sistema {
 	 * 		telefone do Aluno, no formato String.
 	 * @param email 
 	 * 		email do Aluno, no formato String.
+	 * @throws DadoInvalidoException 
 	 */
-	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
+	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email)
+			throws DadoInvalidoException {
+		ValidaAluno.testNome(nome);
 		alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));
 	}
 	
@@ -78,8 +87,10 @@ public class Sistema {
 	 * 		disciplina que o Aluno será o Tutor, no formato String.
 	 * @param proficiencia
 	 * 		valor inteiro que define o quão hábil na disciplina o Aluno é.
+	 * @throws DadoInvalidoException 
 	 */
-	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
+	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws DadoInvalidoException {
+		ValidaTutor.validaProficiencia(proficiencia);
 		Aluno alunoViraTutor = alunos.get(matricula);
 		Aluno alunoTutor = new Tutor(alunoViraTutor.getNome(), alunoViraTutor.getMatricula(), alunoViraTutor.getCodigoCurso(), 
 									alunoViraTutor.getTelefone(), alunoViraTutor.getEmail(), disciplina, proficiencia);

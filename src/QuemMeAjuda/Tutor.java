@@ -2,6 +2,8 @@ package QuemMeAjuda;
 
 import java.util.HashSet;
 
+import exceptions.DadoInvalidoException;
+import validacao.ValidaTutor;
 /**
  * Representação de um tutor que é um aluno.
  * Todo tutor deve ter uma disciplina, uma proficiencia entre 1 e 5 e uma bolsa que se inicia em 0.
@@ -19,8 +21,10 @@ public class Tutor extends Aluno {
 	
 	
 	public Tutor(String nome, String matricula, int codigoCurso, String telefone, 
-				 String email, String disciplina, int proficiencia) {
+				 String email, String disciplina, int proficiencia) throws DadoInvalidoException{
+		
 		super(nome, matricula, codigoCurso, telefone, email);
+		ValidaTutor.validaProficiencia(proficiencia);
 		this.proficiencia = proficiencia;
 		this.disciplina = disciplina;
 		this.bolsa = 0.0;
