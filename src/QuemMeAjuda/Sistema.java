@@ -4,7 +4,7 @@ import java.util.Map;
 /**
  * Sistema Central
  * 
- * @author Wesley Monte, Matheus Silva
+ * @author Wesley Monte, Matheus Silva, Lukas Nascimento
  *
  */
 public class Sistema {
@@ -109,4 +109,81 @@ public class Sistema {
 		}
 		return listaTutores;
 	}
+	
+	/**
+	 * Cadastro de um objeto Horario (que representa o horario de atendimento) do Tutor,
+	 * localizado pelo email.
+	 * @param email 
+	 * 		String email do tutor
+	 * @param horario
+	 * 		String horario a cadastrar
+	 * @param dia
+	 * 		String dia a cadastrar
+	 */
+	public void cadastrarHorario(String email, String horario, String dia) {
+		for(Aluno i : alunos.values())
+			if (i.getEmail().equals(email))
+				if (i instanceof Tutor)
+					((Tutor) i).cadastrarHorario(horario, dia);
+		
+	}
+	
+	/**
+	 * Cadastro de local para atendimento de um Tutor. O local não está relacionado aos horarios do Tutor.
+	 * @param email
+	 * 		String email do Tutor
+	 * @param local
+	 * 		String local de atendimento do Tutor
+	 */
+	public void cadastrarLocalDeAtendimento(String email, String local) {
+		for(Aluno i : alunos.values())
+			if (i.getEmail().equals(email))
+				if (i instanceof Tutor)
+					((Tutor) i).cadastrarLocal(local);
+	}
+
+	/**
+	 * Consulta de Horario de um tutor
+	 * @param email
+	 * 		String email do Tutor
+	 * @param horario
+	 * 		String horario de atendimento do Tutor a ser verificado
+	 * @param dia
+	 * 		String dia de atendimento do Tutor a ser verificado
+	 * @return
+	 */
+	public boolean consultaHorario(String email, String horario, String dia) {
+		Horario hora = new Horario(horario, dia);
+		for(Aluno i : alunos.values())
+			if (i.getEmail().equals(email))
+				if (i instanceof Tutor)
+					for (Horario x : ((Tutor) i).getHorarios())
+						if (x.equals(hora))
+							return true;
+		return false;
+	}
+	
+	/**
+	 * Consulta de um local de Atendimento de um Tutor
+	 * @param email
+	 * 		String email do Tutor
+	 * @param local
+	 * 		String local de atendimento a ser verificado de um Tutor
+	 * @return
+	 */
+	public boolean consultaLocal(String email, String local) {
+		for(Aluno i : alunos.values())
+			if (i.getEmail().equals(email))
+				if (i instanceof Tutor)
+					for (String x : ((Tutor) i).getLocais())
+						if (x.equals(local))
+							return true;
+		return false;
+	}
+
+
+
+
+
+
 }

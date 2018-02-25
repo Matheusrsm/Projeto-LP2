@@ -10,9 +10,9 @@ package QuemMeAjuda;
  */
 public class Aluno {
 	
-	String matricula, nome, email, telefone;
-	int codigoCurso;
-	double notaDeAvaliacao;
+	private String matricula, nome, email, telefone;
+	private int codigoCurso;
+	protected double notaDeAvaliacao;
 		
 	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		this.nome = nome;
