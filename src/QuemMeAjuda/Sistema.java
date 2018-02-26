@@ -1,5 +1,4 @@
 package QuemMeAjuda;
-import java.util.HashMap;
 import java.util.Map;
 
 import exceptions.DadoInvalidoException;
@@ -16,9 +15,6 @@ import validacao.ValidaTutor;
 public class Sistema {
 	private Map<String, Aluno> alunos;
 	
-	public Sistema() {
-		alunos = new HashMap<>();
-	}
 	
 	/**
 	 * Cadastra um Aluno no sistema que será identificado por sua matrícula.
@@ -139,8 +135,9 @@ public class Sistema {
 	 * 		String horario a cadastrar
 	 * @param dia
 	 * 		String dia a cadastrar
+	 * @throws DadoInvalidoException 
 	 */
-	public void cadastrarHorario(String email, String horario, String dia) {
+	public void cadastrarHorario(String email, String horario, String dia) throws DadoInvalidoException {
 		for(Aluno i : alunos.values())
 			if (i.getEmail().equals(email))
 				if (i instanceof Tutor)

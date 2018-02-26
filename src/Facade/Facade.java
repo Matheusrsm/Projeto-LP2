@@ -43,7 +43,7 @@ public class Facade{
 		return sis.listarTutores();
 	}
 	
-	public void cadastrarHorario(String email, String horario, String dia) {
+	public void cadastrarHorario(String email, String horario, String dia) throws DadoInvalidoException {
 		sis.cadastrarHorario(email, horario, dia);
 	}
 	
