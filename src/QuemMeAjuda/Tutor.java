@@ -53,7 +53,12 @@ public class Tutor extends Aluno {
 		locais.add(local);
 	}
 	
-	public void cadastrarHorario(String horario, String dia) {
+	public void cadastrarHorario(String horario, String dia) throws DadoInvalidoException {
+		try {
+			validacao.ValidaAtendimento.validaHorario(horario, dia);
+		}catch(DadoInvalidoException e){
+			throw new DadoInvalidoException("Erro no cadastrar horario" + e.getMessage());
+		}
 		horarios.add(new Horario(horario, dia));
 	}
 	

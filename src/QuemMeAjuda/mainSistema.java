@@ -11,7 +11,7 @@ public class mainSistema {
 	 */
 	public static void main(String[] args) throws DadoInvalidoException {
 		sis = new Sistema();
-		sis.cadastrarAluno("Matthew Mello", "115260904", 10000, "", "matthew.met@ccc.ufcg.edu.br");
+		sis.cadastrarAluno("Matthew Melio", "115260904", 10000, "", "matthew.met@ccc.ufcg.edu.br");
 		System.out.println(sis.recuperaAluno("115260904"));
 	
 	}

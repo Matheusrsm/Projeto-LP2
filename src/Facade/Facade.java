@@ -42,4 +42,20 @@ public class Facade{
 	public String listaTutores() {
 		return sis.listarTutores();
 	}
+	
+	public void cadastrarHorario(String email, String horario, String dia) {
+		sis.cadastrarHorario(email, horario, dia);
+	}
+	
+	public void cadastrarLocalDeAtendimento(String email, String local) {
+		sis.cadastrarLocalDeAtendimento(email, local);
+	}
+	
+	public boolean consultaHorario(String email, String horario, String dia) {
+		return sis.consultaHorario(email, horario, dia);
+	}
+	
+	public boolean consultaLocal(String email, String local) {
+		return sis.consultaLocal(email, local);
+	}
 }
