@@ -5,7 +5,10 @@ package exceptions;
  * @author Lukas Nascimento
  *
  */
+
 public class DadoInvalidoException extends Exception{
+	
+	private static final long serialVersionUID = 1L;
 	
 	/**
 	 * Mostra mensagem de excessao de dado inválido

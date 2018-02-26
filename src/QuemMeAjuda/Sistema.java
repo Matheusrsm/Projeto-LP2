@@ -14,7 +14,11 @@ import validacao.ValidaTutor;
  *
  */
 public class Sistema {
-	private Map<String, Aluno> alunos = new HashMap<>();
+	private Map<String, Aluno> alunos;
+	
+	public Sistema() {
+		alunos = new HashMap<>();
+	}
 	
 	/**
 	 * Cadastra um Aluno no sistema que será identificado por sua matrícula.

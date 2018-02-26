@@ -19,7 +19,7 @@ public class ValidaAluno {
 		for (int i = 0; i < a; i++ )
 			if (email.charAt(i) != ' ')
 				erro = false;
-		for (int i = email.length(); i > a; i-- )
+		for (int i = email.length() -1; i > a; i-- )
 			if (email.charAt(i) != ' ')
 				erro = false;
 		if (erro)
