@@ -8,7 +8,7 @@ package QuemMeAjuda.Entidades;
  * @author Wesley Monte
  *
  */
-public class Aluno {
+public class Aluno implements Comparable<Aluno> {
 	private String matricula, nome, email, telefone;
 	private int codigoCurso;
 	protected double notaDeAvaliacao;
@@ -20,12 +20,6 @@ public class Aluno {
 		this.email = email;
 		this.telefone = telefone;
 		this.notaDeAvaliacao = 5.0;
-	}
-
-	@Override
-	public String toString() {
-		if (telefone.trim().isEmpty()) return matricula + " - " + nome + " - " + codigoCurso + " - " +  email;
-		else return matricula + " - " + nome + " - " + codigoCurso + " - " + telefone + " - " +  email;
 	}
 
 	public String getMatricula() {
@@ -54,5 +48,16 @@ public class Aluno {
 	
 	public void setNotaDeAvaliacao(double novaNota) {
 		this.notaDeAvaliacao = novaNota;
+	}
+	
+	@Override
+	public String toString() {
+		if (telefone.trim().isEmpty()) return matricula + " - " + nome + " - " + codigoCurso + " - " +  email;
+		return matricula + " - " + nome + " - " + codigoCurso + " - " + telefone + " - " +  email;
+	}
+	
+	@Override
+	public int compareTo(Aluno outroAluno) {
+		return getNome().compareTo(outroAluno.getNome());
 	}
 }

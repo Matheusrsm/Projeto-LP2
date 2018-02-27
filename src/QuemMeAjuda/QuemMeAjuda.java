@@ -37,7 +37,7 @@ public class QuemMeAjuda{
 		return sistema.recuperaTutor(matricula).toString();
 	}
 	
-	public String listaTutores() {
+	public String listarTutores() {
 		return sistema.listarTutores();
 	}
 	

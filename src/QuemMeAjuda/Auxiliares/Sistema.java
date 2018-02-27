@@ -1,5 +1,7 @@
 package QuemMeAjuda.Auxiliares;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import QuemMeAjuda.Entidades.*;
@@ -43,12 +45,18 @@ public class Sistema {
 	/**
 	 * @return representação textual de todos os Alunos cadastrados.
 	 */
+
 	public String listarAlunos() {
-		String listaAlunos = "";
+		ArrayList<Aluno> listaDeAlunos = new ArrayList<Aluno>();
 		for(Aluno a: alunos.values()) {
-			listaAlunos += a.toString() + System.lineSeparator();
+			listaDeAlunos.add(a);
 		}
-		listaAlunos = listaAlunos.substring(0, listaAlunos.length() - 1);
+		Collections.sort(listaDeAlunos, new ComparadorNomeAluno());
+		String listaAlunos = "";
+		for(Aluno a: listaDeAlunos) {
+			listaAlunos += a.toString() + ", ";
+		}
+		listaAlunos = listaAlunos.substring(0, listaAlunos.length() - 2);
 		return listaAlunos;
 	}
 	
@@ -105,13 +113,16 @@ public class Sistema {
 	 * @return representação textual de todos os Tutores cadastrados.
 	 */
 	public String listarTutores() {
-		String listaTutores = "";
+		ArrayList<Aluno> listaDeTutores = new ArrayList<Aluno>();
 		for(Aluno a: alunos.values()) {
-			if(a instanceof Tutor) {
-				listaTutores += a.toString() + System.lineSeparator();
-			}
+			if(a instanceof Tutor) listaDeTutores.add(a);
 		}
-		return listaTutores;
+		Collections.sort(listaDeTutores, new ComparadorNomeAluno());
+		String listaTutores = "";
+		for(Aluno a: listaDeTutores) {
+			listaTutores += a.toString() + ", ";
+		}
+		return listaTutores.substring(0, listaTutores.length() - 2);
 	}
 	
 	/**
