@@ -14,7 +14,7 @@ public class QuemMeAjuda{
 		EasyAccept.main(args);
 	}
 	
-	public void cadastrarAluno(String  nome, String matricula, int codigoCurso, String telefone, String email) throws DadoInvalidoException {
+	public void cadastrarAluno(String  nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
 		sistema.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
 	}
 	
@@ -22,19 +22,19 @@ public class QuemMeAjuda{
 		return sistema.listarAlunos();
 	}
 	
-	public String recuperaAluno(String matricula) throws DadoInvalidoException {
+	public String recuperaAluno(String matricula) throws Exception {
 		return sistema.recuperaAluno(matricula);
 	}
 	
-	public String getInfoAluno(String matricula, String atributo) throws DadoInvalidoException {
+	public String getInfoAluno(String matricula, String atributo) throws Exception {
 		return sistema.getInfoAluno(matricula, atributo);
 	}
 	
-	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws DadoInvalidoException {
+	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
 		sistema.tornarTutor(matricula, disciplina, proficiencia);
 	}
 	
-	public String recuperaTutor(String matricula) throws DadoInvalidoException {
+	public String recuperaTutor(String matricula) throws Exception {
 		return sistema.recuperaTutor(matricula).toString();
 	}
 	
@@ -42,11 +42,11 @@ public class QuemMeAjuda{
 		return sistema.listarTutores();
 	}
 	
-	public void cadastrarHorario(String email, String horario, String dia) throws DadoInvalidoException {
+	public void cadastrarHorario(String email, String horario, String dia) throws Exception {
 		sistema.cadastrarHorario(email, horario, dia);
 	}
 	
-	public void cadastrarLocalDeAtendimento(String email, String local) throws DadoInvalidoException {
+	public void cadastrarLocalDeAtendimento(String email, String local) throws Exception {
 		sistema.cadastrarLocalDeAtendimento(email, local);
 	}
 	
