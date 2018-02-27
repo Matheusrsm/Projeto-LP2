@@ -2,11 +2,22 @@ package QuemMeAjuda.Auxiliares;
 
 public class Validacoes {
 		
-	public void validaNome(String nome, String msg) throws Exception {
+	public static void validaNome(String nome, String msg) throws DadoInvalidoException {
 		if(nome == null || nome.trim().isEmpty()) throw new DadoInvalidoException(msg);
 	}
 	
-	public void validaEmail(String email, String msg) throws Exception {
+	/*
+	 *  boolean erro = false;
+		int a = email.indexOf("@");
+		
+		if(!email.contains("@")) erro = true;
+		if(email.length() == 1) erro = true;
+		if (email.substring(0, a).trim().isEmpty()) erro = true;
+		if(email == null || email.trim().isEmpty()) erro = true;
+		
+		if(erro) throw new DadoInvalidoException(msg);
+	 */
+	public static void validaEmail(String email, String msg) throws DadoInvalidoException {
 		int a = 0;
 		boolean erro = false;
 		if(!email.contains("@")) erro = true;

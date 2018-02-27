@@ -1,5 +1,6 @@
 package QuemMeAjuda;
 
+import QuemMeAjuda.Auxiliares.DadoInvalidoException;
 import QuemMeAjuda.Auxiliares.Sistema;
 import easyaccept.EasyAccept;
 
@@ -13,7 +14,7 @@ public class QuemMeAjuda{
 		EasyAccept.main(args);
 	}
 	
-	public void cadastrarAluno(String  nome, String matricula, int codigoCurso, String telefone, String email) {
+	public void cadastrarAluno(String  nome, String matricula, int codigoCurso, String telefone, String email) throws DadoInvalidoException {
 		sistema.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
 	}
 	
@@ -21,19 +22,19 @@ public class QuemMeAjuda{
 		return sistema.listarAlunos();
 	}
 	
-	public String recuperaAluno(String matricula) {
+	public String recuperaAluno(String matricula) throws DadoInvalidoException {
 		return sistema.recuperaAluno(matricula);
 	}
 	
-	public String getInfoAluno(String matricula, String atributo) {
+	public String getInfoAluno(String matricula, String atributo) throws DadoInvalidoException {
 		return sistema.getInfoAluno(matricula, atributo);
 	}
 	
-	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
+	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws DadoInvalidoException {
 		sistema.tornarTutor(matricula, disciplina, proficiencia);
 	}
 	
-	public String recuperaTutor(String matricula) {
+	public String recuperaTutor(String matricula) throws DadoInvalidoException {
 		return sistema.recuperaTutor(matricula).toString();
 	}
 	
@@ -41,7 +42,7 @@ public class QuemMeAjuda{
 		return sistema.listarTutores();
 	}
 	
-	public void cadastrarHorario(String email, String horario, String dia) {
+	public void cadastrarHorario(String email, String horario, String dia) throws DadoInvalidoException {
 		sistema.cadastrarHorario(email, horario, dia);
 	}
 	

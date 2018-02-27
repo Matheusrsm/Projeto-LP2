@@ -14,7 +14,7 @@ import java.util.ArrayList;
 public class Tutor extends Aluno {
 	private List<String> locais;
 	private List<Horario> horarios;
-	private String disciplina;
+	private List<String> disciplinas;
 	private int proficiencia; 
 	private double bolsa;
 	
@@ -22,16 +22,17 @@ public class Tutor extends Aluno {
 	public Tutor(String nome, String matricula, int codigoCurso, String telefone, 
 				 String email, String disciplina, int proficiencia) {
 		super(nome, matricula, codigoCurso, telefone, email);
+		disciplinas = new ArrayList<>();
+		disciplinas.add(disciplina);
 		this.proficiencia = proficiencia;
-		this.disciplina = disciplina;
 		this.bolsa = 0.0;
 		this.notaDeAvaliacao = 4.0;
-		this.locais = new ArrayList<>();
+		this.locais   = new ArrayList<>();
 		this.horarios = new ArrayList<>();
 	}
 
-	public String getDisciplina() {
-		return disciplina;
+	public List getDisciplina() {
+		return disciplinas;
 	}
 
 	public int getProficiencia() {
