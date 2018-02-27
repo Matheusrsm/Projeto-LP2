@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Map;
 import QuemMeAjuda.Entidades.*;
 
-
 /**
  * Sistema Central
  * 
@@ -15,6 +14,7 @@ import QuemMeAjuda.Entidades.*;
  */
 public class Sistema {
 	private Map<String, Aluno> alunos = new HashMap<>();
+	private Validacoes validacoes;
 	
 	/**
 	 * Cadastra um Aluno no sistema que será identificado por sua matricula.
@@ -31,17 +31,11 @@ public class Sistema {
 	 *
 	 * @throws DadoInvalidoException 
 	 */
-	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws DadoInvalidoException {
-		try {
-			if (alunos.containsKey(matricula))
-				throw new DadoInvalidoException("Aluno de mesma matricula ja cadastrado");
-			Validacoes.validaNome(nome, "Nome nao pode ser vazio ou nulo");
-			
-		
-		}catch (DadoInvalidoException e) {
-			throw new DadoInvalidoException("Erro no cadastro de aluno: " + e.getMessage());
+	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
+		try {alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));}
+		catch(Exception e) {
+			e.getMessage();
 		}
-		alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));
 	}
 	
 	/**
@@ -50,9 +44,7 @@ public class Sistema {
 	 * @return Representação textual do Aluno.
 	 * @throws DadoInvalidException 
 	 */
-	public String recuperaAluno(String matricula) throws DadoInvalidoException {
-		if (!alunos.containsKey(matricula))
-				throw new DadoInvalidoException("Erro na busca por aluno: Aluno nao encontrado");
+	public String recuperaAluno(String matricula) throws Exception {
 		return alunos.get(matricula).toString();
 	}
 	
@@ -82,9 +74,7 @@ public class Sistema {
 	 * @return representação textual do atributo do Aluno.
 	 * @throws DadoInvalidoException 
 	 */
-	public String getInfoAluno(String matricula, String atributo) throws DadoInvalidoException {
-		if (!alunos.containsKey(matricula))
-			throw new DadoInvalidoException("Erro na obtencao de informacao de aluno: Aluno nao encontrado");
+	public String getInfoAluno(String matricula, String atributo) throws Exception {
 		switch (atributo.toLowerCase()){
 			case "nome":
 				return alunos.get(matricula).getNome();
@@ -109,18 +99,7 @@ public class Sistema {
 	 * 		valor inteiro que define o quão hábil na disciplina o Aluno é.
 	 * @throws DadoInvalidoException 
 	 */
-	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws DadoInvalidoException {
-		try{
-			if (!alunos.containsKey(matricula))
-				throw new DadoInvalidoException("Tutor nao encontrado");
-			if (alunos.get(matricula) instanceof Tutor)
-				for(String i : ((Tutor) alunos.get(matricula)).getDisciplinas())
-					if (disciplina.equals(i)) throw new DadoInvalidoException("Ja eh tutor dessa disciplina");
-			Validacoes.validaProficiencia(proficiencia, "Proficiencia invalida");
-			
-		}catch (DadoInvalidoException e) {
-			throw new DadoInvalidoException("Erro na definicao de papel: " + e.getMessage());
-		}
+	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
 		Aluno alunoViraTutor = alunos.get(matricula);
 		Aluno alunoTutor = new Tutor(alunoViraTutor.getNome(), alunoViraTutor.getMatricula(), alunoViraTutor.getCodigoCurso(), 
 									 alunoViraTutor.getTelefone(), alunoViraTutor.getEmail(), disciplina, proficiencia);
@@ -134,9 +113,7 @@ public class Sistema {
 	 * @return representação textual do Tutor procurado.
 	 * @throws DadoInvalidoException 
 	 */
-	public String recuperaTutor(String matricula) throws DadoInvalidoException {
-		if (!alunos.containsKey(matricula))
-			throw new DadoInvalidoException("Erro na busca por tutor: Tutor nao encontrado");
+	public String recuperaTutor(String matricula) throws Exception {
 		return alunos.get(matricula).toString();
 	}
 	
@@ -166,8 +143,7 @@ public class Sistema {
 	 * 		String dia a cadastrar.
 	 * @throws DadoInvalidoException 
 	 */
-	public void cadastrarHorario(String email, String horario, String dia) throws DadoInvalidoException {
-		
+	public void cadastrarHorario(String email, String horario, String dia) throws Exception {
 		for(Aluno tutor : alunos.values())
 			if(tutor.getEmail().equals(email))
 				if(tutor instanceof Tutor)
@@ -182,10 +158,7 @@ public class Sistema {
 	 * 		String local de atendimento do Tutor.
 	 * @throws DadoInvalidoException 
 	 */
-	public void cadastrarLocalDeAtendimento(String email, String local) throws DadoInvalidoException {
-		Validacoes.validaNome(local, "Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
-		Validacoes.validaNome(email, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
-		
+	public void cadastrarLocalDeAtendimento(String email, String local) throws Exception {
 		for(Aluno tutor : alunos.values())
 			if(tutor.getEmail().equals(email))
 				if(tutor instanceof Tutor)
