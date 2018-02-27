@@ -1,10 +1,8 @@
-package QuemMeAjuda;
+package QuemMeAjuda.Auxiliares;
+
+import java.util.HashMap;
 import java.util.Map;
-
-import exceptions.DadoInvalidoException;
-import validacao.ValidaAluno;
-import validacao.ValidaTutor;
-
+import QuemMeAjuda.Entidades.*;
 
 /**
  * Sistema Central
@@ -13,11 +11,10 @@ import validacao.ValidaTutor;
  *
  */
 public class Sistema {
-	private Map<String, Aluno> alunos;
-	
+	private Map<String, Aluno> alunos = new HashMap<>();
 	
 	/**
-	 * Cadastra um Aluno no sistema que será identificado por sua matrícula.
+	 * Cadastra um Aluno no sistema que será identificado por sua matricula.
 	 * @param nome 
 	 * 		nome do Aluno, no formato String.
 	 * @param matricula 
@@ -30,14 +27,7 @@ public class Sistema {
 	 * 		email do Aluno, no formato String.
 	 * @throws DadoInvalidoException 
 	 */
-	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email)
-			throws DadoInvalidoException {
-		try{
-			ValidaAluno.validaNome(nome);
-			ValidaAluno.validaEmail(email);
-		}catch(DadoInvalidoException e) {
-			throw new DadoInvalidoException("Erro no cadastro de aluno: " + e.getMessage());
-		}
+	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));
 	}
 	
@@ -94,23 +84,21 @@ public class Sistema {
 	 * 		valor inteiro que define o quão hábil na disciplina o Aluno é.
 	 * @throws DadoInvalidoException 
 	 */
-	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws DadoInvalidoException {
-		ValidaTutor.validaProficiencia(proficiencia);
+	public void tornarTutor(String matricula, String disciplina, int proficiencia) {
 		Aluno alunoViraTutor = alunos.get(matricula);
 		Aluno alunoTutor = new Tutor(alunoViraTutor.getNome(), alunoViraTutor.getMatricula(), alunoViraTutor.getCodigoCurso(), 
-									alunoViraTutor.getTelefone(), alunoViraTutor.getEmail(), disciplina, proficiencia);
+									 alunoViraTutor.getTelefone(), alunoViraTutor.getEmail(), disciplina, proficiencia);
 		alunos.remove(matricula);
 		alunos.put(matricula, alunoTutor);
 	}
 	
 	/**
-	 * 
 	 * @param matricula
 	 * 		matricula do Tutor procurado, no formato String.
-	 * @return o Tutor procurado.
+	 * @return representação textual do Tutor procurado.
 	 */
-	public Aluno recuperaTutor(String matricula) {
-		return alunos.get(matricula);
+	public String recuperaTutor(String matricula) {
+		return alunos.get(matricula).toString();
 	}
 	
 	/**
@@ -127,80 +115,69 @@ public class Sistema {
 	}
 	
 	/**
-	 * Cadastro de um objeto Horario (que representa o horario de atendimento) do Tutor,
-	 * localizado pelo email.
+	 * Cadastro de um Horario (que representa o horario de atendimento) do Tutor.
 	 * @param email 
-	 * 		String email do tutor
+	 * 		String email do tutor.
 	 * @param horario
-	 * 		String horario a cadastrar
+	 * 		String horario a cadastrar.
 	 * @param dia
-	 * 		String dia a cadastrar
+	 * 		String dia a cadastrar.
 	 * @throws DadoInvalidoException 
 	 */
-	public void cadastrarHorario(String email, String horario, String dia) throws DadoInvalidoException {
-		for(Aluno i : alunos.values())
-			if (i.getEmail().equals(email))
-				if (i instanceof Tutor)
-					((Tutor) i).cadastrarHorario(horario, dia);
-		
+	public void cadastrarHorario(String email, String horario, String dia) {
+		for(Aluno tutor : alunos.values())
+			if(tutor.getEmail().equals(email))
+				if(tutor instanceof Tutor)
+					((Tutor) tutor).cadastrarHorario(horario, dia);
 	}
 	
 	/**
 	 * Cadastro de local para atendimento de um Tutor. O local não está relacionado aos horarios do Tutor.
 	 * @param email
-	 * 		String email do Tutor
+	 * 		String email do Tutor.
 	 * @param local
-	 * 		String local de atendimento do Tutor
+	 * 		String local de atendimento do Tutor.
 	 */
 	public void cadastrarLocalDeAtendimento(String email, String local) {
-		for(Aluno i : alunos.values())
-			if (i.getEmail().equals(email))
-				if (i instanceof Tutor)
-					((Tutor) i).cadastrarLocal(local);
+		for(Aluno tutor : alunos.values())
+			if(tutor.getEmail().equals(email))
+				if(tutor instanceof Tutor)
+					((Tutor) tutor).cadastrarLocal(local);
 	}
 
 	/**
-	 * Consulta de Horario de um tutor
+	 * Consulta de Horario de um tutor.
 	 * @param email
 	 * 		String email do Tutor
 	 * @param horario
 	 * 		String horario de atendimento do Tutor a ser verificado
 	 * @param dia
 	 * 		String dia de atendimento do Tutor a ser verificado
-	 * @return
+	 * @return boolean que indica a consulta de um Horario.
 	 */
 	public boolean consultaHorario(String email, String horario, String dia) {
-		Horario hora = new Horario(horario, dia);
-		for(Aluno i : alunos.values())
-			if (i.getEmail().equals(email))
-				if (i instanceof Tutor)
-					for (Horario x : ((Tutor) i).getHorarios())
-						if (x.equals(hora))
-							return true;
+		Horario horarioProcurado = new Horario(horario, dia);
+		for(Aluno tutor : alunos.values())
+			if(tutor.getEmail().equals(email))
+				if(tutor instanceof Tutor)
+					for(Horario h : ((Tutor) tutor).getHorarios())
+						if(h.equals(horarioProcurado)) return true;
 		return false;
 	}
 	
 	/**
-	 * Consulta de um local de atendimento de um Tutor
+	 * Consulta de um local de atendimento de um Tutor.
 	 * @param email
-	 * 		String email do Tutor
+	 * 		String email do Tutor.
 	 * @param local
-	 * 		String local de atendimento a ser verificado de um Tutor
-	 * @return
+	 * 		String local de atendimento a ser verificado de um Tutor.
+	 * @return boolean que indica a consulta de um Local.
 	 */
 	public boolean consultaLocal(String email, String local) {
-		for(Aluno i : alunos.values())
-			if (i.getEmail().equals(email))
-				if (i instanceof Tutor)
-					for (String x : ((Tutor) i).getLocais())
-						if (x.equals(local))
-							return true;
+		for(Aluno tutor : alunos.values())
+			if(tutor.getEmail().equals(email))
+				if(tutor instanceof Tutor)
+					return ((Tutor) tutor).getLocais().contains(local);
 		return false;
 	}
-
-
-
-
-
-
 }

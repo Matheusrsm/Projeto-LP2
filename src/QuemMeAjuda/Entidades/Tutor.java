@@ -1,36 +1,33 @@
-package QuemMeAjuda;
+package QuemMeAjuda.Entidades;
 
-import java.util.HashSet;
+import java.util.List;
+import java.util.ArrayList;
 
-import exceptions.DadoInvalidoException;
-import validacao.ValidaTutor;
 /**
  * Representação de um tutor que é um aluno.
  * Todo tutor deve ter uma disciplina, uma proficiencia entre 1 e 5 e uma bolsa que se inicia em 0.
  * Todo tutor possui uma nota de avaliação entre 0 e 5, que se inicia com 4 e muda de acordo com as avaliações.
  * 
- * @author Matheus Silva, Lukas Nascimento
+ * @author Matheus Silva
  *
  */
 public class Tutor extends Aluno {
-	private HashSet<String> locais;
-	private HashSet<Horario> horarios;
+	private List<String> locais;
+	private List<Horario> horarios;
 	private String disciplina;
 	private int proficiencia; 
 	private double bolsa;
 	
 	
 	public Tutor(String nome, String matricula, int codigoCurso, String telefone, 
-				 String email, String disciplina, int proficiencia) throws DadoInvalidoException{
-		
+				 String email, String disciplina, int proficiencia) {
 		super(nome, matricula, codigoCurso, telefone, email);
-		ValidaTutor.validaProficiencia(proficiencia);
 		this.proficiencia = proficiencia;
 		this.disciplina = disciplina;
 		this.bolsa = 0.0;
 		this.notaDeAvaliacao = 4.0;
-		locais = new HashSet<>();
-		horarios = new HashSet<>();
+		this.locais = new ArrayList<>();
+		this.horarios = new ArrayList<>();
 	}
 
 	public String getDisciplina() {
@@ -53,12 +50,7 @@ public class Tutor extends Aluno {
 		locais.add(local);
 	}
 	
-	public void cadastrarHorario(String horario, String dia) throws DadoInvalidoException {
-		try {
-			validacao.ValidaAtendimento.validaHorario(horario, dia);
-		}catch(DadoInvalidoException e){
-			throw new DadoInvalidoException("Erro no cadastrar horario" + e.getMessage());
-		}
+	public void cadastrarHorario(String horario, String dia) {
 		horarios.add(new Horario(horario, dia));
 	}
 	
@@ -76,11 +68,11 @@ public class Tutor extends Aluno {
 		return listaLocais;
 	}
 	
-	public HashSet<Horario> getHorarios(){
+	public List<Horario> getHorarios(){
 		return horarios;
 	}
 	
-	public HashSet<String> getLocais(){
+	public List<String> getLocais(){
 		return locais;
 	}
 }

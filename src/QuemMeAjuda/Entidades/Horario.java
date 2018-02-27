@@ -1,4 +1,4 @@
-package QuemMeAjuda;
+package QuemMeAjuda.Entidades;
 
 public class Horario{
 	private String horario, dia;
