@@ -3,6 +3,7 @@ package QuemMeAjuda.Auxiliares;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import QuemMeAjuda.Entidades.*;
 
@@ -32,17 +33,11 @@ public class Sistema {
 	 * @throws DadoInvalidoException 
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
-		
-		validacoes.validaNome(nome);
-		validacoes.validaMatricula(matricula, alunos);
-		validacoes.validaEmail(email);
-		
-		try {
-			alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));
-		}
-		catch(Exception e) {
-			e.getMessage();
-		}
+		String erroCadastrarAluno = "Erro no cadastro de aluno: ";
+		validacoes.nomeInvalidoOuNulo(nome, erroCadastrarAluno);
+		validacoes.emailInvalidoOuNulo(email, erroCadastrarAluno);
+		validacoes.matriculaJaCadastrada(matricula, alunos, erroCadastrarAluno);
+		alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));
 	}
 	
 	/**
@@ -52,17 +47,9 @@ public class Sistema {
 	 * @throws DadoInvalidoException 
 	 */
 	public String recuperaAluno(String matricula) throws Exception {
-		
-		validacoes.validaMatriculaJaCadastrada(matricula, alunos);
-		validacoes.validaMatricula(matricula, alunos);
-		
-		try {
-			return alunos.get(matricula).toString();
-		}
-		catch(Exception e) {
-			e.getMessage();
-		}
-		return null;
+		String erroRecuperaAluno = "Erro na busca por aluno: ";
+		validacoes.alunoNaoCadastrado(matricula, alunos, erroRecuperaAluno);
+		return alunos.get(matricula).toString();
 	}
 	
 	/**
@@ -92,6 +79,8 @@ public class Sistema {
 	 * @throws DadoInvalidoException 
 	 */
 	public String getInfoAluno(String matricula, String atributo) throws Exception {
+		String erroGetInfoAluno = "Erro na obtencao de informacao de aluno: ";
+		validacoes.alunoNaoCadastrado(matricula, alunos, erroGetInfoAluno);
 		switch (atributo.toLowerCase()){
 			case "nome":
 				return alunos.get(matricula).getNome();
@@ -117,11 +106,21 @@ public class Sistema {
 	 * @throws DadoInvalidoException 
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
+		String erroTornarTutor = "Erro na definicao de papel: ";
+		validacoes.tutorNaoCadastrado(matricula, alunos, erroTornarTutor);
 		Aluno alunoViraTutor = alunos.get(matricula);
-		Aluno alunoTutor = new Tutor(alunoViraTutor.getNome(), alunoViraTutor.getMatricula(), alunoViraTutor.getCodigoCurso(), 
-									 alunoViraTutor.getTelefone(), alunoViraTutor.getEmail(), disciplina, proficiencia);
-		alunos.remove(matricula);
-		alunos.put(matricula, alunoTutor);
+		if(alunoViraTutor instanceof Tutor) {
+			List<String> disciplinasDoTutor = ((Tutor) alunoViraTutor).getDisciplinas();
+			validacoes.disciplinaJaEhTutor(disciplina, disciplinasDoTutor, erroTornarTutor);
+			validacoes.proficienciaInvalida(proficiencia, erroTornarTutor);
+			disciplinasDoTutor.add(disciplina);
+		}
+		else {
+			Aluno alunoTutor = new Tutor(alunoViraTutor.getNome(), alunoViraTutor.getMatricula(), alunoViraTutor.getCodigoCurso(),
+										 alunoViraTutor.getTelefone(), alunoViraTutor.getEmail(), disciplina, proficiencia);
+			alunos.remove(matricula);
+			alunos.put(matricula, alunoTutor);
+		}
 	}
 	
 	/**
@@ -131,6 +130,8 @@ public class Sistema {
 	 * @throws DadoInvalidoException 
 	 */
 	public String recuperaTutor(String matricula) throws Exception {
+		String erroRecuperaTutor = "Erro na busca por tutor: ";
+		validacoes.tutorNaoCadastrado(matricula, alunos, erroRecuperaTutor);
 		return alunos.get(matricula).toString();
 	}
 	
@@ -180,7 +181,6 @@ public class Sistema {
 			if(tutor.getEmail().equals(email))
 				if(tutor instanceof Tutor)
 					((Tutor) tutor).cadastrarLocal(local);
-			else throw new DadoInvalidoException("Erro no cadastrar local de atendimento: tutor nao cadastrado");
 	}
 
 	/**

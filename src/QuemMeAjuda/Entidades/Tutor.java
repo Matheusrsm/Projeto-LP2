@@ -22,34 +22,28 @@ public class Tutor extends Aluno {
 	public Tutor(String nome, String matricula, int codigoCurso, String telefone, 
 				 String email, String disciplina, int proficiencia) {
 		super(nome, matricula, codigoCurso, telefone, email);
-		disciplinas = new ArrayList<>();
-		disciplinas.add(disciplina);
 		this.proficiencia = proficiencia;
 		this.bolsa = 0.0;
 		this.notaDeAvaliacao = 4.0;
 		this.locais   = new ArrayList<>();
 		this.horarios = new ArrayList<>();
+		this.disciplinas = new ArrayList<>();
+		disciplinas.add(disciplina);
 	}
 
-	public List<String> getDisciplinas() {
-		return disciplinas;
-	}
+	public List<String> getDisciplinas() {return disciplinas;}
 
-	public int getProficiencia() {
-		return proficiencia;
-	}
+	public int getProficiencia() {return proficiencia;}
 
-	public double getBolsa() {
-		return bolsa;
-	}
+	public double getBolsa() {return bolsa;}
 
-	public void setBolsa(int bolsa) {
-		this.bolsa = bolsa;
-	}
+	public void setBolsa(int bolsa) {this.bolsa = bolsa;}
 	
-	public void cadastrarLocal(String local) {
-		locais.add(local);
-	}
+	public List<Horario> getHorarios() {return horarios;}
+	
+	public List<String> getLocais() {return locais;}
+	
+	public void cadastrarLocal(String local) {locais.add(local);}
 	
 	public void cadastrarHorario(String horario, String dia) {
 		horarios.add(new Horario(horario, dia));
@@ -67,13 +61,5 @@ public class Tutor extends Aluno {
 		for (String i : locais)
 			listaLocais += i + "\n";
 		return listaLocais;
-	}
-	
-	public List<Horario> getHorarios(){
-		return horarios;
-	}
-	
-	public List<String> getLocais(){
-		return locais;
 	}
 }

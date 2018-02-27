@@ -22,7 +22,7 @@ public class QuemMeAjuda{
 	}
 	
 	public String recuperaAluno(String matricula) throws Exception {
-		return sistema.recuperaAluno(matricula);
+		return sistema.recuperaAluno(matricula);		
 	}
 	
 	public String getInfoAluno(String matricula, String atributo) throws Exception {
