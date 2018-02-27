@@ -1,6 +1,6 @@
 package QuemMeAjuda.Auxiliares;
 
-import java.util.HashMap;
+import java.util.Map;
 
 import QuemMeAjuda.Entidades.Aluno;
 
@@ -31,10 +31,13 @@ public class Validacoes {
 		if(horario.trim().isEmpty() || dia.trim().isEmpty()) throw new DadoInvalidoException(msg);
 	}
 	
-	public void validaMatricula(String matricula, HashMap<String, Aluno> alunos) throws Exception {
+	public void validaMatricula(String matricula, Map<String, Aluno> alunos) throws Exception {
 		/*if(matricula == null) throw new DadoNuloException(msg);
 		if(matricula.trim().isEmpty()) throw new DadoInvalidoException(msg);*/
 		if(alunos.containsKey(matricula)) throw new DadoInvalidoException("Aluno de mesma matricula ja cadastrado");
+	}
+	
+	public void validaMatriculaJaCadastrada(String matricula, Map<String, Aluno> alunos) throws Exception {
 		if(!alunos.containsKey(matricula)) throw new DadoInvalidoException("Aluno nao encontrado");
 	}
 }

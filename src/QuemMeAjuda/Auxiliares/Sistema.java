@@ -14,7 +14,7 @@ import QuemMeAjuda.Entidades.*;
  */
 public class Sistema {
 	private Map<String, Aluno> alunos = new HashMap<>();
-	private Validacoes validacoes;
+	private Validacoes validacoes = new Validacoes();
 	
 	/**
 	 * Cadastra um Aluno no sistema que será identificado por sua matricula.
@@ -32,7 +32,14 @@ public class Sistema {
 	 * @throws DadoInvalidoException 
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
-		try {alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));}
+		
+		validacoes.validaNome(nome);
+		validacoes.validaMatricula(matricula, alunos);
+		validacoes.validaEmail(email);
+		
+		try {
+			alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));
+		}
 		catch(Exception e) {
 			e.getMessage();
 		}
@@ -42,10 +49,20 @@ public class Sistema {
 	 * @param matricula 
 	 * 		matricula do Aluno, no formato String.
 	 * @return Representação textual do Aluno.
-	 * @throws DadoInvalidException 
+	 * @throws DadoInvalidoException 
 	 */
 	public String recuperaAluno(String matricula) throws Exception {
-		return alunos.get(matricula).toString();
+		
+		validacoes.validaMatriculaJaCadastrada(matricula, alunos);
+		validacoes.validaMatricula(matricula, alunos);
+		
+		try {
+			return alunos.get(matricula).toString();
+		}
+		catch(Exception e) {
+			e.getMessage();
+		}
+		return null;
 	}
 	
 	/**

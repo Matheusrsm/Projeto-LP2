@@ -1,6 +1,5 @@
 package QuemMeAjuda;
 
-import QuemMeAjuda.Auxiliares.DadoInvalidoException;
 import QuemMeAjuda.Auxiliares.Sistema;
 import easyaccept.EasyAccept;
 
