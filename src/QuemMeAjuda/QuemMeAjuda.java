@@ -46,7 +46,7 @@ public class QuemMeAjuda{
 		sistema.cadastrarHorario(email, horario, dia);
 	}
 	
-	public void cadastrarLocalDeAtendimento(String email, String local) {
+	public void cadastrarLocalDeAtendimento(String email, String local) throws DadoInvalidoException {
 		sistema.cadastrarLocalDeAtendimento(email, local);
 	}
 	

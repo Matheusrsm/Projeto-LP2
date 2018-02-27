@@ -31,7 +31,7 @@ public class Validacoes {
 		if(email == null || email.trim().isEmpty()) throw new DadoInvalidoException(msg);
 	}
 	
-	public void validaProficiencia(int proficiencia, String msg) throws DadoInvalidoException{
+	public static void validaProficiencia(int proficiencia, String msg) throws DadoInvalidoException{
 		if(proficiencia < 0 || proficiencia > 5) throw new DadoInvalidoException(msg);
 	}
 	

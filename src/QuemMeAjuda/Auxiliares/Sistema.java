@@ -36,7 +36,7 @@ public class Sistema {
 			if (alunos.containsKey(matricula))
 				throw new DadoInvalidoException("Aluno de mesma matricula ja cadastrado");
 			Validacoes.validaNome(nome, "Nome nao pode ser vazio ou nulo");
-			Validacoes.validaEmail(email, "Email invalido");
+			
 		
 		}catch (DadoInvalidoException e) {
 			throw new DadoInvalidoException("Erro no cadastro de aluno: " + e.getMessage());
@@ -111,10 +111,13 @@ public class Sistema {
 	 */
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws DadoInvalidoException {
 		try{
-			if (alunos.get(matricula) instanceof Tutor)
-				throw new DadoInvalidoException("Ja eh tutor dessa disciplina");
 			if (!alunos.containsKey(matricula))
 				throw new DadoInvalidoException("Tutor nao encontrado");
+			if (alunos.get(matricula) instanceof Tutor)
+				for(String i : ((Tutor) alunos.get(matricula)).getDisciplinas())
+					if (disciplina.equals(i)) throw new DadoInvalidoException("Ja eh tutor dessa disciplina");
+			Validacoes.validaProficiencia(proficiencia, "Proficiencia invalida");
+			
 		}catch (DadoInvalidoException e) {
 			throw new DadoInvalidoException("Erro na definicao de papel: " + e.getMessage());
 		}
@@ -164,11 +167,7 @@ public class Sistema {
 	 * @throws DadoInvalidoException 
 	 */
 	public void cadastrarHorario(String email, String horario, String dia) throws DadoInvalidoException {
-		try{
-			Validacoes.validaEmail(email, "email nao pode ser vazio ou em branco");
-		}catch(DadoInvalidoException e) {
-			throw new DadoInvalidoException("Erro no cadastrar horario: " + e.getMessage());
-		}
+		
 		for(Aluno tutor : alunos.values())
 			if(tutor.getEmail().equals(email))
 				if(tutor instanceof Tutor)
@@ -181,12 +180,17 @@ public class Sistema {
 	 * 		String email do Tutor.
 	 * @param local
 	 * 		String local de atendimento do Tutor.
+	 * @throws DadoInvalidoException 
 	 */
-	public void cadastrarLocalDeAtendimento(String email, String local) {
+	public void cadastrarLocalDeAtendimento(String email, String local) throws DadoInvalidoException {
+		Validacoes.validaNome(local, "Erro no cadastrar local de atendimento: local nao pode ser vazio ou em branco");
+		Validacoes.validaNome(email, "Erro no cadastrar local de atendimento: email nao pode ser vazio ou em branco");
+		
 		for(Aluno tutor : alunos.values())
 			if(tutor.getEmail().equals(email))
 				if(tutor instanceof Tutor)
 					((Tutor) tutor).cadastrarLocal(local);
+			else throw new DadoInvalidoException("Erro no cadastrar local de atendimento: tutor nao cadastrado");
 	}
 
 	/**

@@ -31,7 +31,7 @@ public class Tutor extends Aluno {
 		this.horarios = new ArrayList<>();
 	}
 
-	public List getDisciplina() {
+	public List<String> getDisciplinas() {
 		return disciplinas;
 	}
 
