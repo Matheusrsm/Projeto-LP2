@@ -162,6 +162,10 @@ public class Sistema {
 	 * @throws DadoInvalidoException 
 	 */
 	public void cadastrarHorario(String email, String horario, String dia) throws Exception {
+		String erroCadastrarHorario = "Erro no cadastrar horario: ";
+		validacoes.emailInvalidoOuNulo(email, erroCadastrarHorario);
+		validacoes.horarioInvalido(horario, dia, erroCadastrarHorario);
+		validacoes.tutorEmailNaoCadastrado(email, alunos, erroCadastrarHorario);
 		for(Aluno tutor : alunos.values())
 			if(tutor.getEmail().equals(email))
 				if(tutor instanceof Tutor)
@@ -177,6 +181,10 @@ public class Sistema {
 	 * @throws DadoInvalidoException 
 	 */
 	public void cadastrarLocalDeAtendimento(String email, String local) throws Exception {
+		String erroCadastrarLocal = "Erro no cadastrar local de atendimento: ";
+		validacoes.localInvalidoOuNulo(local, erroCadastrarLocal);
+		validacoes.emailInvalidoOuNulo(email, erroCadastrarLocal);
+		validacoes.tutorEmailNaoCadastrado(email, alunos, erroCadastrarLocal);
 		for(Aluno tutor : alunos.values())
 			if(tutor.getEmail().equals(email))
 				if(tutor instanceof Tutor)

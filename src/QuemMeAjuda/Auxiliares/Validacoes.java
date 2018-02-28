@@ -1,9 +1,11 @@
 package QuemMeAjuda.Auxiliares;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import QuemMeAjuda.Entidades.Aluno;
+import QuemMeAjuda.Entidades.Tutor;
 
 public class Validacoes {
 		
@@ -13,21 +15,32 @@ public class Validacoes {
 	}
 
 	public void emailInvalidoOuNulo(String email, String msg) throws Exception {
-		if(email == null) throw new DadoNuloException(msg + "Email invalido");
+		String msgEmailInvalido = "Email invalido";
+		if(email == null) throw new DadoNuloException(msg + msgEmailInvalido);
 		int a = 0;
 		boolean erro = false;
-		if(email.trim().isEmpty()) erro = true;
+		if(email.trim().isEmpty()) {
+			erro = true;
+			msgEmailInvalido = "email nao pode ser vazio ou em branco";
+		}
 		else if(!email.contains("@")) erro = true;
 		else {
 			a = email.indexOf("@");
 			if(a == 0 || a == email.length() - 1) erro = true;
 		}
-		if(erro) throw new DadoInvalidoException(msg + "Email invalido");
+		if(erro) throw new DadoInvalidoException(msg + msgEmailInvalido);
 	}
+	
 	public void tutorNaoCadastrado(String matricula, Map<String, Aluno> alunos, String msg) throws Exception {
 		if(!alunos.containsKey(matricula)) throw new DadoInvalidoException(msg + "Tutor nao encontrado");
 	}
 	
+	public void tutorEmailNaoCadastrado(String email, Map<String, Aluno> alunos, String msg) throws Exception {
+		List<String> emails = new ArrayList<String>();
+		for (Aluno a : alunos.values()) 
+			if (a instanceof Tutor) emails.add(a.getEmail());
+		if (!emails.contains(email)) throw new DadoInvalidoException (msg + "tutor nao cadastrado");
+	}
 	public void disciplinaJaEhTutor(String disciplina, List<String> disciplinas, String msg) throws Exception {
 		if(disciplinas.contains(disciplina)) throw new DadoInvalidoException(msg + "Ja eh tutor dessa disciplina"); 
 	}
@@ -37,8 +50,16 @@ public class Validacoes {
 	}
 	
 	public void horarioInvalido(String horario, String dia, String msg) throws Exception {
-		if(horario == null || dia == null) throw new DadoNuloException(msg);
-		if(horario.trim().isEmpty() || dia.trim().isEmpty()) throw new DadoInvalidoException(msg);
+		String msgErroHorario = "horario nao pode ser vazio ou em branco";
+		String msgErroDia = "dia nao pode ser vazio ou em branco";
+		
+		if(horario.trim().isEmpty()) throw new DadoInvalidoException(msg + msgErroHorario);
+		else if (dia.trim().isEmpty()) throw new DadoInvalidoException(msg + msgErroDia);
+	}
+	
+	public void localInvalidoOuNulo(String local, String msg) throws Exception {
+		if(local == null) throw new DadoNuloException(msg + "local nao pode ser vazio ou em branco");
+		if(local.trim().isEmpty()) throw new DadoInvalidoException(msg + "local nao pode ser vazio ou em branco");
 	}
 	
 	public void matriculaJaCadastrada(String matricula, Map<String, Aluno> alunos, String msg) throws Exception {
@@ -48,4 +69,7 @@ public class Validacoes {
 	public void alunoNaoCadastrado(String matricula, Map<String, Aluno> alunos, String msg) throws Exception {
 		if(!alunos.containsKey(matricula)) throw new DadoInvalidoException(msg + "Aluno nao encontrado");
 	}
+
+	
+
 }
