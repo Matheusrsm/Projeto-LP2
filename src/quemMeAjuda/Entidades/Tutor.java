@@ -1,4 +1,4 @@
-package QuemMeAjuda.Entidades;
+package quemMeAjuda.Entidades;
 
 import java.util.List;
 import java.util.ArrayList;

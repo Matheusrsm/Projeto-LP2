@@ -1,13 +1,13 @@
-package QuemMeAjuda;
+package quemMeAjuda;
 
-import QuemMeAjuda.Auxiliares.Sistema;
 import easyaccept.EasyAccept;
+import quemMeAjuda.Auxiliares.Sistema;
 
 public class QuemMeAjuda{
 	private Sistema sistema = new Sistema();
 	
 	public static void main(String[] args){
-		args = new String[] {"QuemMeAjuda.QuemMeAjuda", "acceptance_test/us1_test.txt",
+		args = new String[] {"quemMeAjuda.QuemMeAjuda", "acceptance_test/us1_test.txt",
 											  			"acceptance_test/us2_test.txt",
 											  			"acceptance_test/us3_test.txt"};
 		EasyAccept.main(args);

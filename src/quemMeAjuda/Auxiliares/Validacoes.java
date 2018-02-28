@@ -1,11 +1,11 @@
-package QuemMeAjuda.Auxiliares;
+package quemMeAjuda.Auxiliares;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import QuemMeAjuda.Entidades.Aluno;
-import QuemMeAjuda.Entidades.Tutor;
+import quemMeAjuda.Entidades.Aluno;
+import quemMeAjuda.Entidades.Tutor;
 
 public class Validacoes {
 		

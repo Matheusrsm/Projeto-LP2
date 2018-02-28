@@ -1,4 +1,4 @@
-package QuemMeAjuda.Auxiliares;
+package quemMeAjuda.Auxiliares;
 
 public class DadoNuloException extends Exception{
 

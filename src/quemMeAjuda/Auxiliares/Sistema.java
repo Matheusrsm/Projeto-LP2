@@ -1,11 +1,12 @@
-package QuemMeAjuda.Auxiliares;
+package quemMeAjuda.Auxiliares;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import QuemMeAjuda.Entidades.*;
+
+import quemMeAjuda.Entidades.*;
 
 /**
  * Sistema Central

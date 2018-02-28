@@ -1,4 +1,4 @@
-package QuemMeAjuda.Entidades;
+package quemMeAjuda.Entidades;
 
 /**
  * Representação de um aluno, todo aluno deve ter um nome, código do curso e email.
