@@ -1,7 +1,5 @@
 package QuemMeAjuda.Entidades;
 
-import QuemMeAjuda.Auxiliares.Validacoes;
-
 /**
  * Representação de um aluno, todo aluno deve ter um nome, código do curso e email.
  * O telefone é opcional.
@@ -14,7 +12,6 @@ public class Aluno implements Comparable<Aluno> {
 	private String matricula, nome, email, telefone;
 	private int codigoCurso;
 	protected double notaDeAvaliacao;
-	private Validacoes validacoes;
 		
 	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
 		this.nome = nome;
