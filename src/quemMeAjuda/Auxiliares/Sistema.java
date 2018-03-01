@@ -17,6 +17,7 @@ import quemMeAjuda.Entidades.*;
 public class Sistema {
 	private Map<String, Aluno> alunos = new HashMap<>();
 	private Validacoes validacoes = new Validacoes();
+	private List<PedidoDeAjuda> pedidosDeAjudas = new ArrayList<>();
 	
 	/**
 	 * Cadastra um Aluno no sistema que será identificado por sua matricula.
@@ -227,4 +228,17 @@ public class Sistema {
 					return ((Tutor) tutor).getLocais().contains(local);
 		return false;
 	}
+	
+	public int pedirAjudaPresencial (String disciplina, String horario, String dia, String localInteresse) {
+		PedidoDeAjuda pedido = new PedidoDeAjudaPresencial(disciplina, horario, dia, localInteresse);
+		pedidosDeAjudas.add(pedido);
+		return pedidosDeAjudas.indexOf(pedido) + 1;
+	}
+	
+	public int pedirAjudaOnline (String disciplina) {
+		PedidoDeAjuda pedido = new PedidoDeAjudaOnline(disciplina);
+		pedidosDeAjudas.add(pedido);
+		return pedidosDeAjudas.indexOf(pedido) + 1;
+	}
+	
 }
