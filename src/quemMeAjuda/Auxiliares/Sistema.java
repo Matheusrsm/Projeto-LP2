@@ -34,6 +34,12 @@ public class Sistema {
 	 *
 	 * @throws DadoInvalidoException, DadoNuloException
 	 */
+	
+	
+	public Map<String, Aluno> getAlunos() {
+		return alunos;
+	}
+	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
 		String erroCadastrarAluno = "Erro no cadastro de aluno: ";
 		validacoes.matriculaJaCadastrada(matricula, alunos, erroCadastrarAluno);
@@ -271,11 +277,23 @@ public class Sistema {
 		return pedidosDeAjudas.get(iDAjuda - 1).getTutor();
 	}
 	
-	public void avaliarTutor (int idAjuda, int nota) {
+	public void avaliarTutor(int idAjuda, int nota) {
 		pedidosDeAjudas.get(idAjuda - 1).getTutor().setNotaDeAvaliacao(nota);
 	}
-	public Map<String, Aluno> getAlunos() {
-		return alunos;
+	
+	public double pegarNota(String matriculaTutor) {
+		double notaDoTutor = 0;	
+		Aluno alunoPossivelTutor = alunos.get(matriculaTutor);
+		if(alunoPossivelTutor instanceof Tutor) notaDoTutor = alunoPossivelTutor.getNotaDeAvaliacao();
+		return notaDoTutor;
 	}
 	
+	public String pegarNivel(String matriculaTutor) {
+		String nivelDoTutor = "";
+		double notaDoTutor = pegarNota(matriculaTutor);
+		if(notaDoTutor > 4.5) nivelDoTutor = "TOP";
+		else if(notaDoTutor > 3 && notaDoTutor <= 4.5) nivelDoTutor = "Tutor";
+		else if(0 < notaDoTutor && notaDoTutor > 3.0) nivelDoTutor = "Aprendiz";
+		return nivelDoTutor;
+	}
 }
