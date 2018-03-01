@@ -32,13 +32,13 @@ public class Sistema {
 	 * @param email 
 	 * 		email do Aluno, no formato String.
 	 *
-	 * @throws DadoInvalidoException 
+	 * @throws DadoInvalidoException, DadoNuloException
 	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
 		String erroCadastrarAluno = "Erro no cadastro de aluno: ";
+		validacoes.matriculaJaCadastrada(matricula, alunos, erroCadastrarAluno);
 		validacoes.nomeInvalidoOuNulo(nome, erroCadastrarAluno);
 		validacoes.emailInvalidoOuNulo(email, erroCadastrarAluno);
-		validacoes.matriculaJaCadastrada(matricula, alunos, erroCadastrarAluno);
 		alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));
 	}
 	
@@ -239,6 +239,10 @@ public class Sistema {
 		PedidoDeAjuda pedido = new PedidoDeAjudaOnline(disciplina);
 		pedidosDeAjudas.add(pedido);
 		return pedidosDeAjudas.indexOf(pedido) + 1;
+	}
+
+	public Map<String, Aluno> getAlunos() {
+		return alunos;
 	}
 	
 }
