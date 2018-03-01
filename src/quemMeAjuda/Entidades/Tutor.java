@@ -49,6 +49,11 @@ public class Tutor extends Aluno {
 		horarios.add(new Horario(horario, dia));
 	}
 	
+	@Override
+	public void setNotaDeAvaliacao(double nota) {
+		this.notaDeAvaliacao = ((notaDeAvaliacao * 5) + nota) / 6;
+	}
+	
 	public String listaHorarios() {
 		String listaHorarios = "";
 		for (Horario i : horarios)

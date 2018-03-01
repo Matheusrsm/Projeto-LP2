@@ -229,18 +229,51 @@ public class Sistema {
 		return false;
 	}
 	
+	public boolean verificaTutor(Tutor tutor, String disciplina, String horario, String dia, String local) {
+		if(tutor.getDisciplinas().contains(disciplina)) {
+			if(tutor.getHorarios().contains(new Horario(horario, dia)) && tutor.getLocais().contains(local)) {
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+	
 	public int pedirAjudaPresencial (String disciplina, String horario, String dia, String localInteresse) {
-		PedidoDeAjuda pedido = new PedidoDeAjudaPresencial(disciplina, horario, dia, localInteresse);
+		Tutor tutorAjudara = new Tutor("", "", 0, "", "", "", 0);
+		for(Aluno tutor : alunos.values()) {
+			if(tutor instanceof Tutor) {
+				if(verificaTutor((Tutor) tutor, disciplina, horario, dia, localInteresse)) {
+					if(((Tutor) tutor).getProficiencia() > tutorAjudara.getProficiencia()) tutorAjudara = (Tutor) tutor;
+				}	
+			}
+		}
+		PedidoDeAjuda pedido = new PedidoDeAjudaPresencial(disciplina, horario, dia, localInteresse, tutorAjudara);
 		pedidosDeAjudas.add(pedido);
 		return pedidosDeAjudas.indexOf(pedido) + 1;
 	}
 	
 	public int pedirAjudaOnline (String disciplina) {
-		PedidoDeAjuda pedido = new PedidoDeAjudaOnline(disciplina);
+		Tutor tutorAjudara = new Tutor("", "", 0, "", "", "", 0);
+		for(Aluno tutor : alunos.values()) {
+			if(tutor instanceof Tutor) {
+				if(((Tutor) tutor).getDisciplinas().contains(disciplina)) {
+					if(((Tutor) tutor).getProficiencia() > tutorAjudara.getProficiencia()) tutorAjudara = (Tutor) tutor;
+				}	
+			}
+		}
+		PedidoDeAjuda pedido = new PedidoDeAjudaOnline(disciplina, tutorAjudara);
 		pedidosDeAjudas.add(pedido);
 		return pedidosDeAjudas.indexOf(pedido) + 1;
 	}
-
+	
+	public Aluno pegarTutor(int iDAjuda) {
+		return pedidosDeAjudas.get(iDAjuda - 1).getTutor();
+	}
+	
+	public void avaliarTutor (int idAjuda, int nota) {
+		pedidosDeAjudas.get(idAjuda - 1).getTutor().setNotaDeAvaliacao(nota);
+	}
 	public Map<String, Aluno> getAlunos() {
 		return alunos;
 	}
