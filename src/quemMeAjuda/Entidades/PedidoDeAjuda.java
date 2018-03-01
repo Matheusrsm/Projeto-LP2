@@ -6,4 +6,5 @@ public interface PedidoDeAjuda {
 	public String getLocal();
 	public String getDisciplina();
 	public Tutor getTutor();
+	public String getMatriculaAluno();
 }

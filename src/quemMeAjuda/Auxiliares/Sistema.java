@@ -17,7 +17,7 @@ import quemMeAjuda.Entidades.*;
 public class Sistema {
 	private Map<String, Aluno> alunos = new HashMap<>();
 	private Validacoes validacoes = new Validacoes();
-	private List<PedidoDeAjuda> pedidosDeAjudas = new ArrayList<>();
+	private Map<Integer, PedidoDeAjuda> pedidosDeAjudas = new HashMap<>();
 	
 	/**
 	 * Cadastra um Aluno no sistema que será identificado por sua matricula.
@@ -245,7 +245,7 @@ public class Sistema {
 		return false;
 	}
 	
-	public int pedirAjudaPresencial (String disciplina, String horario, String dia, String localInteresse) {
+	public int pedirAjudaPresencial (String matriculaAluno, String disciplina, String horario, String dia, String localInteresse) {
 		Tutor tutorAjudara = new Tutor("", "", 0, "", "", "", 0);
 		for(Aluno tutor : alunos.values()) {
 			if(tutor instanceof Tutor) {
@@ -254,12 +254,13 @@ public class Sistema {
 				}	
 			}
 		}
-		PedidoDeAjuda pedido = new PedidoDeAjudaPresencial(disciplina, horario, dia, localInteresse, tutorAjudara);
-		pedidosDeAjudas.add(pedido);
-		return pedidosDeAjudas.indexOf(pedido) + 1;
+		PedidoDeAjuda pedido = new PedidoDeAjudaPresencial(matriculaAluno, disciplina, horario, dia, localInteresse, tutorAjudara);
+		int iD = pedidosDeAjudas.size() + 1;
+		pedidosDeAjudas.put(iD, pedido);
+		return iD;
 	}
 	
-	public int pedirAjudaOnline (String disciplina) {
+	public int pedirAjudaOnline (String matriculaAluno, String disciplina) {
 		Tutor tutorAjudara = new Tutor("", "", 0, "", "", "", 0);
 		for(Aluno tutor : alunos.values()) {
 			if(tutor instanceof Tutor) {
@@ -268,17 +269,18 @@ public class Sistema {
 				}	
 			}
 		}
-		PedidoDeAjuda pedido = new PedidoDeAjudaOnline(disciplina, tutorAjudara);
-		pedidosDeAjudas.add(pedido);
-		return pedidosDeAjudas.indexOf(pedido) + 1;
+		PedidoDeAjuda pedido = new PedidoDeAjudaOnline(matriculaAluno, disciplina, tutorAjudara);
+		int iD = pedidosDeAjudas.size() + 1;
+		pedidosDeAjudas.put(iD, pedido);
+		return iD;
 	}
 	
 	public Aluno pegarTutor(int iDAjuda) {
-		return pedidosDeAjudas.get(iDAjuda - 1).getTutor();
+		return pedidosDeAjudas.get(iDAjuda).getTutor();
 	}
 	
 	public void avaliarTutor(int idAjuda, int nota) {
-		pedidosDeAjudas.get(idAjuda - 1).getTutor().setNotaDeAvaliacao(nota);
+		pedidosDeAjudas.get(idAjuda).getTutor().setNotaDeAvaliacao(nota);
 	}
 	
 	public double pegarNota(String matriculaTutor) {

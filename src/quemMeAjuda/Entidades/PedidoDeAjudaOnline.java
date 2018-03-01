@@ -2,10 +2,11 @@ package quemMeAjuda.Entidades;
 
 public class PedidoDeAjudaOnline implements PedidoDeAjuda{
 
-	private String disciplina;
+	private String disciplina, matricula;
 	private Tutor tutor;
 	
-	public PedidoDeAjudaOnline(String disciplina, Tutor tutor) {
+	public PedidoDeAjudaOnline(String matricula, String disciplina, Tutor tutor) {
+		this.matricula = matricula;
 		this.disciplina = disciplina;
 		this.tutor = tutor;
 	}
@@ -28,5 +29,10 @@ public class PedidoDeAjudaOnline implements PedidoDeAjuda{
 	@Override
 	public Tutor getTutor() {
 		return tutor;
+	}
+
+	@Override
+	public String getMatriculaAluno() {
+		return matricula;
 	}
 }
