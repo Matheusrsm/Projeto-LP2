@@ -6,7 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import quemMeAjuda.Entidades.*;
+import quemMeAjuda.Entidades.Aluno;
+import quemMeAjuda.Entidades.Horario;
+import quemMeAjuda.Entidades.PedidoDeAjuda;
+import quemMeAjuda.Entidades.PedidoDeAjudaOnline;
+import quemMeAjuda.Entidades.PedidoDeAjudaPresencial;
+import quemMeAjuda.Entidades.Tutor;
 
 /**
  * Sistema Central
@@ -235,7 +240,7 @@ public class Sistema {
 		return false;
 	}
 	
-	public boolean verificaTutor(Tutor tutor, String disciplina, String horario, String dia, String local) {
+	private boolean verificaTutor(Tutor tutor, String disciplina, String horario, String dia, String local) {
 		if(tutor.getDisciplinas().contains(disciplina)) {
 			if(tutor.getHorarios().contains(new Horario(horario, dia)) && tutor.getLocais().contains(local)) {
 				return true;
@@ -245,7 +250,7 @@ public class Sistema {
 		return false;
 	}
 	
-	public int pedirAjudaPresencial (String matriculaAluno, String disciplina, String horario, String dia, String localInteresse) {
+	public int pedirAjudaPresencial(String matriculaAluno, String disciplina, String horario, String dia, String localInteresse) {
 		Tutor tutorAjudara = new Tutor("", "", 0, "", "", "", 0);
 		for(Aluno tutor : alunos.values()) {
 			if(tutor instanceof Tutor) {
@@ -260,7 +265,7 @@ public class Sistema {
 		return iD;
 	}
 	
-	public int pedirAjudaOnline (String matriculaAluno, String disciplina) {
+	public int pedirAjudaOnline(String matriculaAluno, String disciplina) {
 		Tutor tutorAjudara = new Tutor("", "", 0, "", "", "", 0);
 		for(Aluno tutor : alunos.values()) {
 			if(tutor instanceof Tutor) {
