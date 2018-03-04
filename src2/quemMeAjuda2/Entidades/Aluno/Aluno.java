@@ -1,4 +1,4 @@
-package quemMeAjuda2.Entidades;
+package quemMeAjuda2.Entidades.Aluno;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +20,11 @@ public class Aluno implements Comparable<Aluno> {
 		this.email       = email;
 		this.telefone    = telefone;
 		notaDeAvaliacao  = 5.0;
-		tutorias         = new ArrayList<>();
+		tutorias         = null;
 	}
 	
 	public void tornaAlunoTutor(String disciplina, int proficiencia) {
+		tutorias = new ArrayList<>();
 		tutorias.add(new Tutoria(disciplina, proficiencia));
 		horarios = new ArrayList<>();
 		locais   = new ArrayList<>();
@@ -32,7 +33,9 @@ public class Aluno implements Comparable<Aluno> {
 	}
 	
 	public boolean isTutor() {
-		return !tutorias.isEmpty();
+		if (tutorias == null)
+			return false;
+		return true;
 	}
 	
 	public List<String> getDisciplinas() {
