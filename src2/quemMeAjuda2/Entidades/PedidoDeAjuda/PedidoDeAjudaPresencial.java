@@ -1,8 +1,10 @@
 package quemMeAjuda2.Entidades.PedidoDeAjuda;
 
+import quemMeAjuda2.Entidades.Aluno.*;
 public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 
 	private String matricula, disciplina, dia, local, horario;
+	private Aluno tutor;
 	
 	public PedidoDeAjudaPresencial(String matricula, String disciplina, String horario, String dia, String local) {
 		this.matricula = matricula;
@@ -10,6 +12,7 @@ public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 		this.horario = horario;
 		this.dia = dia;
 		this.local = local;
+		setTutor(null);
 	}
 	
 	@Override
@@ -34,6 +37,15 @@ public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 	@Override
 	public String getMatriculaAluno() {
 		return matricula;
+	}
+
+	@Override
+	public Aluno getTutor() {
+		return tutor;
+	}
+
+	public void setTutor(Aluno tutor) {
+		this.tutor = tutor;
 	}
 	
 }

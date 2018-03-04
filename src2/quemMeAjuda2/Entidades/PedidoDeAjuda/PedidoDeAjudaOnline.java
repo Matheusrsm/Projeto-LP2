@@ -1,23 +1,17 @@
 package quemMeAjuda2.Entidades.PedidoDeAjuda;
 
-public class PedidoDeAjudaOnline implements PedidoDeAjuda{
+import quemMeAjuda2.Entidades.Aluno.*;
+public abstract class PedidoDeAjudaOnline implements PedidoDeAjuda{
 
 	private String disciplina, matricula;
+	private Aluno tutor;
 	
 	public PedidoDeAjudaOnline(String matricula, String disciplina) {
 		this.matricula = matricula;
 		this.disciplina = disciplina;
-	}
-	
-	@Override
-	public String getDia() {
-		return null;
+		setTutor(null);
 	}
 
-	@Override
-	public String getLocal() {
-		return null;
-	}
 
 	@Override
 	public String getDisciplina() {
@@ -27,5 +21,15 @@ public class PedidoDeAjudaOnline implements PedidoDeAjuda{
 	@Override
 	public String getMatriculaAluno() {
 		return matricula;
+	}
+
+	@Override
+	public Aluno getTutor() {
+		return tutor;
+	}
+
+
+	public void setTutor(Aluno tutor) {
+		this.tutor = tutor;
 	}
 }
