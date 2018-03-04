@@ -7,10 +7,7 @@ public class Aluno implements Comparable<Aluno> {
 	private String  matricula, nome, email, telefone;
 	private int     codigoCurso;
 	private double  notaDeAvaliacao;
-	private double  bolsa;
-	private static List<Tutoria> tutorias;
-	private List<String> locais;
-	private List<Horario> horarios;
+	private static Tutoria tutoria;
 	
 			
 	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
@@ -20,20 +17,16 @@ public class Aluno implements Comparable<Aluno> {
 		this.email       = email;
 		this.telefone    = telefone;
 		notaDeAvaliacao  = 5.0;
-		tutorias         = null;
+		tutoria          = null;
 	}
 	
 	public void tornaAlunoTutor(String disciplina, int proficiencia) {
-		tutorias = new ArrayList<>();
-		tutorias.add(new Tutoria(disciplina, proficiencia));
-		horarios = new ArrayList<>();
-		locais   = new ArrayList<>();
-		bolsa    = 0.0;
+		tutoria = new Tutoria(disciplina, proficiencia);
 		notaDeAvaliacao = 4.0;
 	}
 	
 	public boolean isTutor() {
-		if (tutorias == null)
+		if (tutoria == null)
 			return false;
 		return true;
 	}
@@ -41,8 +34,8 @@ public class Aluno implements Comparable<Aluno> {
 	public List<String> getDisciplinas() {
 		List<String> disciplinas = new ArrayList<>();
 		if (isTutor()) 
-			for (Tutoria i : tutorias)
-				disciplinas.add(i.getDisciplina());
+			for (Disciplina d  : tutoria.getDisciplinas())
+				disciplinas.add(d.getNome());
 		return disciplinas;
 	}
 	
@@ -56,13 +49,13 @@ public class Aluno implements Comparable<Aluno> {
 
 	public int getCodigoCurso() {return codigoCurso;}
 	
-	public List<Tutoria> getTutorias() {return tutorias;}
+	public Tutoria getTutoria() {return tutoria;}
 	
-	public double getBolsa() {return bolsa;}
+	public double getBolsa() {return tutoria.getBolsa();}
 	
-	public List<String> getLocais() {return locais;}
+	public List<String> getLocais() {return tutoria.getLocais();}
 
-	public List<Horario> getHorarios() {return horarios;}
+	public List<Horario> getHorarios() {return tutoria.getHorarios();}
 
 	public double getNotaDeAvaliacao() {return notaDeAvaliacao;}
 	

@@ -71,7 +71,7 @@ public class SistemaAlunos implements Sistema{
 	 * @return boolean
 	 */
 	private boolean verificaTutoria(Aluno aluno) {
-		return !aluno.getTutorias().isEmpty();
+		return !(aluno.getTutoria() == null);
 	}
 	@Override
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
@@ -82,7 +82,7 @@ public class SistemaAlunos implements Sistema{
 			List<String> disciplinasDoTutor = alunoViraTutor.getDisciplinas();
 			validacoes.disciplinaJaEhTutor(disciplina, disciplinasDoTutor, erroTornarTutor);
 			validacoes.proficienciaInvalida(proficiencia, erroTornarTutor);
-			disciplinasDoTutor.add(disciplina);
+			alunoViraTutor.getTutoria().adicionarDisciplina(disciplina, proficiencia);
 		}
 		else alunoViraTutor.tornaAlunoTutor(disciplina, proficiencia);
 	}
@@ -119,7 +119,7 @@ public class SistemaAlunos implements Sistema{
 		validacoes.tutorEmailNaoCadastrado(email, alunos, erroCadastrarHorario);
 		for(Aluno aluno : alunos.values())
 			if(verificaEmailETutoria(email, aluno)) 
-				aluno.getHorarios().add(new Horario(horario, dia));
+				aluno.getTutoria().getHorarios().add(new Horario(horario, dia));
 	}
 	
 	@Override
@@ -130,14 +130,14 @@ public class SistemaAlunos implements Sistema{
 		validacoes.tutorEmailNaoCadastrado(email, alunos, erroCadastrarLocal);
 		for(Aluno aluno : alunos.values())
 			if(verificaEmailETutoria(email, aluno))
-					aluno.getLocais().add(local);
+					aluno.getTutoria().getLocais().add(local);
 	}
 	
 	@Override
 	public boolean consultaHorario(String email, String horario, String dia) {
 		for(Aluno aluno : alunos.values())
 			if(verificaEmailETutoria(email, aluno))
-				for(Horario h : aluno.getHorarios())
+				for(Horario h : aluno.getTutoria().getHorarios())
 					if(h.getDia().equalsIgnoreCase(dia) && h.getHorario().equalsIgnoreCase(horario)) 
 						return true;
 		return false;

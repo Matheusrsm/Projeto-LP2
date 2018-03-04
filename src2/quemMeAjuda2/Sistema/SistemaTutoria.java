@@ -53,6 +53,8 @@ public class SistemaTutoria {
 	
 	public int pedirAjudaOnline (String matrAluno, String disciplina) {
 		PedidoDeAjudaOnline pedidoOnline = new PedidoDeAjudaOnline(matrAluno, disciplina);
+		pedidos.add(pedidoOnline);
+		return pedidos.size();
 	}
 	
 	public String pegarTutor(int idAjuda) {
