@@ -45,10 +45,24 @@ public class SistemaTutoria {
 		PedidoDeAjudaPresencial pedidoPresencial = new PedidoDeAjudaPresencial(matrAluno, disciplina,
 																			horario, dia, localInteresse);
 		//aqui ainda faltam validacoes e comparacoes de tutores para qual possa melhor atender o aluno contratante
-		pedidoPresencial.setTutor(mapaAlunos.get(matrAluno));
+		pedidoPresencial.setTutor(mapaAlunos.get(tutorAdequado(disciplina)));
 		pedidos.add(pedidoPresencial);
 		return pedidos.indexOf(pedidoPresencial);
 		
+	}
+	
+	private String tutorAdequado(String disciplina) {
+		//falta definir o que fazer em caso de empate
+		String matricula = "";
+		for(Aluno a : mapaAlunos.values()) {
+			if (a.isTutor() && matricula.isEmpty()) {
+				matricula = a.getMatricula();
+			}
+			else if(a.isTutor() && a.getTutoria().getProficiencia(disciplina) > mapaAlunos.get(matricula).getTutoria().getProficiencia(disciplina)) {
+				matricula = a.getMatricula();
+			}
+		}
+		return matricula;
 	}
 	
 	public int pedirAjudaOnline (String matrAluno, String disciplina) {

@@ -73,6 +73,7 @@ public class SistemaAlunos implements Sistema{
 	private boolean verificaTutoria(Aluno aluno) {
 		return !(aluno.getTutoria() == null);
 	}
+	
 	@Override
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
 		String erroTornarTutor = "Erro na definicao de papel: ";

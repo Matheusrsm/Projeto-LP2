@@ -26,7 +26,7 @@ public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 
 	@Override
 	public String getInfoAjuda(String atributo) {
-		switch(atributo) {
+		switch(atributo.toLowerCase()) {
 		case "horario":
 			return this.horario;
 		case "dia":

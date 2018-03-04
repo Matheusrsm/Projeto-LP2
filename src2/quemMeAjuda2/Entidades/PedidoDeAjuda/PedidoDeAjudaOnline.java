@@ -24,7 +24,7 @@ public class PedidoDeAjudaOnline implements PedidoDeAjuda{
 
 	@Override
 	public String getInfoAjuda(String atributo) {
-		switch(atributo) {
+		switch(atributo.toLowerCase()) {
 			case "disciplina":
 				return this.disciplina;
 			case "matricula":
