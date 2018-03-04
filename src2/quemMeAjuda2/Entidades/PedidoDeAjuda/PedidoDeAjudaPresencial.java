@@ -14,30 +14,6 @@ public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 		this.local = local;
 		setTutor(null);
 	}
-	
-	@Override
-	public String getDia() {
-		return dia;
-	}
-
-	@Override
-	public String getLocal() {
-		return local;
-	}
-
-	@Override
-	public String getDisciplina() {
-		return disciplina;
-	}
-
-	public String getHorario() {
-		return horario;
-	}
-
-	@Override
-	public String getMatriculaAluno() {
-		return matricula;
-	}
 
 	@Override
 	public Aluno getTutor() {
@@ -46,6 +22,24 @@ public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 
 	public void setTutor(Aluno tutor) {
 		this.tutor = tutor;
+	}
+
+	@Override
+	public String getInfoAjuda(String atributo) {
+		switch(atributo) {
+		case "horario":
+			return this.horario;
+		case "dia":
+			return this.dia;
+		case "local":
+			return this.local;
+		case "disciplina":
+			return this.disciplina;
+		case "matricula":
+			return this.matricula;
+		default:
+			return null;
+	}
 	}
 	
 }

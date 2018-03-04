@@ -1,8 +1,8 @@
-package quemMeAjuda2.Entidades;
+package quemMeAjuda2.Entidades.Aluno;
 
 public class Tutoria {
 
-	private String disciplina; 
+	private String disciplina;
 	private int proficiencia;
 	
 	public Tutoria(String disciplina, int proficiencia) {

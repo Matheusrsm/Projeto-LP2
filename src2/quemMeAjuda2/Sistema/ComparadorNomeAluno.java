@@ -1,4 +1,4 @@
-package quemMeAjuda2.Auxiliares;
+package quemMeAjuda2.Sistema;
 
 import java.util.Comparator;
 import quemMeAjuda2.Entidades.Aluno.*;

@@ -1,7 +1,7 @@
 package quemMeAjuda2.Entidades.PedidoDeAjuda;
 
 import quemMeAjuda2.Entidades.Aluno.*;
-public abstract class PedidoDeAjudaOnline implements PedidoDeAjuda{
+public class PedidoDeAjudaOnline implements PedidoDeAjuda{
 
 	private String disciplina, matricula;
 	private Aluno tutor;
@@ -12,17 +12,6 @@ public abstract class PedidoDeAjudaOnline implements PedidoDeAjuda{
 		setTutor(null);
 	}
 
-
-	@Override
-	public String getDisciplina() {
-		return disciplina;
-	}
-
-	@Override
-	public String getMatriculaAluno() {
-		return matricula;
-	}
-
 	@Override
 	public Aluno getTutor() {
 		return tutor;
@@ -31,5 +20,17 @@ public abstract class PedidoDeAjudaOnline implements PedidoDeAjuda{
 
 	public void setTutor(Aluno tutor) {
 		this.tutor = tutor;
+	}
+
+	@Override
+	public String getInfoAjuda(String atributo) {
+		switch(atributo) {
+			case "disciplina":
+				return this.disciplina;
+			case "matricula":
+				return this.matricula;
+			default:
+				return null;
+		}
 	}
 }
