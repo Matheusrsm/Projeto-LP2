@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import quemMeAjuda2.Entidades.*;
+import quemMeAjuda2.Entidades.Aluno.*;
 import quemMeAjuda2.Excecoes.DadoInvalidoException;
 import quemMeAjuda2.Excecoes.DadoNuloException;
 

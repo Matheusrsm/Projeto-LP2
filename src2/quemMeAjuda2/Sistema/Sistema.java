@@ -1,12 +1,11 @@
-package quemMeAjuda2.Auxiliares;
+package quemMeAjuda2.Sistema;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import quemMeAjuda2.Entidades.*;
+import quemMeAjuda2.Entidades.Aluno.*;
 import quemMeAjuda2.validacoes.Validacoes;
 
 public class Sistema {
