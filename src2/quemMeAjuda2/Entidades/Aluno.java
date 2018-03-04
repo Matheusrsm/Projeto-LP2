@@ -4,35 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Aluno implements Comparable<Aluno> {
-	private String matricula, nome, email, telefone;
-	private int codigoCurso;
-	private double notaDeAvaliacao;
-	private double bolsa;
-	private Tutoria tutoria;
-	private List<String> locais, disciplinas;
+	private String  matricula, nome, email, telefone;
+	private int     codigoCurso;
+	private double  notaDeAvaliacao;
+	private double  bolsa;
+	private static List<Tutoria> tutorias;
+	private List<String> locais;
 	private List<Horario> horarios;
 	
 			
 	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
-		this.nome = nome;
-		this.matricula = matricula;
+		this.nome        = nome;
+		this.matricula   = matricula;
 		this.codigoCurso = codigoCurso;
-		this.email = email;
-		this.telefone = telefone;
-		this.notaDeAvaliacao = 5.0;
-		this.tutoria = null;
+		this.email       = email;
+		this.telefone    = telefone;
+		notaDeAvaliacao  = 5.0;
+		tutorias         = new ArrayList<>();
 	}
 	
 	public void tornaAlunoTutor(String disciplina, int proficiencia) {
-		this.tutoria = new Tutoria(disciplina, proficiencia);
-		this.disciplinas = new ArrayList<>();
-		disciplinas.add(disciplina);
-		this.horarios = new ArrayList<>();
-		this.locais = new ArrayList<>();
-		this.bolsa = 0.0;
-		this.notaDeAvaliacao = 4.0;
+		tutorias.add(new Tutoria(disciplina, proficiencia));
+		horarios = new ArrayList<>();
+		locais   = new ArrayList<>();
+		bolsa    = 0.0;
+		notaDeAvaliacao = 4.0;
 	}
-
+	
+	public boolean isTutor() {
+		return !tutorias.isEmpty();
+	}
+	
+	public List<String> getDisciplinas() {
+		List<String> disciplinas = new ArrayList<>();
+		if (isTutor()) 
+			for (Tutoria i : tutorias)
+				disciplinas.add(i.getDisciplina());
+		return disciplinas;
+	}
+	
 	public String getMatricula() {return matricula;}
 
 	public String getNome() {return nome;}
@@ -43,21 +53,17 @@ public class Aluno implements Comparable<Aluno> {
 
 	public int getCodigoCurso() {return codigoCurso;}
 	
-	public Tutoria getTutoria() {return tutoria;}
+	public List<Tutoria> getTutorias() {return tutorias;}
 	
 	public double getBolsa() {return bolsa;}
 	
 	public List<String> getLocais() {return locais;}
 
-	public List<String> getDisciplinas() {return disciplinas;}
-
 	public List<Horario> getHorarios() {return horarios;}
 
 	public double getNotaDeAvaliacao() {return notaDeAvaliacao;}
 	
-	public void setNotaDeAvaliacao(double novaNota) {
-		this.notaDeAvaliacao = novaNota;
-	}
+	public void setNotaDeAvaliacao(double novaNota) {this.notaDeAvaliacao = novaNota;}
 	
 	@Override
 	public String toString() {
@@ -66,7 +72,5 @@ public class Aluno implements Comparable<Aluno> {
 	}
 	
 	@Override
-	public int compareTo(Aluno outroAluno) {
-		return getNome().compareTo(outroAluno.getNome());
-	}
+	public int compareTo(Aluno outroAluno) {return getNome().compareTo(outroAluno.getNome());}
 }

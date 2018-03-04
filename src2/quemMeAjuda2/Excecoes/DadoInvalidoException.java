@@ -1,4 +1,4 @@
-package quemMeAjuda2.Auxiliares;
+package quemMeAjuda2.Excecoes;
 
 /**
  * Classe responsavel por lancar excecao de dados invalidos.

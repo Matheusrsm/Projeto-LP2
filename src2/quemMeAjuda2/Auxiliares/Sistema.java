@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import quemMeAjuda2.Entidades.*;
+import quemMeAjuda2.validacoes.Validacoes;
 
 public class Sistema {
 
@@ -14,7 +15,7 @@ public class Sistema {
 	private Validacoes validacoes;
 	
 	public Sistema() {
-		this.alunos = new HashMap<>();
+		this.alunos     = new HashMap<>();
 		this.validacoes = new Validacoes();
 	}
 	
@@ -59,8 +60,13 @@ public class Sistema {
 		}
 	}
 	
+	/**
+	 * Se a lista de tutorias estiver vazia, retornará false. I.e., o Aluno não é Tutor;
+	 * @param aluno
+	 * @return boolean
+	 */
 	private boolean verificaTutoria(Aluno aluno) {
-		return aluno.getTutoria() != null;
+		return !aluno.getTutorias().isEmpty();
 	}
 	
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
@@ -133,4 +139,18 @@ public class Sistema {
 				return aluno.getLocais().contains(local);
 		return false;
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

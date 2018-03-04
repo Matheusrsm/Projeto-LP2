@@ -1,10 +1,12 @@
-package quemMeAjuda2.Auxiliares;
+package quemMeAjuda2.validacoes;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import quemMeAjuda2.Entidades.*;
+import quemMeAjuda2.Excecoes.DadoInvalidoException;
+import quemMeAjuda2.Excecoes.DadoNuloException;
 
 public class Validacoes {
 		
@@ -33,7 +35,7 @@ public class Validacoes {
 	public void tutorEmailNaoCadastrado(String email, Map<String, Aluno> alunos, String msg) throws Exception {
 		List<String> emails = new ArrayList<String>();
 		for (Aluno a : alunos.values()) 
-			if (a.getTutoria() != null) emails.add(a.getEmail());
+			if (a.isTutor()) emails.add(a.getEmail());
 		if (!emails.contains(email)) throw new DadoInvalidoException (msg + "tutor nao cadastrado");
 	}
 	
