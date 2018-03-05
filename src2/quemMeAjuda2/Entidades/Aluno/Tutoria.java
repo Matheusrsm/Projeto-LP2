@@ -1,32 +1,47 @@
 package quemMeAjuda2.Entidades.Aluno;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Tutoria {
 
-	private HashMap<String, Disciplina> disciplinas;
+	private List<Disciplina> disciplinas;
 	private List<String> locais;
 	private List<Horario> horarios;
 	private double notaDeAvaliacao;
 	private double  bolsa;
 	
 	public Tutoria(String disciplina, int proficiencia) {
-		disciplinas          = new HashMap<>();
-		this.disciplinas.put(disciplina.toLowerCase(), new Disciplina(disciplina, proficiencia));
+		disciplinas          = new ArrayList<>();
+		this.disciplinas.add(new Disciplina(disciplina, proficiencia));
 		this.locais          = new ArrayList<>();
 		this.horarios        = new ArrayList<>();
 		this.notaDeAvaliacao = 4.0;
 	}
 	
 	public void adicionarDisciplina(String disciplina, int proficiencia) {
-		disciplinas.put(disciplina.toLowerCase(), new Disciplina(disciplina, proficiencia));
+		disciplinas.add(new Disciplina(disciplina, proficiencia));
 	}
 	
-	
+	// Falta lançar uma exceção quando a disciplina nãoo existir
 	public double getProficiencia(String disciplina) {
-		return disciplinas.get(disciplina.toLowerCase()).getProficiencia();
+		for (Disciplina d : disciplinas) {
+			if (d.getNome().equals(disciplina)) return d.getProficiencia();
+		}
+		return 0.0;
+	}
+	
+	/**
+	 * Método que verifica se o tutor tem a disciplina passada
+	 * @param disciplina
+	 * 				Disciplina a ser consultada
+	 * @return Um booleano 
+	 */
+	public boolean temDisciplina(String disciplina) {
+		for (Disciplina d : disciplinas) {
+			if (d.getNome().equals(disciplina)) return true;
+		}
+		return false;
 	}
 	
 	public void recebeDoacao(double doacao) {
@@ -34,7 +49,7 @@ public class Tutoria {
 	}
 
 	public List<Disciplina> getDisciplinas() {
-		return (List<Disciplina>) disciplinas.values();
+		return this.disciplinas;
 	}
 
 	public List<String> getLocais() {

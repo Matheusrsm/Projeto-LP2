@@ -50,8 +50,33 @@ public class SistemaTutoria {
 		return pedidos.indexOf(pedidoPresencial);
 		
 	}
+	
 	/**
-	 * Verifica qual o Tutor adequado para o Aluno de acordo com as especifícações de disciplina, horario, dia e local de interesse
+	 * Método usado para definir o tutor adequado para um pedido de ajuda online
+	 * @param disciplina
+	 * 				Disciplina que o Aluno precisa de ajuda
+	 * @return matricula do Tutor, uma String.
+	 */
+	private String tutorAdequado(String disciplina) {
+		String matricula = "";
+		for(Aluno a : mapaAlunos.values()) {
+			if (matricula.isEmpty() && a.isTutor() && a.getTutoria().temDisciplina(disciplina)) {
+				matricula = a.getMatricula();
+			}
+			else if (a.isTutor() && a.getTutoria().temDisciplina(disciplina) &&
+					a.getTutoria().getProficiencia(disciplina) > mapaAlunos.get(matricula).getTutoria().getProficiencia(disciplina)) {
+				matricula = a.getMatricula();
+			}
+		}
+		return matricula;
+	}
+	
+	/**
+	 * Verifica qual o Tutor adequado para um pedido de ajuda presencial de acordo com as especifícações de disciplina, horario, dia e local de interesse.
+	 * Primeiro é verificado se o Aluno é um Tutor.
+	 * Segundo se ele dá tutoria da disciplina desejada.
+	 * E em seguida se ele atende no horario, no dia e no local de desejados.
+	 * E por fim é escolhido aquele que possui maior proficiencia na disciplina
 	 * @param disciplina
 	 * 				Disciplina que o Aluno precisa de ajuda
 	 * @param horario
@@ -60,16 +85,16 @@ public class SistemaTutoria {
 	 * 				Dia de interesse do Aluno
 	 * @param localInteresse
 	 * 				Local de interesse do Aluno
-	 * @return
+	 * @return Matricula do Tutor, uma String.
 	 */
 	private String tutorAdequado(String disciplina, String horario, String dia, String localInteresse) {
 		//falta definir o que fazer em caso de empate
 		String matricula = "";
 		for(Aluno a : mapaAlunos.values()) {
-			if (matricula.isEmpty() && a.isTutor() && verificaHorario(a, horario, dia) && a.getLocais().contains(localInteresse)) {
+			if (matricula.isEmpty() && a.isTutor() && a.getTutoria().temDisciplina(disciplina) && verificaHorario(a, horario, dia) && a.getLocais().contains(localInteresse)) {
 				matricula = a.getMatricula();
 			}
-			else if(a.isTutor() && verificaHorario(a, horario, dia) && a.getLocais().contains(localInteresse) && 
+			else if(a.isTutor() && a.getTutoria().temDisciplina(disciplina) && verificaHorario(a, horario, dia) && a.getLocais().contains(localInteresse) && 
 					a.getTutoria().getProficiencia(disciplina) > mapaAlunos.get(matricula).getTutoria().getProficiencia(disciplina)) {
 				matricula = a.getMatricula();
 			}
@@ -79,7 +104,7 @@ public class SistemaTutoria {
 	
 	/**
 	 * Verifica se o Tutor atende no horario e no dia especificados.
-	 * @param horario
+	 * @param horario 
 	 * @param dia
 	 * @return
 	 */
@@ -94,6 +119,7 @@ public class SistemaTutoria {
 	
 	public int pedirAjudaOnline (String matrAluno, String disciplina) {
 		PedidoDeAjudaOnline pedidoOnline = new PedidoDeAjudaOnline(matrAluno, disciplina);
+		pedidoOnline.setTutor(mapaAlunos.get((this.tutorAdequado(disciplina))));
 		pedidos.add(pedidoOnline);
 		return pedidos.size();
 	}
