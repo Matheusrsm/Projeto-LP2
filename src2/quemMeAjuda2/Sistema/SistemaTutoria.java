@@ -5,6 +5,7 @@ import java.util.Map;
 
 import quemMeAjuda2.Entidades.Aluno.*;
 import quemMeAjuda2.Entidades.PedidoDeAjuda.*;
+import quemMeAjuda2.validacoes.Validacoes;
 
 /**
  * Classe SistemaTutoria. A classe SistemaTutoria implementa os métodos da interface Sistema
@@ -16,6 +17,7 @@ import quemMeAjuda2.Entidades.PedidoDeAjuda.*;
 public class SistemaTutoria {
 	private Map<String, Aluno> mapaAlunos = SistemaAlunos.getMapaDeAlunos();
 	private static List<PedidoDeAjuda> pedidos;
+	private Validacoes validacoes = new Validacoes();
 	
 	
 	//***********************************************************************************************************
@@ -39,36 +41,20 @@ public class SistemaTutoria {
 	 * @param localInteresse
 	 * 		local que o aluno contratante quer a ajuda
 	 * @return
+	 * @throws Exception 
 	 */
-	public int pedirAjudaPresencial (String matrAluno, String disciplina,
-										String horario, String dia, String localInteresse) {
-		PedidoDeAjudaPresencial pedidoPresencial = new PedidoDeAjudaPresencial(matrAluno, disciplina,
-																			horario, dia, localInteresse);
-		//aqui ainda faltam validacoes e comparacoes de tutores para qual possa melhor atender o aluno contratante
+	public int pedirAjudaPresencial (String matrAluno, String disciplina, String horario, String dia, String localInteresse) throws Exception {
+		String erroPedirAjudaPresencial = "Erro no pedido de ajuda presencial: ";
+		validacoes.matriculaVaziaOuNula(matrAluno, erroPedirAjudaPresencial);
+		validacoes.disciplinaVaziaOuNula(disciplina, erroPedirAjudaPresencial);
+		validacoes.horarioVazioOuNulo(horario, erroPedirAjudaPresencial);
+		validacoes.diaVazioOuNulo(dia, erroPedirAjudaPresencial);
+		validacoes.localVazioOuNulo(localInteresse, erroPedirAjudaPresencial);
+		PedidoDeAjudaPresencial pedidoPresencial = new PedidoDeAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 		pedidoPresencial.setTutor(mapaAlunos.get(tutorAdequado(disciplina, horario, dia, localInteresse)));
 		pedidos.add(pedidoPresencial);
 		return pedidos.indexOf(pedidoPresencial);
 		
-	}
-	
-	/**
-	 * Método usado para definir o tutor adequado para um pedido de ajuda online
-	 * @param disciplina
-	 * 				Disciplina que o Aluno precisa de ajuda
-	 * @return matricula do Tutor, uma String.
-	 */
-	private String tutorAdequado(String disciplina) {
-		String matricula = "";
-		for(Aluno a : mapaAlunos.values()) {
-			if (matricula.isEmpty() && a.isTutor() && a.getTutoria().temDisciplina(disciplina)) {
-				matricula = a.getMatricula();
-			}
-			else if (a.isTutor() && a.getTutoria().temDisciplina(disciplina) &&
-					a.getTutoria().getProficiencia(disciplina) > mapaAlunos.get(matricula).getTutoria().getProficiencia(disciplina)) {
-				matricula = a.getMatricula();
-			}
-		}
-		return matricula;
 	}
 	
 	/**
@@ -117,7 +103,31 @@ public class SistemaTutoria {
 		return false;
 	}
 	
-	public int pedirAjudaOnline (String matrAluno, String disciplina) {
+	/**
+	 * Método usado para definir o tutor adequado para um pedido de ajuda online.
+	 * @param disciplina
+	 * 				Disciplina que o Aluno precisa de ajuda
+	 * @return matricula do Tutor, uma String.
+	 */
+	private String tutorAdequado(String disciplina) {
+		//falta definir o que fazer em caso de empate
+		String matricula = "";
+		for(Aluno a : mapaAlunos.values()) {
+			if (matricula.isEmpty() && a.isTutor() && a.getTutoria().temDisciplina(disciplina)) {
+				matricula = a.getMatricula();
+			}
+			else if (a.isTutor() && a.getTutoria().temDisciplina(disciplina) &&
+					a.getTutoria().getProficiencia(disciplina) > mapaAlunos.get(matricula).getTutoria().getProficiencia(disciplina)) {
+				matricula = a.getMatricula();
+			}
+		}
+		return matricula;
+	}
+	
+	public int pedirAjudaOnline (String matrAluno, String disciplina) throws Exception {
+		String erroPedirAjudaOnline = "Erro no pedido de ajuda online";
+		validacoes.matriculaVaziaOuNula(matrAluno, erroPedirAjudaOnline);
+		validacoes.disciplinaVaziaOuNula(disciplina, erroPedirAjudaOnline);
 		PedidoDeAjudaOnline pedidoOnline = new PedidoDeAjudaOnline(matrAluno, disciplina);
 		pedidoOnline.setTutor(mapaAlunos.get((this.tutorAdequado(disciplina))));
 		pedidos.add(pedidoOnline);

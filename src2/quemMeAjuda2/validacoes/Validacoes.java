@@ -67,4 +67,30 @@ public class Validacoes {
 	public void alunoNaoCadastrado(String matricula, Map<String, Aluno> alunos, String msg) throws Exception {
 		if(!alunos.containsKey(matricula)) throw new DadoInvalidoException(msg + "Aluno nao encontrado");
 	}
+	
+	////////////////////////////// DE ACORDO COM O US4_TEST /////////////////////////////////////////////
+	public void matriculaVaziaOuNula(String matricula, String msg) throws Exception {
+		if (matricula == null) throw new DadoNuloException(msg + "matricula de aluno nao pode ser vazio ou em branco");
+		if (matricula.trim().isEmpty()) throw new DadoInvalidoException(msg + "matricula de aluno nao pode ser vazio ou em branco");
+	}
+	
+	public void disciplinaVaziaOuNula(String disciplina, String msg) throws Exception {
+		if (disciplina == null) throw new DadoNuloException(msg + "disciplina nao pode ser vazio ou em branco");
+		if (disciplina.trim().isEmpty()) throw new DadoInvalidoException(msg + "disciplina nao pode ser vazio ou em branco");
+	}
+	
+	public void horarioVazioOuNulo(String horario, String msg) throws Exception {
+		if (horario == null) throw new DadoNuloException(msg + "horario nao pode ser vazio ou em branco");
+		if (horario.trim().isEmpty()) throw new DadoInvalidoException(msg + "horario nao pode ser vazio ou em branco");
+	}
+	
+	public void diaVazioOuNulo(String dia, String msg) throws Exception {
+		if (dia == null) throw new DadoNuloException(msg + "dia nao pode ser vazio ou em branco");
+		if (dia.trim().isEmpty()) throw new DadoInvalidoException(msg + "dia nao pode ser vazio ou em branco");
+	}
+	
+	public void localVazioOuNulo(String local, String msg) throws Exception {
+		if (local == null) throw new DadoNuloException(msg + "local de interesse nao pode ser vazio ou em branco");
+		if (local.trim().isEmpty()) throw new DadoInvalidoException(msg + "local de interesse nao pode ser vazio ou em branco");
+	}
 }
