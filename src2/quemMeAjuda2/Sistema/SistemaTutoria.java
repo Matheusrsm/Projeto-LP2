@@ -10,7 +10,7 @@ import quemMeAjuda2.Entidades.PedidoDeAjuda.*;
  * Classe SistemaTutoria. A classe SistemaTutoria implementa os métodos da interface Sistema
  * em vista de divisão de código e trabalho das classes
  * 
- * @author Lukas Nascimento
+ * @author Lukas Nascimento, Matheus Silva, Wesley Monte
  *
  */
 public class SistemaTutoria {
@@ -45,24 +45,51 @@ public class SistemaTutoria {
 		PedidoDeAjudaPresencial pedidoPresencial = new PedidoDeAjudaPresencial(matrAluno, disciplina,
 																			horario, dia, localInteresse);
 		//aqui ainda faltam validacoes e comparacoes de tutores para qual possa melhor atender o aluno contratante
-		pedidoPresencial.setTutor(mapaAlunos.get(tutorAdequado(disciplina)));
+		pedidoPresencial.setTutor(mapaAlunos.get(tutorAdequado(disciplina, horario, dia, localInteresse)));
 		pedidos.add(pedidoPresencial);
 		return pedidos.indexOf(pedidoPresencial);
 		
 	}
-	
-	private String tutorAdequado(String disciplina) {
+	/**
+	 * Verifica qual o Tutor adequado para o Aluno de acordo com as especifícações de disciplina, horario, dia e local de interesse
+	 * @param disciplina
+	 * 				Disciplina que o Aluno precisa de ajuda
+	 * @param horario
+	 * 				Horario de interesse do Aluno
+	 * @param dia
+	 * 				Dia de interesse do Aluno
+	 * @param localInteresse
+	 * 				Local de interesse do Aluno
+	 * @return
+	 */
+	private String tutorAdequado(String disciplina, String horario, String dia, String localInteresse) {
 		//falta definir o que fazer em caso de empate
 		String matricula = "";
 		for(Aluno a : mapaAlunos.values()) {
-			if (a.isTutor() && matricula.isEmpty()) {
+			if (matricula.isEmpty() && a.isTutor() && verificaHorario(a, horario, dia) && a.getLocais().contains(localInteresse)) {
 				matricula = a.getMatricula();
 			}
-			else if(a.isTutor() && a.getTutoria().getProficiencia(disciplina) > mapaAlunos.get(matricula).getTutoria().getProficiencia(disciplina)) {
+			else if(a.isTutor() && verificaHorario(a, horario, dia) && a.getLocais().contains(localInteresse) && 
+					a.getTutoria().getProficiencia(disciplina) > mapaAlunos.get(matricula).getTutoria().getProficiencia(disciplina)) {
 				matricula = a.getMatricula();
 			}
 		}
 		return matricula;
+	}
+	
+	/**
+	 * Verifica se o Tutor atende no horario e no dia especificados.
+	 * @param horario
+	 * @param dia
+	 * @return
+	 */
+	private boolean verificaHorario(Aluno a, String horario, String dia) {
+		for (Horario h : a.getHorarios()) {
+			if(h.getHorario().equals(dia) && h.getDia().equals(dia)) {
+				return true;
+					}
+			}
+		return false;
 	}
 	
 	public int pedirAjudaOnline (String matrAluno, String disciplina) {

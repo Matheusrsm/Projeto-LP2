@@ -24,8 +24,13 @@ public class Tutoria {
 		disciplinas.put(disciplina.toLowerCase(), new Disciplina(disciplina, proficiencia));
 	}
 	
+	
 	public double getProficiencia(String disciplina) {
 		return disciplinas.get(disciplina.toLowerCase()).getProficiencia();
+	}
+	
+	public void recebeDoacao(double doacao) {
+		this.bolsa += doacao;
 	}
 
 	public List<Disciplina> getDisciplinas() {
