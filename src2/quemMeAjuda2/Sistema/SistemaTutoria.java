@@ -1,6 +1,5 @@
 package quemMeAjuda2.Sistema;
 
-import java.util.List;
 import java.util.Map;
 
 import quemMeAjuda2.Entidades.Aluno.*;
@@ -16,7 +15,7 @@ import quemMeAjuda2.validacoes.Validacoes;
  */
 public class SistemaTutoria {
 	private Map<String, Aluno> mapaAlunos = SistemaAlunos.getMapaDeAlunos();
-	private static List<PedidoDeAjuda> pedidos;
+	private static Map<Integer, PedidoDeAjuda> pedidos;
 	private Validacoes validacoes = new Validacoes();
 	
 	
@@ -45,15 +44,15 @@ public class SistemaTutoria {
 	 */
 	public int pedirAjudaPresencial (String matrAluno, String disciplina, String horario, String dia, String localInteresse) throws Exception {
 		String erroPedirAjudaPresencial = "Erro no pedido de ajuda presencial: ";
-		validacoes.matriculaVaziaOuNula(matrAluno, erroPedirAjudaPresencial);
-		validacoes.disciplinaVaziaOuNula(disciplina, erroPedirAjudaPresencial);
-		validacoes.horarioVazioOuNulo(horario, erroPedirAjudaPresencial);
-		validacoes.diaVazioOuNulo(dia, erroPedirAjudaPresencial);
-		validacoes.localVazioOuNulo(localInteresse, erroPedirAjudaPresencial);
+		validacoes.matriculaVazia(matrAluno, erroPedirAjudaPresencial);
+		validacoes.disciplinaVazia(disciplina, erroPedirAjudaPresencial);
+		validacoes.horarioVazio(horario, erroPedirAjudaPresencial);
+		validacoes.diaVazio(dia, erroPedirAjudaPresencial);
+		validacoes.localVazio(localInteresse, erroPedirAjudaPresencial);
 		PedidoDeAjudaPresencial pedidoPresencial = new PedidoDeAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 		pedidoPresencial.setTutor(mapaAlunos.get(tutorAdequado(disciplina, horario, dia, localInteresse)));
-		pedidos.add(pedidoPresencial);
-		return pedidos.indexOf(pedidoPresencial);
+		pedidos.put(pedidos.size(), pedidoPresencial);
+		return pedidos.size() - 1;
 		
 	}
 	
@@ -126,12 +125,12 @@ public class SistemaTutoria {
 	
 	public int pedirAjudaOnline (String matrAluno, String disciplina) throws Exception {
 		String erroPedirAjudaOnline = "Erro no pedido de ajuda online";
-		validacoes.matriculaVaziaOuNula(matrAluno, erroPedirAjudaOnline);
-		validacoes.disciplinaVaziaOuNula(disciplina, erroPedirAjudaOnline);
+		validacoes.matriculaVazia(matrAluno, erroPedirAjudaOnline);
+		validacoes.disciplinaVazia(disciplina, erroPedirAjudaOnline);
 		PedidoDeAjudaOnline pedidoOnline = new PedidoDeAjudaOnline(matrAluno, disciplina);
 		pedidoOnline.setTutor(mapaAlunos.get((this.tutorAdequado(disciplina))));
-		pedidos.add(pedidoOnline);
-		return pedidos.size();
+		pedidos.put(pedidos.size(), pedidoOnline);
+		return pedidos.size() - 1;
 	}
 	
 	public String pegarTutor(int idAjuda) {
@@ -139,19 +138,24 @@ public class SistemaTutoria {
 		
 	}
 	
-	public String getInfoAjuda(int idAjuda, String atributo) {
+	public String getInfoAjuda(int idAjuda, String atributo) throws Exception {
+		String erroGetInfoAjuda = "Erro ao tentar recuperar info da ajuda :";
+		validacoes.idAjudaInvalido(idAjuda, pedidos, erroGetInfoAjuda);
+		validacoes.atributoVazio(atributo, erroGetInfoAjuda);
 		switch (atributo.toLowerCase()) {
 		default:
 			return pedidos.get(idAjuda).toString();
 		case "tutor":
 			return pedidos.get(idAjuda).toString() + " - Matricula do tutor:" + this.pegarTutor(idAjuda);
-		case "infoAjuda":
-			return pedidos.get(idAjuda).toString();
+		case "horario":
+			return pedidos.get(idAjuda).getInfoAjuda("horario");
+		case "dia":
+			return pedidos.get(idAjuda).getInfoAjuda("dia");
+		case "localInteresse":
+			return pedidos.get(idAjuda).getInfoAjuda("localInteresse");
 		}
 		
 		
 	}
-	
-	private static List<PedidoDeAjuda> getPedidos(){ return pedidos;}
 
 }

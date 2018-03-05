@@ -31,7 +31,7 @@ public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 			return this.horario;
 		case "dia":
 			return this.dia;
-		case "local":
+		case "localInteresse":
 			return this.local;
 		case "disciplina":
 			return this.disciplina;

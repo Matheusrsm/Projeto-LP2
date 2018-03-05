@@ -1,10 +1,12 @@
 package quemMeAjuda2.validacoes;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import quemMeAjuda2.Entidades.Aluno.*;
+import quemMeAjuda2.Entidades.PedidoDeAjuda.PedidoDeAjuda;
 import quemMeAjuda2.Excecoes.DadoInvalidoException;
 import quemMeAjuda2.Excecoes.DadoNuloException;
 
@@ -69,28 +71,35 @@ public class Validacoes {
 	}
 	
 	////////////////////////////// DE ACORDO COM O US4_TEST /////////////////////////////////////////////
-	public void matriculaVaziaOuNula(String matricula, String msg) throws Exception {
-		if (matricula == null) throw new DadoNuloException(msg + "matricula de aluno nao pode ser vazio ou em branco");
+	public void matriculaVazia(String matricula, String msg) throws Exception {
 		if (matricula.trim().isEmpty()) throw new DadoInvalidoException(msg + "matricula de aluno nao pode ser vazio ou em branco");
 	}
 	
-	public void disciplinaVaziaOuNula(String disciplina, String msg) throws Exception {
-		if (disciplina == null) throw new DadoNuloException(msg + "disciplina nao pode ser vazio ou em branco");
+	public void disciplinaVazia(String disciplina, String msg) throws Exception {
 		if (disciplina.trim().isEmpty()) throw new DadoInvalidoException(msg + "disciplina nao pode ser vazio ou em branco");
 	}
 	
-	public void horarioVazioOuNulo(String horario, String msg) throws Exception {
-		if (horario == null) throw new DadoNuloException(msg + "horario nao pode ser vazio ou em branco");
+	public void horarioVazio(String horario, String msg) throws Exception {
 		if (horario.trim().isEmpty()) throw new DadoInvalidoException(msg + "horario nao pode ser vazio ou em branco");
 	}
 	
-	public void diaVazioOuNulo(String dia, String msg) throws Exception {
-		if (dia == null) throw new DadoNuloException(msg + "dia nao pode ser vazio ou em branco");
+	public void diaVazio(String dia, String msg) throws Exception {
 		if (dia.trim().isEmpty()) throw new DadoInvalidoException(msg + "dia nao pode ser vazio ou em branco");
 	}
 	
-	public void localVazioOuNulo(String local, String msg) throws Exception {
-		if (local == null) throw new DadoNuloException(msg + "local de interesse nao pode ser vazio ou em branco");
+	public void localVazio(String local, String msg) throws Exception {
 		if (local.trim().isEmpty()) throw new DadoInvalidoException(msg + "local de interesse nao pode ser vazio ou em branco");
+	}
+	
+	public void idAjudaInvalido(int id, Map<Integer, PedidoDeAjuda> pedidos, String msg) throws Exception {
+		if (id < 0) throw new DadoInvalidoException(msg + "id nao pode menor que zero");
+		if (!(pedidos.containsKey(id))) throw new DadoInvalidoException(msg + "id nao encontrado");
+	}
+	
+	public void atributoVazio(String atributo, String msg) throws Exception {
+		if (atributo.trim().isEmpty()) throw new DadoInvalidoException(msg + "local de interesse nao pode ser vazio ou em branco");
+		if (!atributo.equals("tutor") || !atributo.equals("horario") || !atributo.equals("dia") || !atributo.equals("localInteresse")) {
+			throw new DadoInvalidoException(msg + "atributo nao encontrado");
+		}
 	}
 }
