@@ -6,22 +6,18 @@ public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 	private String matricula, disciplina, dia, local, horario;
 	private Aluno tutor;
 	
-	public PedidoDeAjudaPresencial(String matricula, String disciplina, String horario, String dia, String local) {
+	public PedidoDeAjudaPresencial(Aluno tutor, String matricula, String disciplina, String horario, String dia, String local) {
 		this.matricula = matricula;
 		this.disciplina = disciplina;
 		this.horario = horario;
 		this.dia = dia;
 		this.local = local;
-		setTutor(null);
+		this.tutor = tutor;
 	}
 
 	@Override
 	public Aluno getTutor() {
 		return tutor;
-	}
-
-	public void setTutor(Aluno tutor) {
-		this.tutor = tutor;
 	}
 
 	@Override
@@ -39,7 +35,6 @@ public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 			return this.matricula;
 		default:
 			return null;
+		}
 	}
-	}
-	
 }

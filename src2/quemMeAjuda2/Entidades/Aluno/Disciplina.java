@@ -16,6 +16,4 @@ public class Disciplina {
 	public double getProficiencia() {
 		return proficiencia;
 	}
-	
-	
 }

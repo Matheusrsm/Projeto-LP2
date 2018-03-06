@@ -8,35 +8,36 @@ import java.util.Map;
 import quemMeAjuda2.Entidades.Aluno.*;
 import quemMeAjuda2.validacoes.Validacoes;
 
-public class SistemaAlunos implements Sistema{
+public class SistemaAlunos{
 
-	private static Map<String, Aluno> alunos;
+	private Map<String, Aluno> alunos;
 	private Validacoes validacoes;
+	private SistemaTutoria sistemaTutoria;
 	
 	public SistemaAlunos() {
-		alunos     = new HashMap<>();
-		validacoes = new Validacoes();
+		this.alunos = new HashMap<>();
+		this.validacoes = new Validacoes();
+		this.sistemaTutoria = new SistemaTutoria(alunos);
 	}
 	
-	public static Map<String, Aluno> getMapaDeAlunos(){return alunos;}
+	public SistemaTutoria getSistemaTutoria() {
+		return sistemaTutoria;
+	}
 	
-	@Override
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
 		String erroCadastrarAluno = "Erro no cadastro de aluno: ";
 		validacoes.matriculaJaCadastrada(matricula, alunos, erroCadastrarAluno);
 		validacoes.nomeInvalidoOuNulo(nome, erroCadastrarAluno);
 		validacoes.emailInvalidoOuNulo(email, erroCadastrarAluno);
-		alunos.put(matricula, new Aluno(nome, matricula, codigoCurso, telefone, email));
+		alunos.put(matricula, new Aluno(alunos.size() + 1, nome, matricula, codigoCurso, telefone, email));
 	}
 	
-	@Override
 	public String recuperaAluno(String matricula) throws Exception {
 		String erroRecuperaAluno = "Erro na busca por aluno: ";
 		validacoes.alunoNaoCadastrado(matricula, alunos, erroRecuperaAluno);
 		return alunos.get(matricula).toString();
 	}
 	
-	@Override
 	public String listarAlunos() {
 		List<Aluno> listaDeAlunos = new ArrayList<Aluno>();
 		for(Aluno a: alunos.values()) listaDeAlunos.add(a);
@@ -47,7 +48,6 @@ public class SistemaAlunos implements Sistema{
 		return listaAlunos;
 	}
 	
-	@Override
 	public String getInfoAluno(String matricula, String atributo) throws Exception {
 		String erroGetInfoAluno = "Erro na obtencao de informacao de aluno: ";
 		validacoes.alunoNaoCadastrado(matricula, alunos, erroGetInfoAluno);
@@ -65,21 +65,11 @@ public class SistemaAlunos implements Sistema{
 		}
 	}
 	
-	/**
-	 * Se a lista de tutorias estiver vazia, retornará false. I.e., o Aluno não é Tutor;
-	 * @param aluno
-	 * @return boolean
-	 */
-	private boolean verificaTutoria(Aluno aluno) {
-		return !(aluno.getTutoria() == null);
-	}
-	
-	@Override
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
 		String erroTornarTutor = "Erro na definicao de papel: ";
 		validacoes.alunoNaoCadastrado(matricula, alunos, erroTornarTutor);
 		Aluno alunoViraTutor = alunos.get(matricula);
-		if(verificaTutoria(alunoViraTutor)) {
+		if(alunoViraTutor.isTutor()) {
 			List<String> disciplinasDoTutor = alunoViraTutor.getDisciplinas();
 			validacoes.disciplinaJaEhTutor(disciplina, disciplinasDoTutor, erroTornarTutor);
 			validacoes.proficienciaInvalida(proficiencia, erroTornarTutor);
@@ -88,19 +78,17 @@ public class SistemaAlunos implements Sistema{
 		else alunoViraTutor.tornaAlunoTutor(disciplina, proficiencia);
 	}
 	
-	@Override
 	public String recuperaTutor(String matricula) throws Exception {
 		String erroRecuperaTutor = "Erro na busca por tutor: ";
 		validacoes.alunoNaoCadastrado(matricula, alunos, erroRecuperaTutor);
-		if(verificaTutoria(alunos.get(matricula))) return alunos.get(matricula).toString();
+		if(alunos.get(matricula).isTutor()) return alunos.get(matricula).toString();
 		return null;
 	}
 	
-	@Override
 	public String listarTutores() {
 		ArrayList<Aluno> listaDeTutores = new ArrayList<Aluno>();
 		for(Aluno aluno: alunos.values()) {
-			if(verificaTutoria(aluno)) listaDeTutores.add(aluno);
+			if(aluno.isTutor()) listaDeTutores.add(aluno);
 		}
 		Collections.sort(listaDeTutores, new ComparadorNomeAluno());
 		String listaTutores = "";
@@ -109,10 +97,9 @@ public class SistemaAlunos implements Sistema{
 	}
 	
 	private boolean verificaEmailETutoria(String email, Aluno aluno) {
-		return aluno.getEmail().equals(email) && verificaTutoria(aluno);
+		return aluno.getEmail().equals(email) && aluno.isTutor();
 	}
 	
-	@Override
 	public void cadastrarHorario(String email, String horario, String dia) throws Exception {
 		String erroCadastrarHorario = "Erro no cadastrar horario: ";
 		validacoes.emailInvalidoOuNulo(email, erroCadastrarHorario);
@@ -123,7 +110,6 @@ public class SistemaAlunos implements Sistema{
 				aluno.getTutoria().getHorarios().add(new Horario(horario, dia));
 	}
 	
-	@Override
 	public void cadastrarLocalDeAtendimento(String email, String local) throws Exception {
 		String erroCadastrarLocal = "Erro no cadastrar local de atendimento: ";
 		validacoes.localInvalidoOuNulo(local, erroCadastrarLocal);
@@ -134,7 +120,6 @@ public class SistemaAlunos implements Sistema{
 					aluno.getTutoria().getLocais().add(local);
 	}
 	
-	@Override
 	public boolean consultaHorario(String email, String horario, String dia) {
 		for(Aluno aluno : alunos.values())
 			if(verificaEmailETutoria(email, aluno))
@@ -144,19 +129,10 @@ public class SistemaAlunos implements Sistema{
 		return false;
 	}
 	
-	@Override
 	public boolean consultaLocal(String email, String local) {
 		for(Aluno aluno : alunos.values())
 			if(verificaEmailETutoria(email, aluno))
 				return aluno.getLocais().contains(local);
 		return false;
 	}
-
-
-
-
-
-
-
-
 }

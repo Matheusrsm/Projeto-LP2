@@ -5,24 +5,24 @@ import java.util.List;
 
 public class Aluno implements Comparable<Aluno> {
 	private String  matricula, nome, email, telefone;
-	private int     codigoCurso;
+	private int     codigoCurso, iD;
 	private double  notaDeAvaliacao;
-	private static Tutoria tutoria;
+	private Tutoria tutoria;
 	
 			
-	public Aluno(String nome, String matricula, int codigoCurso, String telefone, String email) {
-		this.nome        = nome;
-		this.matricula   = matricula;
+	public Aluno(int iD, String nome, String matricula, int codigoCurso, String telefone, String email) {
+		this.iD = iD;
+		this.nome = nome;
+		this.matricula = matricula;
 		this.codigoCurso = codigoCurso;
-		this.email       = email;
-		this.telefone    = telefone;
-		notaDeAvaliacao  = 5.0;
-		tutoria          = null;
+		this.email = email;
+		this.telefone = telefone;
+		this.notaDeAvaliacao = 5.0;
 	}
 	
 	public void tornaAlunoTutor(String disciplina, int proficiencia) {
-		tutoria = new Tutoria(disciplina, proficiencia);
-		notaDeAvaliacao = 4.0;
+		tutoria = new Tutoria();
+		tutoria.adicionarDisciplina(disciplina, proficiencia);
 	}
 	
 	public boolean isTutor() {
@@ -61,6 +61,8 @@ public class Aluno implements Comparable<Aluno> {
 	
 	public void setNotaDeAvaliacao(double novaNota) {this.notaDeAvaliacao = novaNota;}
 	
+	public int getID() {return iD;}
+	
 	@Override
 	public String toString() {
 		if (telefone.trim().isEmpty()) return matricula + " - " + nome + " - " + codigoCurso + " - " +  email;
@@ -69,4 +71,5 @@ public class Aluno implements Comparable<Aluno> {
 	
 	@Override
 	public int compareTo(Aluno outroAluno) {return getNome().compareTo(outroAluno.getNome());}
+
 }

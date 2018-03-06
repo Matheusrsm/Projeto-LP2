@@ -11,12 +11,12 @@ public class Tutoria {
 	private double notaDeAvaliacao;
 	private double  bolsa;
 	
-	public Tutoria(String disciplina, int proficiencia) {
-		disciplinas          = new ArrayList<>();
-		this.disciplinas.add(new Disciplina(disciplina, proficiencia));
-		this.locais          = new ArrayList<>();
-		this.horarios        = new ArrayList<>();
+	public Tutoria() {
+		this.disciplinas = new ArrayList<>();
+		this.locais = new ArrayList<>();
+		this.horarios = new ArrayList<>();
 		this.notaDeAvaliacao = 4.0;
+		this.bolsa = 0.0;
 	}
 	
 	public void adicionarDisciplina(String disciplina, int proficiencia) {

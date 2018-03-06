@@ -6,20 +6,15 @@ public class PedidoDeAjudaOnline implements PedidoDeAjuda{
 	private String disciplina, matricula;
 	private Aluno tutor;
 	
-	public PedidoDeAjudaOnline(String matricula, String disciplina) {
+	public PedidoDeAjudaOnline(Aluno tutor, String matricula, String disciplina) {
 		this.matricula = matricula;
 		this.disciplina = disciplina;
-		setTutor(null);
+		this.tutor = tutor;;
 	}
 
 	@Override
 	public Aluno getTutor() {
 		return tutor;
-	}
-
-
-	public void setTutor(Aluno tutor) {
-		this.tutor = tutor;
 	}
 
 	@Override

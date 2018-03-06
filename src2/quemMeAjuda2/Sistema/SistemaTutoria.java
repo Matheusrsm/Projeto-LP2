@@ -14,18 +14,14 @@ import quemMeAjuda2.validacoes.Validacoes;
  *
  */
 public class SistemaTutoria {
-	private Map<String, Aluno> mapaAlunos = SistemaAlunos.getMapaDeAlunos();
-	private static Map<Integer, PedidoDeAjuda> pedidos;
+	private Map<String, Aluno> mapaAlunos;
+	private Map<Integer, PedidoDeAjuda> pedidos;
 	private Validacoes validacoes = new Validacoes();
 	
-	
-	//***********************************************************************************************************
-	/*
-	 * Acredito que a partir daqui seria bom por tudo em um outro controle. O novo sistema guardaria a lista de pedidos.
-	 * Nesse sistema pode-se adicionar getMapaAluno caso seja necessario usar no novo.
-	 * 
-	 */
-	
+	public SistemaTutoria(Map<String, Aluno> alunos) {
+		this.mapaAlunos = alunos;
+	}
+
 	/**
 	 * Cria um novo objeto PedidoDeAjudaPresencial e implementa qual tutor está sendo associado ao pedido.
 	 * O novo objeto é adicionado à lista de pedidos de ajuda do sistema.
@@ -35,23 +31,21 @@ public class SistemaTutoria {
 	 * 		disciplina que o aluno deseja ajuda
 	 * @param horario String
 	 * 		horario que o aluno contratante quer a ajuda
-	 * @param dia String
+	 * @param dia String static
 	 * 		dia que o aluno contratante quer a ajuda
 	 * @param localInteresse
 	 * 		local que o aluno contratante quer a ajuda
 	 * @return
 	 * @throws Exception 
 	 */
-	public int pedirAjudaPresencial (String matrAluno, String disciplina, String horario, String dia, String localInteresse) throws Exception {
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) throws Exception {
 		String erroPedirAjudaPresencial = "Erro no pedido de ajuda presencial: ";
 		validacoes.matriculaVazia(matrAluno, erroPedirAjudaPresencial);
 		validacoes.disciplinaVazia(disciplina, erroPedirAjudaPresencial);
 		validacoes.horarioVazio(horario, erroPedirAjudaPresencial);
 		validacoes.diaVazio(dia, erroPedirAjudaPresencial);
 		validacoes.localVazio(localInteresse, erroPedirAjudaPresencial);
-		PedidoDeAjudaPresencial pedidoPresencial = new PedidoDeAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
-		pedidoPresencial.setTutor(mapaAlunos.get(tutorAdequado(disciplina, horario, dia, localInteresse)));
-		pedidos.put(pedidos.size(), pedidoPresencial);
+		pedidos.put(pedidos.size(), new PedidoDeAjudaPresencial(tutorAdequado(disciplina, horario, dia, localInteresse), matrAluno, disciplina, horario, dia, localInteresse));
 		return pedidos.size() - 1;
 		
 	}
@@ -72,19 +66,17 @@ public class SistemaTutoria {
 	 * 				Local de interesse do Aluno
 	 * @return Matricula do Tutor, uma String.
 	 */
-	private String tutorAdequado(String disciplina, String horario, String dia, String localInteresse) {
-		//falta definir o que fazer em caso de empate
-		String matricula = "";
+	private Aluno tutorAdequado(String disciplina, String horario, String dia, String localInteresse) {
+		Aluno tutor = new Aluno(0, "", "", 0, "", "");
 		for(Aluno a : mapaAlunos.values()) {
-			if (matricula.isEmpty() && a.isTutor() && a.getTutoria().temDisciplina(disciplina) && verificaHorario(a, horario, dia) && a.getLocais().contains(localInteresse)) {
-				matricula = a.getMatricula();
-			}
-			else if(a.isTutor() && a.getTutoria().temDisciplina(disciplina) && verificaHorario(a, horario, dia) && a.getLocais().contains(localInteresse) && 
-					a.getTutoria().getProficiencia(disciplina) > mapaAlunos.get(matricula).getTutoria().getProficiencia(disciplina)) {
-				matricula = a.getMatricula();
+			if(a.isTutor() && a.getTutoria().temDisciplina(disciplina) && verificaHorario(a, horario, dia) && a.getLocais().contains(localInteresse)) {
+				if(a.getTutoria().getProficiencia(disciplina) > tutor.getTutoria().getProficiencia(disciplina)) tutor = a;
+				else if(a.getTutoria().getProficiencia(disciplina) == tutor.getTutoria().getProficiencia(disciplina)) {
+					if(tutor.getID() > a.getID()) tutor = a;
+				}
 			}
 		}
-		return matricula;
+		return tutor;
 	}
 	
 	/**
@@ -95,10 +87,8 @@ public class SistemaTutoria {
 	 */
 	private boolean verificaHorario(Aluno a, String horario, String dia) {
 		for (Horario h : a.getHorarios()) {
-			if(h.getHorario().equals(dia) && h.getDia().equals(dia)) {
-				return true;
-					}
-			}
+			if(h.getHorario().equals(dia) && h.getDia().equals(dia)) return true;
+		}
 		return false;
 	}
 	
@@ -108,35 +98,28 @@ public class SistemaTutoria {
 	 * 				Disciplina que o Aluno precisa de ajuda
 	 * @return matricula do Tutor, uma String.
 	 */
-	private String tutorAdequado(String disciplina) {
-		//falta definir o que fazer em caso de empate
-		String matricula = "";
+	private Aluno tutorAdequado(String disciplina) {
+		Aluno tutor = new Aluno(0, "", "", 0, "", "");
 		for(Aluno a : mapaAlunos.values()) {
-			if (matricula.isEmpty() && a.isTutor() && a.getTutoria().temDisciplina(disciplina)) {
-				matricula = a.getMatricula();
-			}
-			else if (a.isTutor() && a.getTutoria().temDisciplina(disciplina) &&
-					a.getTutoria().getProficiencia(disciplina) > mapaAlunos.get(matricula).getTutoria().getProficiencia(disciplina)) {
-				matricula = a.getMatricula();
+			if(a.isTutor() && a.getTutoria().temDisciplina(disciplina)) {
+				if(a.getTutoria().getProficiencia(disciplina) > tutor.getTutoria().getProficiencia(disciplina)) tutor = a;
+				else if(a.getTutoria().getProficiencia(disciplina) == tutor.getTutoria().getProficiencia(disciplina)) {
+					if(tutor.getID() > a.getID()) tutor = a;
+				}
 			}
 		}
-		return matricula;
+		return tutor;
 	}
 	
-	public int pedirAjudaOnline (String matrAluno, String disciplina) throws Exception {
+	public int pedirAjudaOnline(String matrAluno, String disciplina) throws Exception {
 		String erroPedirAjudaOnline = "Erro no pedido de ajuda online";
 		validacoes.matriculaVazia(matrAluno, erroPedirAjudaOnline);
 		validacoes.disciplinaVazia(disciplina, erroPedirAjudaOnline);
-		PedidoDeAjudaOnline pedidoOnline = new PedidoDeAjudaOnline(matrAluno, disciplina);
-		pedidoOnline.setTutor(mapaAlunos.get((this.tutorAdequado(disciplina))));
-		pedidos.put(pedidos.size(), pedidoOnline);
+		pedidos.put(pedidos.size(), new PedidoDeAjudaOnline(tutorAdequado(disciplina), matrAluno, disciplina));
 		return pedidos.size() - 1;
 	}
 	
-	public String pegarTutor(int idAjuda) {
-		return pedidos.get(idAjuda).getTutor().toString();
-		
-	}
+	public String pegarTutor(int idAjuda) {return pedidos.get(idAjuda).getTutor().toString();}
 	
 	public String getInfoAjuda(int idAjuda, String atributo) throws Exception {
 		String erroGetInfoAjuda = "Erro ao tentar recuperar info da ajuda :";
@@ -154,8 +137,25 @@ public class SistemaTutoria {
 		case "localInteresse":
 			return pedidos.get(idAjuda).getInfoAjuda("localInteresse");
 		}
-		
-		
 	}
-
+	
+	public void avaliarTutor(int idAjuda, int nota) {
+		pedidos.get(idAjuda).getTutor().setNotaDeAvaliacao(nota);
+	}
+	
+	public double pegarNota(String matriculaTutor) {
+		double notaDoTutor = 0;	
+		Aluno alunoPossivelTutor = mapaAlunos.get(matriculaTutor);
+		if(alunoPossivelTutor.isTutor()) notaDoTutor = alunoPossivelTutor.getNotaDeAvaliacao();
+		return notaDoTutor;
+	}
+	
+	public String pegarNivel(String matriculaTutor) {
+		String nivelDoTutor = "";
+		double notaDoTutor = pegarNota(matriculaTutor);
+		if(notaDoTutor > 4.5) nivelDoTutor = "TOP";
+		else if(notaDoTutor > 3 && notaDoTutor <= 4.5) nivelDoTutor = "Tutor";
+		else if(0 < notaDoTutor && notaDoTutor > 3.0) nivelDoTutor = "Aprendiz";
+		return nivelDoTutor;
+	}
 }
