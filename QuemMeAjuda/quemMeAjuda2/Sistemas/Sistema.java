@@ -1,102 +1,106 @@
-package quemMeAjuda2;
+package quemMeAjuda2.Sistemas;
 
-import easyaccept.EasyAccept;
-import quemMeAjuda2.Sistemas.*;
+import java.util.Map;
 
-public class QuemMeAjuda{
-	private Sistema sistema = new Sistema();
+import quemMeAjuda2.Entidades.Aluno.Aluno;
+
+public class Sistema {
 	
-	public static void main(String[] args){
-		args = new String[] {"quemMeAjuda2.QuemMeAjuda", "acceptance_test/us1_test.txt",
-											  			 "acceptance_test/us2_test.txt",
-											  			 "acceptance_test/us3_test.txt",
-											  			 "acceptance_test/us4_test.txt",
-											  			 "acceptance_test/us5_test.txt",
-											  			 "acceptance_test/us6_test.txt"};
-		EasyAccept.main(args);
+	private SistemaAlunos sisAlunos;
+	private SistemaTutoria sisTutor;
+	public Sistema() {
+		sisAlunos = new SistemaAlunos();
+		sisTutor = new SistemaTutoria();
 	}
 	
+	
 	public void cadastrarAluno(String  nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
-		sistema.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
+		sisAlunos.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
 	}
 	
 	public String listarAlunos() {
-		return sistema.listarAlunos();
+		return sisAlunos.listarAlunos();
 	}
 	
 	public String recuperaAluno(String matricula) throws Exception {
-		return sistema.recuperaAluno(matricula);		
+		return sisAlunos.recuperaAluno(matricula);		
 	}
 	
 	public String getInfoAluno(String matricula, String atributo) throws Exception {
-		return sistema.getInfoAluno(matricula, atributo);
+		return sisAlunos.getInfoAluno(matricula, atributo);
 	}
 	
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
-		sistema.tornarTutor(matricula, disciplina, proficiencia);
+		sisAlunos.tornarTutor(matricula, disciplina, proficiencia);
 	}
 	
 	public String recuperaTutor(String matricula) throws Exception {
-		return sistema.recuperaTutor(matricula).toString();
+		return sisAlunos.recuperaTutor(matricula).toString();
 	}
 	
 	public String listarTutores() {
-		return sistema.listarTutores();
+		return sisAlunos.listarTutores();
 	}
 	
 	public void cadastrarHorario(String email, String horario, String dia) throws Exception {
-		sistema.cadastrarHorario(email, horario, dia);
+		sisAlunos.cadastrarHorario(email, horario, dia);
 	}
 	
 	public void cadastrarLocalDeAtendimento(String email, String local) throws Exception {
-		sistema.cadastrarLocalDeAtendimento(email, local);
+		sisAlunos.cadastrarLocalDeAtendimento(email, local);
 	}
 	
 	public boolean consultaHorario(String email, String horario, String dia) {
-		return sistema.consultaHorario(email, horario, dia);
+		return sisAlunos.consultaHorario(email, horario, dia);
 	}
 	
 	public boolean consultaLocal(String email, String local) {
-		return sistema.consultaLocal(email, local);
+		return sisAlunos.consultaLocal(email, local);
 	}
 	
 	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) throws Exception {
-		return sistema.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
+		return sisTutor.pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
 	}
 	
 	public int pedirAjudaOnline(String matrAluno, String disciplina) throws Exception {
-		return sistema.pedirAjudaOnline(matrAluno, disciplina);
+		return sisTutor.pedirAjudaOnline(matrAluno, disciplina);
 	}
 	
 	public String pegarTutor(int idAjuda) throws Exception {
-		return sistema.pegarTutor(idAjuda);
+		return sisTutor.pegaTutor(idAjuda);
 	}
 	
 	public String getInfoAjuda(int idAjuda, String atributo) throws Exception {
-		return sistema.getInfoAjuda(idAjuda, atributo);
+		return sisTutor.getInfoAjuda(idAjuda, atributo);
 	}
 	
 	public void avaliarTutor(int idAjuda, int nota) throws Exception {
-		sistema.avaliarTutor(idAjuda, nota);
+		sisTutor.avaliarTutor(idAjuda, nota);
 	}
 	
 	public String pegarNota(String matriculaTutor) {
-		return sistema.pegarNota(matriculaTutor);
+		return sisAlunos.pegarNota(matriculaTutor);
 	}
 
 	public String pegarNivel(String matriculaTutor) {
-		return sistema.pegarNivel(matriculaTutor);
+		return sisAlunos.pegarNivel(matriculaTutor);
 	}
 	
 	public void doar(String matriculaTutor, int totalCentavos) throws Exception {
-		sistema.doar(matriculaTutor, totalCentavos);
+		sisTutor.doar(matriculaTutor, totalCentavos);
 	}
 	
 	public int totalDinheiroTutor(String emailTutor) throws Exception {
-		return sistema.totalDinheiroTutor(emailTutor);
+		return sisAlunos.totalDinheiroTutor(emailTutor);
 	}
 	
 	public int totalDinheiroSistema() {
-		return sistema.totalDinheiroSistema();
+		return sisTutor.getCaixa();
 	}
+
+
+	public Map<String, Aluno> getAlunos() {
+		return SistemaAlunos.getAlunos();
+	}
+
 }

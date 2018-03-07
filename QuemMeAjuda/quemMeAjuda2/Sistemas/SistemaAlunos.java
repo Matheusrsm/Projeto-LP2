@@ -10,19 +10,19 @@ import quemMeAjuda2.Excecoes.Validacoes;
 
 public class SistemaAlunos{
 
-	private Map<String, Aluno> alunos;
+	private static Map<String, Aluno> alunos;
 	private Validacoes validacoes;
-	private SistemaTutoria sistemaTutoria;
+	//private SistemaTutoria sistemaTutoria;
 	
 	public SistemaAlunos() {
-		this.alunos = new HashMap<>();
+		alunos = new HashMap<>();
 		this.validacoes = new Validacoes();
-		this.sistemaTutoria = new SistemaTutoria(alunos);
+		//this.sistemaTutoria = new SistemaTutoria(alunos);
 	}
 	
-	public SistemaTutoria getSistemaTutoria() {
+	/*public SistemaTutoria getSistemaTutoria() {
 		return sistemaTutoria;
-	}
+	}*/
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
 		String erroCadastrarAluno = "Erro no cadastro de aluno: ";
@@ -151,11 +151,13 @@ public class SistemaAlunos{
 		String erroTotalDinheiroTutor = "Erro na consulta de total de dinheiro do tutor: ";
 		validacoes.emailTutorInvalidoOuNulo(emailTutor, erroTotalDinheiroTutor);
 		validacoes.tutorEmailNaoCadastrado(emailTutor, alunos, erroTotalDinheiroTutor + "Tutor nao encontrado");
-		for(Aluno a:alunos.values()) {
-			if(a.isTutor() && a.getEmail().equals(emailTutor)) {
+		for(Aluno a:alunos.values())
+			if(a.isTutor() && a.getEmail().equals(emailTutor))
 				return (int) a.getTutoria().getBolsa();
-			}
-		}
 		return 0;
+	}
+
+	protected static Map<String, Aluno> getAlunos() {
+		return alunos;
 	}
 }

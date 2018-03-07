@@ -1,12 +1,11 @@
-package quemMeAjuda.Testes;
+package QuemMeAjuda.Testes;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import quemMeAjuda.Auxiliares.DadoInvalidoException;
-import quemMeAjuda.Auxiliares.DadoNuloException;
-import quemMeAjuda.Auxiliares.Sistema;
-import quemMeAjuda.Entidades.Tutor;
+import quemMeAjuda2.Excecoes.*;
+import quemMeAjuda2.Sistemas.*;
+import quemMeAjuda2.Entidades.*;
 
 /**
  * Classe de teste da Classe Sistema
@@ -138,8 +137,8 @@ public class SistemaTest {
 		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
 		sis.tornarTutor("123456789", "Calculo 2", 3);
 		sis.tornarTutor("123456789", "Vetorial", 4);
-		assertEquals("Calculo 2", ((Tutor) sis.getAlunos().get("123456789")).getDisciplinas().get(0));
-		assertEquals("Vetorial", ((Tutor) sis.getAlunos().get("123456789")).getDisciplinas().get(1));
+		assertEquals("Calculo 2", sis.getAlunos().get("123456789").getDisciplinas().get(0));
+		assertEquals("Vetorial", sis.getAlunos().get("123456789").getDisciplinas().get(1));
 	}
 	
 }

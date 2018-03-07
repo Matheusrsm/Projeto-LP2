@@ -20,8 +20,8 @@ public class SistemaTutoria {
 	private int caixa;
 	private Validacoes validacoes;
 	
-	public SistemaTutoria(Map<String, Aluno> alunos) {
-		this.mapaAlunos = alunos;
+	public SistemaTutoria() {
+		this.mapaAlunos = SistemaAlunos.getAlunos();
 		this.pedidos = new HashMap<>();
 		this.caixa = 0;
 		this.validacoes = new Validacoes();
