@@ -22,7 +22,7 @@ public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 
 	@Override
 	public String getInfoAjuda(String atributo) {
-		switch(atributo.toLowerCase()) {
+		switch(atributo) {
 		case "horario":
 			return this.horario;
 		case "dia":
@@ -31,10 +31,18 @@ public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 			return this.local;
 		case "disciplina":
 			return this.disciplina;
-		case "matricula":
-			return this.matricula;
 		default:
 			return null;
 		}
+	}
+
+	@Override
+	public String getMatriculaAluno() {
+		return matricula;
+	}
+	
+	@Override
+	public String toString() {
+		return "Tutor - " + tutor.getMatricula() + ", horario - " + horario + ", dia - " + dia + ", local - " + local + ", disciplina - " + disciplina;
 	}
 }

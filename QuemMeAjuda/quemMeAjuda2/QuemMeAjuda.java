@@ -1,17 +1,18 @@
 package quemMeAjuda2;
 
 import easyaccept.EasyAccept;
-import quemMeAjuda.Auxiliares.Sistema;
+import quemMeAjuda2.Sistemas.SistemaAlunos;
 
 public class QuemMeAjuda{
-	private Sistema sistema = new Sistema();
+	private SistemaAlunos sistema = new SistemaAlunos();
 	
 	public static void main(String[] args){
 		args = new String[] {"quemMeAjuda2.QuemMeAjuda", "acceptance_test/us1_test.txt",
 											  			 "acceptance_test/us2_test.txt",
 											  			 "acceptance_test/us3_test.txt",
 											  			 "acceptance_test/us4_test.txt",
-											  			 "acceptance_test/us5_test.txt"};
+											  			 "acceptance_test/us5_test.txt",
+											  			 "acceptance_test/us6_test.txt"};
 		EasyAccept.main(args);
 	}
 	
@@ -57,5 +58,45 @@ public class QuemMeAjuda{
 	
 	public boolean consultaLocal(String email, String local) {
 		return sistema.consultaLocal(email, local);
+	}
+	
+	public int pedirAjudaPresencial(String matrAluno, String disciplina, String horario, String dia, String localInteresse) throws Exception {
+		return sistema.getSistemaTutoria().pedirAjudaPresencial(matrAluno, disciplina, horario, dia, localInteresse);
+	}
+	
+	public int pedirAjudaOnline(String matrAluno, String disciplina) throws Exception {
+		return sistema.getSistemaTutoria().pedirAjudaOnline(matrAluno, disciplina);
+	}
+	
+	public String pegarTutor(int idAjuda) {
+		return sistema.getSistemaTutoria().pegaTutor(idAjuda);
+	}
+	
+	public String getInfoAjuda(int idAjuda, String atributo) throws Exception {
+		return sistema.getSistemaTutoria().getInfoAjuda(idAjuda, atributo);
+	}
+	
+	public void avaliarTutor(int idAjuda, int nota) {
+		sistema.getSistemaTutoria().avaliarTutor(idAjuda, nota);
+	}
+	
+	public String pegarNota(String matriculaTutor) {
+		return sistema.pegarNota(matriculaTutor);
+	}
+
+	public String pegarNivel(String matriculaTutor) {
+		return sistema.pegarNivel(matriculaTutor);
+	}
+	
+	public void doar(String matriculaTutor, int totalCentavos) {
+		sistema.getSistemaTutoria().doar(matriculaTutor, totalCentavos);
+	}
+	
+	public int totalDinheiroTutor(String emailTutor) {
+		return sistema.totalDinheiroTutor(emailTutor);
+	}
+	
+	public int totalDinheiroSistema() {
+		return (int) sistema.getCaixaSistema();
 	}
 }

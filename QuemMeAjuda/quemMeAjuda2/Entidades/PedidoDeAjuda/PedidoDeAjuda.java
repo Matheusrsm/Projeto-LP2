@@ -6,4 +6,5 @@ public interface PedidoDeAjuda {
 
 	public String getInfoAjuda(String atributo);
 	public Aluno getTutor();
+	public String getMatriculaAluno();
 }

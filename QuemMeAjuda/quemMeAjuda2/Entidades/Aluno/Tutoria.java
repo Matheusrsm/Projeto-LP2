@@ -10,12 +10,14 @@ public class Tutoria {
 	private List<Horario> horarios;
 	private double notaDeAvaliacao;
 	private double  bolsa;
+	private NivelTutoria nivel;
 	
 	public Tutoria() {
 		this.disciplinas = new ArrayList<>();
 		this.locais = new ArrayList<>();
 		this.horarios = new ArrayList<>();
 		this.notaDeAvaliacao = 4.0;
+		this.nivel = NivelTutoria.TUTOR;
 		this.bolsa = 0.0;
 	}
 	
@@ -23,12 +25,11 @@ public class Tutoria {
 		disciplinas.add(new Disciplina(disciplina, proficiencia));
 	}
 	
-	// Falta lançar uma exceção quando a disciplina nãoo existir
 	public double getProficiencia(String disciplina) {
 		for (Disciplina d : disciplinas) {
 			if (d.getNome().equals(disciplina)) return d.getProficiencia();
 		}
-		return 0.0;
+		return 0;
 	}
 	
 	/**
@@ -66,5 +67,15 @@ public class Tutoria {
 
 	public double getBolsa() {
 		return bolsa;
+	}
+
+	public String getNivel() {
+		return nivel.getDescricao();
+	}
+
+	public void setNivel() {
+		if(notaDeAvaliacao > 4.5) this.nivel = NivelTutoria.TOP;
+		else if(notaDeAvaliacao > 3.0 && notaDeAvaliacao <= 4.5) this.nivel = NivelTutoria.TUTOR;
+		else if(notaDeAvaliacao > 0 && notaDeAvaliacao <= 3.0) this.nivel = NivelTutoria.APRENDIZ;
 	}
 }

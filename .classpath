@@ -8,8 +8,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="testes"/>
-	<classpathentry kind="src" path="src2"/>
+	<classpathentry kind="src" path="QuemMeAjuda"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
-	<classpathentry kind="lib" path="/home/matheussm/Documentos/LP2/Projeto/easyaccept.jar"/>
+	<classpathentry kind="lib" path="/home/matheus/Documentos/UFCG/LP2/Projeto/easyaccept.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

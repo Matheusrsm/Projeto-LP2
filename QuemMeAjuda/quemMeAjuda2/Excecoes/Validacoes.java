@@ -1,4 +1,4 @@
-package quemMeAjuda2.validacoes;
+package quemMeAjuda2.Excecoes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,8 +6,6 @@ import java.util.Map;
 
 import quemMeAjuda2.Entidades.Aluno.*;
 import quemMeAjuda2.Entidades.PedidoDeAjuda.PedidoDeAjuda;
-import quemMeAjuda2.Excecoes.DadoInvalidoException;
-import quemMeAjuda2.Excecoes.DadoNuloException;
 
 public class Validacoes {
 		
@@ -40,8 +38,10 @@ public class Validacoes {
 		if (!emails.contains(email)) throw new DadoInvalidoException (msg + "tutor nao cadastrado");
 	}
 	
-	public void disciplinaJaEhTutor(String disciplina, List<String> disciplinas, String msg) throws Exception {
-		if(disciplinas.contains(disciplina)) throw new DadoInvalidoException(msg + "Ja eh tutor dessa disciplina"); 
+	public void disciplinaJaEhTutor(String disciplina, List<Disciplina> disciplinas, String msg) throws Exception {
+		for(Disciplina d: disciplinas) {
+			if(d.getNome().equals(disciplina)) throw new DadoInvalidoException(msg + "Ja eh tutor dessa disciplina");
+		}
 	}
 	
 	public void proficienciaInvalida(int proficiencia, String msg) throws Exception{
@@ -69,7 +69,10 @@ public class Validacoes {
 		if(!alunos.containsKey(matricula)) throw new DadoInvalidoException(msg + "Aluno nao encontrado");
 	}
 	
-	////////////////////////////// DE ACORDO COM O US4_TEST /////////////////////////////////////////////
+	public void naoEhTutor(String matricula, Map<String, Aluno> alunos, String msg) throws Exception {
+		if(!alunos.containsKey(matricula)) throw new DadoInvalidoException(msg + "Tutor nao encontrado");
+	}
+	
 	public void matriculaVazia(String matricula, String msg) throws Exception {
 		if (matricula.trim().isEmpty()) throw new DadoInvalidoException(msg + "matricula de aluno nao pode ser vazio ou em branco");
 	}

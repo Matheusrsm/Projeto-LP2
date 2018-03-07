@@ -1,10 +1,11 @@
-package quemMeAjuda2.Sistema;
+package quemMeAjuda2.Sistemas;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import quemMeAjuda2.Entidades.Aluno.*;
 import quemMeAjuda2.Entidades.PedidoDeAjuda.*;
-import quemMeAjuda2.validacoes.Validacoes;
+import quemMeAjuda2.Excecoes.Validacoes;
 
 /**
  * Classe SistemaTutoria. A classe SistemaTutoria implementa os métodos da interface Sistema
@@ -16,10 +17,18 @@ import quemMeAjuda2.validacoes.Validacoes;
 public class SistemaTutoria {
 	private Map<String, Aluno> mapaAlunos;
 	private Map<Integer, PedidoDeAjuda> pedidos;
-	private Validacoes validacoes = new Validacoes();
+	private double caixa;
+	private Validacoes validacoes;
 	
-	public SistemaTutoria(Map<String, Aluno> alunos) {
+	public SistemaTutoria(Map<String, Aluno> alunos, double caixa) {
 		this.mapaAlunos = alunos;
+		this.pedidos = new HashMap<>();
+		this.caixa = caixa;
+		this.validacoes = new Validacoes();
+	}
+	
+	public String pegaTutor(int idAjuda) {
+		return pedidos.get(idAjuda).toString();
 	}
 
 	/**
@@ -45,8 +54,8 @@ public class SistemaTutoria {
 		validacoes.horarioVazio(horario, erroPedirAjudaPresencial);
 		validacoes.diaVazio(dia, erroPedirAjudaPresencial);
 		validacoes.localVazio(localInteresse, erroPedirAjudaPresencial);
-		pedidos.put(pedidos.size(), new PedidoDeAjudaPresencial(tutorAdequado(disciplina, horario, dia, localInteresse), matrAluno, disciplina, horario, dia, localInteresse));
-		return pedidos.size() - 1;
+		pedidos.put(pedidos.size() + 1, new PedidoDeAjudaPresencial(tutorAdequado(disciplina, horario, dia, localInteresse), matrAluno, disciplina, horario, dia, localInteresse));
+		return pedidos.size();
 		
 	}
 	
@@ -69,7 +78,7 @@ public class SistemaTutoria {
 	private Aluno tutorAdequado(String disciplina, String horario, String dia, String localInteresse) {
 		Aluno tutor = new Aluno(0, "", "", 0, "", "");
 		for(Aluno a : mapaAlunos.values()) {
-			if(a.isTutor() && a.getTutoria().temDisciplina(disciplina) && verificaHorario(a, horario, dia) && a.getLocais().contains(localInteresse)) {
+			if(a.isTutor() && a.getTutoria().temDisciplina(disciplina) && verificaHorario(a, horario, dia) && a.getTutoria().getLocais().contains(localInteresse)) {
 				if(a.getTutoria().getProficiencia(disciplina) > tutor.getTutoria().getProficiencia(disciplina)) tutor = a;
 				else if(a.getTutoria().getProficiencia(disciplina) == tutor.getTutoria().getProficiencia(disciplina)) {
 					if(tutor.getID() > a.getID()) tutor = a;
@@ -86,7 +95,7 @@ public class SistemaTutoria {
 	 * @return
 	 */
 	private boolean verificaHorario(Aluno a, String horario, String dia) {
-		for (Horario h : a.getHorarios()) {
+		for (Horario h : a.getTutoria().getHorarios()) {
 			if(h.getHorario().equals(dia) && h.getDia().equals(dia)) return true;
 		}
 		return false;
@@ -113,49 +122,45 @@ public class SistemaTutoria {
 	
 	public int pedirAjudaOnline(String matrAluno, String disciplina) throws Exception {
 		String erroPedirAjudaOnline = "Erro no pedido de ajuda online";
-		validacoes.matriculaVazia(matrAluno, erroPedirAjudaOnline);
-		validacoes.disciplinaVazia(disciplina, erroPedirAjudaOnline);
-		pedidos.put(pedidos.size(), new PedidoDeAjudaOnline(tutorAdequado(disciplina), matrAluno, disciplina));
-		return pedidos.size() - 1;
+		/*validacoes.matriculaVazia(matrAluno, erroPedirAjudaOnline);
+		validacoes.disciplinaVazia(disciplina, erroPedirAjudaOnline);*/
+		pedidos.put(pedidos.size() + 1, new PedidoDeAjudaOnline(tutorAdequado(disciplina), matrAluno, disciplina));
+		return pedidos.size();
 	}
 	
-	public String pegarTutor(int idAjuda) {return pedidos.get(idAjuda).getTutor().toString();}
-	
 	public String getInfoAjuda(int idAjuda, String atributo) throws Exception {
-		String erroGetInfoAjuda = "Erro ao tentar recuperar info da ajuda :";
-		validacoes.idAjudaInvalido(idAjuda, pedidos, erroGetInfoAjuda);
-		validacoes.atributoVazio(atributo, erroGetInfoAjuda);
-		switch (atributo.toLowerCase()) {
-		default:
-			return pedidos.get(idAjuda).toString();
-		case "tutor":
-			return pedidos.get(idAjuda).toString() + " - Matricula do tutor:" + this.pegarTutor(idAjuda);
-		case "horario":
-			return pedidos.get(idAjuda).getInfoAjuda("horario");
-		case "dia":
-			return pedidos.get(idAjuda).getInfoAjuda("dia");
-		case "localInteresse":
-			return pedidos.get(idAjuda).getInfoAjuda("localInteresse");
-		}
+		String erroGetInfoAjuda = "Erro ao tentar recuperar info da ajuda: ";
+		/*validacoes.idAjudaInvalido(idAjuda, pedidos, erroGetInfoAjuda);
+		validacoes.atributoVazio(atributo, erroGetInfoAjuda);*/
+		return pedidos.get(idAjuda).getInfoAjuda(atributo);
 	}
 	
 	public void avaliarTutor(int idAjuda, int nota) {
 		pedidos.get(idAjuda).getTutor().setNotaDeAvaliacao(nota);
 	}
 	
-	public double pegarNota(String matriculaTutor) {
-		double notaDoTutor = 0;	
-		Aluno alunoPossivelTutor = mapaAlunos.get(matriculaTutor);
-		if(alunoPossivelTutor.isTutor()) notaDoTutor = alunoPossivelTutor.getNotaDeAvaliacao();
-		return notaDoTutor;
+	private double calculaTaxaTutor(String matriculaTutor) {
+		Aluno tutor = mapaAlunos.get(matriculaTutor);
+		double taxa = 0;
+		if(tutor.isTutor())
+			if(tutor.getTutoria().getNivel().equals("TOP")) {
+				double valorAMais = tutor.getTutoria().getNotaDeAvaliacao() - 4.5;
+				taxa = 90 + (valorAMais * 10);
+			}
+			else if(tutor.getTutoria().getNivel().equals("Tutor")) {
+				taxa = 80;
+			}
+			else if(tutor.getTutoria().getNivel().equals("Aprendiz")) {
+				double valorAMenos = 3.0 - tutor.getTutoria().getNotaDeAvaliacao();
+				taxa = 40 - (valorAMenos * 10);
+			}
+		return taxa / 100;
 	}
 	
-	public String pegarNivel(String matriculaTutor) {
-		String nivelDoTutor = "";
-		double notaDoTutor = pegarNota(matriculaTutor);
-		if(notaDoTutor > 4.5) nivelDoTutor = "TOP";
-		else if(notaDoTutor > 3 && notaDoTutor <= 4.5) nivelDoTutor = "Tutor";
-		else if(0 < notaDoTutor && notaDoTutor > 3.0) nivelDoTutor = "Aprendiz";
-		return nivelDoTutor;
+	public void doar(String matriculaTutor, int totalCentavos) {
+		double totalSistema = Math.floor((1 - calculaTaxaTutor(matriculaTutor)) * totalCentavos);
+		this.caixa += totalSistema;
+		mapaAlunos.get(matriculaTutor).getTutoria().recebeDoacao(totalCentavos - totalSistema);
 	}
-}
+
+}	

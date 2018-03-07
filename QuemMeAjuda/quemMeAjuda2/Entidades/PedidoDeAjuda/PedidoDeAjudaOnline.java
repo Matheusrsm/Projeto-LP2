@@ -9,7 +9,7 @@ public class PedidoDeAjudaOnline implements PedidoDeAjuda{
 	public PedidoDeAjudaOnline(Aluno tutor, String matricula, String disciplina) {
 		this.matricula = matricula;
 		this.disciplina = disciplina;
-		this.tutor = tutor;;
+		this.tutor = tutor;
 	}
 
 	@Override
@@ -19,13 +19,21 @@ public class PedidoDeAjudaOnline implements PedidoDeAjuda{
 
 	@Override
 	public String getInfoAjuda(String atributo) {
-		switch(atributo.toLowerCase()) {
+		switch(atributo) {
 			case "disciplina":
 				return this.disciplina;
-			case "matricula":
-				return this.matricula;
 			default:
 				return null;
 		}
+	}
+
+	@Override
+	public String getMatriculaAluno() {
+		return matricula;
+	}
+	
+	@Override
+	public String toString() {
+		return "Tutor - " + tutor.getMatricula() + ", disciplina - " + disciplina;
 	}
 }

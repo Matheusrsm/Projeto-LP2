@@ -1,8 +1,5 @@
 package quemMeAjuda2.Entidades.Aluno;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Aluno implements Comparable<Aluno> {
 	private String  matricula, nome, email, telefone;
 	private int     codigoCurso, iD;
@@ -31,14 +28,6 @@ public class Aluno implements Comparable<Aluno> {
 		return true;
 	}
 	
-	public List<String> getDisciplinas() {
-		List<String> disciplinas = new ArrayList<>();
-		if (isTutor()) 
-			for (Disciplina d  : tutoria.getDisciplinas())
-				disciplinas.add(d.getNome());
-		return disciplinas;
-	}
-	
 	public String getMatricula() {return matricula;}
 
 	public String getNome() {return nome;}
@@ -50,12 +39,6 @@ public class Aluno implements Comparable<Aluno> {
 	public int getCodigoCurso() {return codigoCurso;}
 	
 	public Tutoria getTutoria() {return tutoria;}
-	
-	public double getBolsa() {return tutoria.getBolsa();}
-	
-	public List<String> getLocais() {return tutoria.getLocais();}
-
-	public List<Horario> getHorarios() {return tutoria.getHorarios();}
 
 	public double getNotaDeAvaliacao() {return notaDeAvaliacao;}
 	
