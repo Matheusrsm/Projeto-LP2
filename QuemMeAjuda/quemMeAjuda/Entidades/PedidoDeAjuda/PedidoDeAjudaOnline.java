@@ -1,17 +1,29 @@
-package quemMeAjuda2.Entidades.PedidoDeAjuda;
+package quemMeAjuda.Entidades.PedidoDeAjuda;
 
-import quemMeAjuda2.Entidades.Aluno.*;
+import quemMeAjuda.Entidades.Aluno.*;
 public class PedidoDeAjudaOnline implements PedidoDeAjuda{
 
 	private String disciplina, matricula;
 	private Aluno tutor;
+	private boolean finalizada;
 	
 	public PedidoDeAjudaOnline(Aluno tutor, String matricula, String disciplina) {
 		this.matricula = matricula;
 		this.disciplina = disciplina;
 		this.tutor = tutor;
+		this.finalizada = false;
 	}
 
+	@Override
+	public boolean getFinalizacao() {
+		return finalizada;
+	}
+	
+	@Override
+	public void setFinalizacao(boolean fechouOuNao) {
+		this.finalizada = fechouOuNao;
+	}
+	
 	@Override
 	public Aluno getTutor() {
 		return tutor;

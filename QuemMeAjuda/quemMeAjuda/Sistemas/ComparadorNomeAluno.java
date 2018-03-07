@@ -1,7 +1,8 @@
-package quemMeAjuda2.Sistemas;
+package quemMeAjuda.Sistemas;
 
 import java.util.Comparator;
-import quemMeAjuda2.Entidades.Aluno.*;
+
+import quemMeAjuda.Entidades.Aluno.*;
 
 public class ComparadorNomeAluno implements Comparator<Aluno> {
 	

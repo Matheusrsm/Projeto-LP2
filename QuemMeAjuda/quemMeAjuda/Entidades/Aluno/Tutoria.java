@@ -1,4 +1,4 @@
-package quemMeAjuda2.Entidades.Aluno;
+package quemMeAjuda.Entidades.Aluno;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -67,11 +67,11 @@ public class Tutoria {
 	
 	public void setNotaDeAvaliacao(double novaAvaliacao) {
 		this.notaDeAvaliacao = ((notaDeAvaliacao * 5) + novaAvaliacao) / 6;
+		setNivel();
 	}
 	
 	public String toStringNotaDeAvaliacao() {
-		String nota = String.format("%.2f", notaDeAvaliacao);
-		return nota.replace('.', ',');
+		return String.format("%.2f", notaDeAvaliacao).replace('.', ',');
 	}
 
 	public double getBolsa() {
@@ -85,6 +85,6 @@ public class Tutoria {
 	public void setNivel() {
 		if(notaDeAvaliacao > 4.5) this.nivel = NivelTutoria.TOP;
 		else if(notaDeAvaliacao > 3.0 && notaDeAvaliacao <= 4.5) this.nivel = NivelTutoria.TUTOR;
-		else if(notaDeAvaliacao > 0 && notaDeAvaliacao <= 3.0) this.nivel = NivelTutoria.APRENDIZ;
+		else if(notaDeAvaliacao > 0.0 && notaDeAvaliacao <= 3.0) this.nivel = NivelTutoria.APRENDIZ;
 	}
 }

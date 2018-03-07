@@ -1,10 +1,11 @@
-package quemMeAjuda2.Entidades.PedidoDeAjuda;
+package quemMeAjuda.Entidades.PedidoDeAjuda;
 
-import quemMeAjuda2.Entidades.Aluno.*;
+import quemMeAjuda.Entidades.Aluno.*;
 public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 
 	private String matricula, disciplina, dia, local, horario;
 	private Aluno tutor;
+	private boolean finalizada;
 	
 	public PedidoDeAjudaPresencial(Aluno tutor, String matricula, String disciplina, String horario, String dia, String local) {
 		this.matricula = matricula;
@@ -13,8 +14,19 @@ public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 		this.dia = dia;
 		this.local = local;
 		this.tutor = tutor;
+		this.finalizada = false;
 	}
 
+	@Override
+	public boolean getFinalizacao() {
+		return finalizada;
+	}
+	
+	@Override
+	public void setFinalizacao(boolean fechouOuNao) {
+		this.finalizada = fechouOuNao;
+	}
+	
 	@Override
 	public Aluno getTutor() {
 		return tutor;

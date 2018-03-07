@@ -1,4 +1,4 @@
-package quemMeAjuda2.Entidades.Aluno;
+package quemMeAjuda.Entidades.Aluno;
 
 public class Disciplina {
 	private String nome;

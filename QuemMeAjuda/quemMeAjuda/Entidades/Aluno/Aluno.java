@@ -1,4 +1,4 @@
-package quemMeAjuda2.Entidades.Aluno;
+package quemMeAjuda.Entidades.Aluno;
 
 public class Aluno implements Comparable<Aluno> {
 	private String  matricula, nome, email, telefone;

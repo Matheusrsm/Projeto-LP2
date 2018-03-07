@@ -1,11 +1,11 @@
-package quemMeAjuda2.Excecoes;
+package quemMeAjuda.Excecoes;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import quemMeAjuda2.Entidades.Aluno.*;
-import quemMeAjuda2.Entidades.PedidoDeAjuda.PedidoDeAjuda;
+import quemMeAjuda.Entidades.Aluno.*;
+import quemMeAjuda.Entidades.PedidoDeAjuda.PedidoDeAjuda;
 
 public class Validacoes {
 		
@@ -100,9 +100,8 @@ public class Validacoes {
 	
 	public void atributoInvalido(String atributo, String msg) throws Exception {
 		if(atributo.trim().isEmpty()) throw new DadoInvalidoException(msg + "atributo nao pode ser vazio ou em branco");
-		if(!atributo.equals("disciplina") && !atributo.equals("horario") && !atributo.equals("dia") && !atributo.equals("localInteresse")) {
+		if(!atributo.equals("disciplina") && !atributo.equals("horario") && !atributo.equals("dia") && !atributo.equals("localInteresse")) 
 			throw new DadoInvalidoException(msg + "atributo nao encontrado");
-		}
 	}
 	
 	public void notaInvalida(double nota, String msg) throws Exception {
@@ -117,5 +116,9 @@ public class Validacoes {
 	
 	public void totalCentavosInvalido(int totalCentavos, String msg) throws Exception {
 		if(totalCentavos < 0) throw new DadoInvalidoException(msg + "totalCentavos nao pode ser menor que zero");
+	}
+	
+	public void ajudaJaFechada(int id, Map<Integer, PedidoDeAjuda> pedidos, String msg) throws Exception {
+		if(pedidos.get(id).getFinalizacao()) throw new DadoInvalidoException(msg + "Ajuda ja avaliada");
 	}
 }

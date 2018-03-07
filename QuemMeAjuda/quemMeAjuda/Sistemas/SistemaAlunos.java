@@ -1,28 +1,23 @@
-package quemMeAjuda2.Sistemas;
+package quemMeAjuda.Sistemas;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import quemMeAjuda2.Entidades.Aluno.*;
-import quemMeAjuda2.Excecoes.Validacoes;
+
+import quemMeAjuda.Entidades.Aluno.*;
+import quemMeAjuda.Excecoes.Validacoes;
 
 public class SistemaAlunos{
 
 	private static Map<String, Aluno> alunos;
 	private Validacoes validacoes;
-	//private SistemaTutoria sistemaTutoria;
 	
 	public SistemaAlunos() {
-		alunos = new HashMap<>();
+		SistemaAlunos.alunos = new HashMap<>();
 		this.validacoes = new Validacoes();
-		//this.sistemaTutoria = new SistemaTutoria(alunos);
 	}
-	
-	/*public SistemaTutoria getSistemaTutoria() {
-		return sistemaTutoria;
-	}*/
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
 		String erroCadastrarAluno = "Erro no cadastro de aluno: ";
@@ -157,7 +152,7 @@ public class SistemaAlunos{
 		return 0;
 	}
 
-	protected static Map<String, Aluno> getAlunos() {
+	public static Map<String, Aluno> getAlunos() {
 		return alunos;
 	}
 }

@@ -1,11 +1,11 @@
-package quemMeAjuda2.Sistemas;
+package quemMeAjuda.Sistemas;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import quemMeAjuda2.Entidades.Aluno.*;
-import quemMeAjuda2.Entidades.PedidoDeAjuda.*;
-import quemMeAjuda2.Excecoes.Validacoes;
+import quemMeAjuda.Entidades.Aluno.*;
+import quemMeAjuda.Entidades.PedidoDeAjuda.*;
+import quemMeAjuda.Excecoes.Validacoes;
 
 /**
  * Classe SistemaTutoria. A classe SistemaTutoria implementa os métodos da interface Sistema
@@ -147,12 +147,12 @@ public class SistemaTutoria {
 		String erroAvaliarTutor = "Erro na avaliacao de tutor: ";
 		validacoes.notaInvalida(nota, erroAvaliarTutor);
 		validacoes.idAjudaInvalido(idAjuda, pedidos, erroAvaliarTutor);
+		validacoes.ajudaJaFechada(idAjuda, pedidos, erroAvaliarTutor);
 		pedidos.get(idAjuda).getTutor().getTutoria().setNotaDeAvaliacao(nota);
-		pedidos.get(idAjuda).getTutor().getTutoria().setNivel();
+		pedidos.get(idAjuda).setFinalizacao(true);
 	}
 	
 	private double calculaTaxaTutor(String matriculaTutor) {
-		mapaAlunos.get(matriculaTutor).getTutoria().setNivel();
 		Aluno tutor = mapaAlunos.get(matriculaTutor);
 		double taxa = 0;
 		if(tutor.isTutor())
