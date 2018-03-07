@@ -77,6 +77,7 @@ public class SistemaTutoria {
 	 */
 	private Aluno tutorAdequado(String disciplina, String horario, String dia, String localInteresse) {
 		Aluno tutor = new Aluno(0, "", "", 0, "", "");
+		tutor.tornaAlunoTutor("", 0);
 		for(Aluno a : mapaAlunos.values()) {
 			if(a.isTutor() && a.getTutoria().temDisciplina(disciplina) && verificaHorario(a, horario, dia) && a.getTutoria().getLocais().contains(localInteresse)) {
 				if(a.getTutoria().getProficiencia(disciplina) > tutor.getTutoria().getProficiencia(disciplina)) tutor = a;
@@ -95,8 +96,8 @@ public class SistemaTutoria {
 	 * @return
 	 */
 	private boolean verificaHorario(Aluno a, String horario, String dia) {
-		for (Horario h : a.getTutoria().getHorarios()) {
-			if(h.getHorario().equals(dia) && h.getDia().equals(dia)) return true;
+		for(Horario h : a.getTutoria().getHorarios()) {
+			if(h.getHorario().equals(horario) && h.getDia().equals(dia)) return true;
 		}
 		return false;
 	}
@@ -109,6 +110,7 @@ public class SistemaTutoria {
 	 */
 	private Aluno tutorAdequado(String disciplina) {
 		Aluno tutor = new Aluno(0, "", "", 0, "", "");
+		tutor.tornaAlunoTutor("", 0);
 		for(Aluno a : mapaAlunos.values()) {
 			if(a.isTutor() && a.getTutoria().temDisciplina(disciplina)) {
 				if(a.getTutoria().getProficiencia(disciplina) > tutor.getTutoria().getProficiencia(disciplina)) tutor = a;

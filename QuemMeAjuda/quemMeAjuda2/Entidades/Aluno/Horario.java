@@ -43,19 +43,7 @@ public class Horario{
 		return horario;
 	}
 
-	public void setHorario(String horario) {
-		this.horario = horario;
-	}
-
 	public String getDia() {
 		return dia;
-	}
-
-	public void setDia(String dia) {
-		this.dia = dia;
-	}
-	
-	public String toString() {
-		return dia + " - " + horario;
 	}
 }
