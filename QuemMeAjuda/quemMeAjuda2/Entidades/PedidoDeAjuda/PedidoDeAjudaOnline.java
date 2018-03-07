@@ -22,6 +22,8 @@ public class PedidoDeAjudaOnline implements PedidoDeAjuda{
 		switch(atributo) {
 			case "disciplina":
 				return this.disciplina;
+			case "matricula":
+				return this.matricula;
 			default:
 				return null;
 		}
