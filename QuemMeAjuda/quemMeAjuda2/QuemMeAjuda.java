@@ -68,7 +68,7 @@ public class QuemMeAjuda{
 		return sistema.getSistemaTutoria().pedirAjudaOnline(matrAluno, disciplina);
 	}
 	
-	public String pegarTutor(int idAjuda) {
+	public String pegarTutor(int idAjuda) throws Exception {
 		return sistema.getSistemaTutoria().pegaTutor(idAjuda);
 	}
 	

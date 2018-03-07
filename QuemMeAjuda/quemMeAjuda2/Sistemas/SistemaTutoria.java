@@ -27,7 +27,9 @@ public class SistemaTutoria {
 		this.validacoes = new Validacoes();
 	}
 	
-	public String pegaTutor(int idAjuda) {
+	public String pegaTutor(int idAjuda) throws Exception {
+		String erroPegaTutor = "Erro ao tentar recuperar tutor : ";
+		validacoes.idAjudaInvalido(idAjuda, pedidos, erroPegaTutor);
 		return pedidos.get(idAjuda).toString();
 	}
 
@@ -123,17 +125,17 @@ public class SistemaTutoria {
 	}
 	
 	public int pedirAjudaOnline(String matrAluno, String disciplina) throws Exception {
-		String erroPedirAjudaOnline = "Erro no pedido de ajuda online";
-		/*validacoes.matriculaVazia(matrAluno, erroPedirAjudaOnline);
-		validacoes.disciplinaVazia(disciplina, erroPedirAjudaOnline);*/
+		String erroPedirAjudaOnline = "Erro no pedido de ajuda online: ";
+		validacoes.matriculaVazia(matrAluno, erroPedirAjudaOnline);
+		validacoes.disciplinaVazia(disciplina, erroPedirAjudaOnline);
 		pedidos.put(pedidos.size() + 1, new PedidoDeAjudaOnline(tutorAdequado(disciplina), matrAluno, disciplina));
 		return pedidos.size();
 	}
 	
 	public String getInfoAjuda(int idAjuda, String atributo) throws Exception {
-		String erroGetInfoAjuda = "Erro ao tentar recuperar info da ajuda: ";
-		/*validacoes.idAjudaInvalido(idAjuda, pedidos, erroGetInfoAjuda);
-		validacoes.atributoVazio(atributo, erroGetInfoAjuda);*/
+		String erroGetInfoAjuda = "Erro ao tentar recuperar info da ajuda : ";
+		validacoes.idAjudaInvalido(idAjuda, pedidos, erroGetInfoAjuda);
+		validacoes.atributoInvalido(atributo, erroGetInfoAjuda);
 		return pedidos.get(idAjuda).getInfoAjuda(atributo);
 	}
 	

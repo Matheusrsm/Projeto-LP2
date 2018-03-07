@@ -74,33 +74,33 @@ public class Validacoes {
 	}
 	
 	public void matriculaVazia(String matricula, String msg) throws Exception {
-		if (matricula.trim().isEmpty()) throw new DadoInvalidoException(msg + "matricula de aluno nao pode ser vazio ou em branco");
+		if(matricula.trim().isEmpty()) throw new DadoInvalidoException(msg + "matricula de aluno nao pode ser vazio ou em branco");
 	}
 	
 	public void disciplinaVazia(String disciplina, String msg) throws Exception {
-		if (disciplina.trim().isEmpty()) throw new DadoInvalidoException(msg + "disciplina nao pode ser vazio ou em branco");
+		if(disciplina.trim().isEmpty()) throw new DadoInvalidoException(msg + "disciplina nao pode ser vazio ou em branco");
 	}
 	
 	public void horarioVazio(String horario, String msg) throws Exception {
-		if (horario.trim().isEmpty()) throw new DadoInvalidoException(msg + "horario nao pode ser vazio ou em branco");
+		if(horario.trim().isEmpty()) throw new DadoInvalidoException(msg + "horario nao pode ser vazio ou em branco");
 	}
 	
 	public void diaVazio(String dia, String msg) throws Exception {
-		if (dia.trim().isEmpty()) throw new DadoInvalidoException(msg + "dia nao pode ser vazio ou em branco");
+		if(dia.trim().isEmpty()) throw new DadoInvalidoException(msg + "dia nao pode ser vazio ou em branco");
 	}
 	
 	public void localVazio(String local, String msg) throws Exception {
-		if (local.trim().isEmpty()) throw new DadoInvalidoException(msg + "local de interesse nao pode ser vazio ou em branco");
+		if(local.trim().isEmpty()) throw new DadoInvalidoException(msg + "local de interesse nao pode ser vazio ou em branco");
 	}
 	
 	public void idAjudaInvalido(int id, Map<Integer, PedidoDeAjuda> pedidos, String msg) throws Exception {
-		if (id < 0) throw new DadoInvalidoException(msg + "id nao pode menor que zero");
-		if (!(pedidos.containsKey(id))) throw new DadoInvalidoException(msg + "id nao encontrado");
+		if(id < 0) throw new DadoInvalidoException(msg + "id nao pode menor que zero ");
+		if(!(pedidos.containsKey(id))) throw new DadoInvalidoException(msg + "id nao encontrado ");
 	}
 	
-	public void atributoVazio(String atributo, String msg) throws Exception {
-		if (atributo.trim().isEmpty()) throw new DadoInvalidoException(msg + "local de interesse nao pode ser vazio ou em branco");
-		if (!atributo.equals("tutor") || !atributo.equals("horario") || !atributo.equals("dia") || !atributo.equals("localInteresse")) {
+	public void atributoInvalido(String atributo, String msg) throws Exception {
+		if(atributo.trim().isEmpty()) throw new DadoInvalidoException(msg + "atributo nao pode ser vazio ou em branco");
+		if(!atributo.equals("disciplina") && !atributo.equals("horario") && !atributo.equals("dia") && !atributo.equals("localInteresse")) {
 			throw new DadoInvalidoException(msg + "atributo nao encontrado");
 		}
 	}
