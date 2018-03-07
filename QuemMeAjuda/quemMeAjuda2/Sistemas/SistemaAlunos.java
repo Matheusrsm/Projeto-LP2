@@ -13,21 +13,15 @@ public class SistemaAlunos{
 	private Map<String, Aluno> alunos;
 	private Validacoes validacoes;
 	private SistemaTutoria sistemaTutoria;
-	private double caixa;
 	
 	public SistemaAlunos() {
 		this.alunos = new HashMap<>();
 		this.validacoes = new Validacoes();
-		this.sistemaTutoria = new SistemaTutoria(alunos, caixa);
-		this.caixa = 0;
+		this.sistemaTutoria = new SistemaTutoria(alunos);
 	}
 	
 	public SistemaTutoria getSistemaTutoria() {
 		return sistemaTutoria;
-	}
-	
-	public double getCaixaSistema() {
-		return caixa;
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {

@@ -17,13 +17,13 @@ import quemMeAjuda2.Excecoes.Validacoes;
 public class SistemaTutoria {
 	private Map<String, Aluno> mapaAlunos;
 	private Map<Integer, PedidoDeAjuda> pedidos;
-	private double caixa;
+	private int caixa;
 	private Validacoes validacoes;
 	
-	public SistemaTutoria(Map<String, Aluno> alunos, double caixa) {
+	public SistemaTutoria(Map<String, Aluno> alunos) {
 		this.mapaAlunos = alunos;
 		this.pedidos = new HashMap<>();
-		this.caixa = caixa;
+		this.caixa = 0;
 		this.validacoes = new Validacoes();
 	}
 	
@@ -33,7 +33,7 @@ public class SistemaTutoria {
 		return pedidos.get(idAjuda).toString();
 	}
 
-	public double getCaixa() {
+	public int getCaixa() {
 		return caixa;
 	}
 
@@ -148,31 +148,33 @@ public class SistemaTutoria {
 		validacoes.notaInvalida(nota, erroAvaliarTutor);
 		validacoes.idAjudaInvalido(idAjuda, pedidos, erroAvaliarTutor);
 		pedidos.get(idAjuda).getTutor().getTutoria().setNotaDeAvaliacao(nota);
+		pedidos.get(idAjuda).getTutor().getTutoria().setNivel();
 	}
 	
 	private double calculaTaxaTutor(String matriculaTutor) {
+		mapaAlunos.get(matriculaTutor).getTutoria().setNivel();
 		Aluno tutor = mapaAlunos.get(matriculaTutor);
 		double taxa = 0;
 		if(tutor.isTutor())
 			if(tutor.getTutoria().getNivel().equals("TOP")) {
 				double valorAMais = tutor.getTutoria().getNotaDeAvaliacao() - 4.5;
-				taxa = 90 + (valorAMais * 10);
+				taxa = 0.9 + (valorAMais / 10);
 			}
 			else if(tutor.getTutoria().getNivel().equals("Tutor")) {
-				taxa = 80;
+				taxa = 0.8;
 			}
 			else if(tutor.getTutoria().getNivel().equals("Aprendiz")) {
 				double valorAMenos = 3.0 - tutor.getTutoria().getNotaDeAvaliacao();
-				taxa = 40 - (valorAMenos * 10);
+				taxa = 0.4 - (valorAMenos / 10);
 			}
-		return taxa / 100;
+		return taxa;
 	}
 	
 	public void doar(String matriculaTutor, int totalCentavos) throws Exception {
 		String erroDoar = "Erro na doacao para tutor: ";
 		validacoes.totalCentavosInvalido(totalCentavos, erroDoar);
 		validacoes.naoEhTutor(matriculaTutor, mapaAlunos, erroDoar);
-		double totalSistema = Math.floor((1 - calculaTaxaTutor(matriculaTutor)) * totalCentavos);
+		double totalSistema = Math.ceil((1 - calculaTaxaTutor(matriculaTutor)) * totalCentavos);
 		this.caixa += totalSistema;
 		mapaAlunos.get(matriculaTutor).getTutoria().recebeDoacao(totalCentavos - totalSistema);
 	}

@@ -97,6 +97,6 @@ public class QuemMeAjuda{
 	}
 	
 	public int totalDinheiroSistema() {
-		return (int) sistema.getCaixaSistema();
+		return sistema.getSistemaTutoria().getCaixa();
 	}
 }

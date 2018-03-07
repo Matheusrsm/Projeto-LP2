@@ -70,9 +70,8 @@ public class Tutoria {
 	}
 	
 	public String toStringNotaDeAvaliacao() {
-		String nota = "" + notaDeAvaliacao;
-		String[] notaQuebrada = nota.split(".");
-		return notaQuebrada[0] + "," + notaQuebrada[1];
+		String nota = String.format("%.2f", notaDeAvaliacao);
+		return nota.replace('.', ',');
 	}
 
 	public double getBolsa() {
