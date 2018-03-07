@@ -64,6 +64,16 @@ public class Tutoria {
 	public double getNotaDeAvaliacao() {
 		return notaDeAvaliacao;
 	}
+	
+	public void setNotaDeAvaliacao(double novaAvaliacao) {
+		this.notaDeAvaliacao = ((notaDeAvaliacao * 5) + novaAvaliacao) / 6;
+	}
+	
+	public String toStringNotaDeAvaliacao() {
+		String nota = "" + notaDeAvaliacao;
+		String[] notaQuebrada = nota.split(".");
+		return notaQuebrada[0] + "," + notaQuebrada[1];
+	}
 
 	public double getBolsa() {
 		return bolsa;

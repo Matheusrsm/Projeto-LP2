@@ -110,7 +110,7 @@ public class SistemaAlunos{
 		String erroCadastrarHorario = "Erro no cadastrar horario: ";
 		validacoes.emailInvalidoOuNulo(email, erroCadastrarHorario);
 		validacoes.horarioInvalido(horario, dia, erroCadastrarHorario);
-		validacoes.tutorEmailNaoCadastrado(email, alunos, erroCadastrarHorario);
+		validacoes.tutorEmailNaoCadastrado(email, alunos, erroCadastrarHorario + "tutor nao cadastrado");
 		for(Aluno aluno : alunos.values())
 			if(verificaEmailETutoria(email, aluno)) 
 				aluno.getTutoria().getHorarios().add(new Horario(horario, dia));
@@ -120,7 +120,7 @@ public class SistemaAlunos{
 		String erroCadastrarLocal = "Erro no cadastrar local de atendimento: ";
 		validacoes.localInvalidoOuNulo(local, erroCadastrarLocal);
 		validacoes.emailInvalidoOuNulo(email, erroCadastrarLocal);
-		validacoes.tutorEmailNaoCadastrado(email, alunos, erroCadastrarLocal);
+		validacoes.tutorEmailNaoCadastrado(email, alunos, erroCadastrarLocal + "tutor nao cadastrado");
 		for(Aluno aluno : alunos.values())
 			if(verificaEmailETutoria(email, aluno))
 					aluno.getTutoria().getLocais().add(local);
@@ -143,10 +143,9 @@ public class SistemaAlunos{
 	}
 	
 	public String pegarNota(String matriculaTutor) {
-		String saida = "";
 		Aluno alunoPossivelTutor = alunos.get(matriculaTutor);
-		if(alunoPossivelTutor.isTutor()) return saida + alunoPossivelTutor.getNotaDeAvaliacao();
-		return saida + 0;
+		if(alunoPossivelTutor.isTutor()) return alunoPossivelTutor.getTutoria().toStringNotaDeAvaliacao();
+		return null;
 	}
 	
 	public String pegarNivel(String matriculaTutor) {
@@ -154,7 +153,10 @@ public class SistemaAlunos{
 		return alunos.get(matriculaTutor).getTutoria().getNivel();
 	}
 	
-	public int totalDinheiroTutor(String emailTutor) {
+	public int totalDinheiroTutor(String emailTutor) throws Exception {
+		String erroTotalDinheiroTutor = "Erro na consulta de total de dinheiro do tutor: ";
+		validacoes.emailTutorInvalidoOuNulo(emailTutor, erroTotalDinheiroTutor);
+		validacoes.tutorEmailNaoCadastrado(emailTutor, alunos, erroTotalDinheiroTutor + "Tutor nao encontrado");
 		for(Aluno a:alunos.values()) {
 			if(a.isTutor() && a.getEmail().equals(emailTutor)) {
 				return (int) a.getTutoria().getBolsa();

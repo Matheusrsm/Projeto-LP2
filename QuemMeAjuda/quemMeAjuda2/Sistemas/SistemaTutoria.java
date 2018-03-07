@@ -33,6 +33,10 @@ public class SistemaTutoria {
 		return pedidos.get(idAjuda).toString();
 	}
 
+	public double getCaixa() {
+		return caixa;
+	}
+
 	/**
 	 * Cria um novo objeto PedidoDeAjudaPresencial e implementa qual tutor está sendo associado ao pedido.
 	 * O novo objeto é adicionado à lista de pedidos de ajuda do sistema.
@@ -139,8 +143,11 @@ public class SistemaTutoria {
 		return pedidos.get(idAjuda).getInfoAjuda(atributo);
 	}
 	
-	public void avaliarTutor(int idAjuda, int nota) {
-		pedidos.get(idAjuda).getTutor().setNotaDeAvaliacao(nota);
+	public void avaliarTutor(int idAjuda, int nota) throws Exception {
+		String erroAvaliarTutor = "Erro na avaliacao de tutor: ";
+		validacoes.notaInvalida(nota, erroAvaliarTutor);
+		validacoes.idAjudaInvalido(idAjuda, pedidos, erroAvaliarTutor);
+		pedidos.get(idAjuda).getTutor().getTutoria().setNotaDeAvaliacao(nota);
 	}
 	
 	private double calculaTaxaTutor(String matriculaTutor) {
@@ -161,10 +168,12 @@ public class SistemaTutoria {
 		return taxa / 100;
 	}
 	
-	public void doar(String matriculaTutor, int totalCentavos) {
+	public void doar(String matriculaTutor, int totalCentavos) throws Exception {
+		String erroDoar = "Erro na doacao para tutor: ";
+		validacoes.totalCentavosInvalido(totalCentavos, erroDoar);
+		validacoes.naoEhTutor(matriculaTutor, mapaAlunos, erroDoar);
 		double totalSistema = Math.floor((1 - calculaTaxaTutor(matriculaTutor)) * totalCentavos);
 		this.caixa += totalSistema;
 		mapaAlunos.get(matriculaTutor).getTutoria().recebeDoacao(totalCentavos - totalSistema);
 	}
-
 }	

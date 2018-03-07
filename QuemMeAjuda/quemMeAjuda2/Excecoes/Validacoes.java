@@ -35,7 +35,7 @@ public class Validacoes {
 		List<String> emails = new ArrayList<String>();
 		for (Aluno a : alunos.values()) 
 			if (a.isTutor()) emails.add(a.getEmail());
-		if (!emails.contains(email)) throw new DadoInvalidoException (msg + "tutor nao cadastrado");
+		if (!emails.contains(email)) throw new DadoInvalidoException(msg);
 	}
 	
 	public void disciplinaJaEhTutor(String disciplina, List<Disciplina> disciplinas, String msg) throws Exception {
@@ -103,5 +103,19 @@ public class Validacoes {
 		if(!atributo.equals("disciplina") && !atributo.equals("horario") && !atributo.equals("dia") && !atributo.equals("localInteresse")) {
 			throw new DadoInvalidoException(msg + "atributo nao encontrado");
 		}
+	}
+	
+	public void notaInvalida(double nota, String msg) throws Exception {
+		if(nota < 0) throw new DadoInvalidoException(msg + "nota nao pode ser menor que 0");
+		else if(nota > 5) throw new DadoInvalidoException(msg + "nota nao pode ser maior que 5");
+	}
+	
+	public void emailTutorInvalidoOuNulo(String email, String msg) throws Exception {
+		if(email == null) throw new DadoNuloException(msg + "emailTutor nao pode ser vazio ou nulo");
+		else if(email.trim().isEmpty()) throw new DadoInvalidoException(msg + "emailTutor nao pode ser vazio ou nulo");
+	}
+	
+	public void totalCentavosInvalido(int totalCentavos, String msg) throws Exception {
+		if(totalCentavos < 0) throw new DadoInvalidoException(msg + "totalCentavos nao pode ser menor que zero");
 	}
 }

@@ -76,7 +76,7 @@ public class QuemMeAjuda{
 		return sistema.getSistemaTutoria().getInfoAjuda(idAjuda, atributo);
 	}
 	
-	public void avaliarTutor(int idAjuda, int nota) {
+	public void avaliarTutor(int idAjuda, int nota) throws Exception {
 		sistema.getSistemaTutoria().avaliarTutor(idAjuda, nota);
 	}
 	
@@ -88,11 +88,11 @@ public class QuemMeAjuda{
 		return sistema.pegarNivel(matriculaTutor);
 	}
 	
-	public void doar(String matriculaTutor, int totalCentavos) {
+	public void doar(String matriculaTutor, int totalCentavos) throws Exception {
 		sistema.getSistemaTutoria().doar(matriculaTutor, totalCentavos);
 	}
 	
-	public int totalDinheiroTutor(String emailTutor) {
+	public int totalDinheiroTutor(String emailTutor) throws Exception {
 		return sistema.totalDinheiroTutor(emailTutor);
 	}
 	
