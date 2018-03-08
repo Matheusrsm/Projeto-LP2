@@ -5,12 +5,11 @@ import org.junit.Test;
 
 import quemMeAjuda.Excecoes.*;
 import quemMeAjuda.Sistemas.*;
-import quemMeAjuda.Entidades.*;
 
 /**
  * Classe de teste da Classe Sistema
  * 
- * @author wesleyham
+ * @author Wesley Monte, Lukas Nascimento
  *
  */
 public class SistemaTest {
@@ -132,13 +131,179 @@ public class SistemaTest {
 		assertEquals(null, sis.getInfoAluno("987654321", "idade"));
 	}
 	
-	/*@Test
+	@Test
 	public void testTornarTutor() throws Exception {
 		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
 		sis.tornarTutor("123456789", "Calculo 2", 3);
 		sis.tornarTutor("123456789", "Vetorial", 4);
-		assertEquals("Calculo 2", sis.getAlunos().get("123456789").getDisciplinas().get(0));
-		assertEquals("Vetorial", sis.getAlunos().get("123456789").getDisciplinas().get(1));
-	}*/
+		assertEquals("Calculo 2", sis.getAlunos().get("123456789").getTutoria().getDisciplinas().get(0).getNome(), "Calculo 2");
+		assertEquals("Vetorial", sis.getAlunos().get("123456789").getTutoria().getDisciplinas().get(1).getNome(), "Vetorial");
+	}
 	
+	@Test (expected = DadoInvalidoException.class)
+	public void testTornarTutorDisciplinaVazio() throws Exception {
+		sis.cadastrarAluno("Lukas", "666", 666, "", "lukas@live.com");
+		sis.tornarTutor("666", "", 3);
+	}
+	
+	@Test
+	public void testRecuperaTutor() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		assertEquals(sis.recuperaTutor("123456789"), sis.recuperaTutor("123456789").toString());
+	}
+	
+	@Test
+	public void testCadastrarHorario() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarHorario("lukas@live.com", "15:00", "seg");
+	}
+	
+	@Test
+	public void testCadastrarLocalDeAtendimento() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarLocalDeAtendimento("lukas@live.com", "LCC3");
+	}
+	
+	@Test
+	public void testConsultaLocalDeAtendimento() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarLocalDeAtendimento("lukas@live.com", "LCC3");
+		assertEquals(sis.consultaLocal("lukas@live.com", "LCC3"), true);
+	}
+	
+	@Test
+	public void testConsultaLocalDeAtendimentoFalse() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarLocalDeAtendimento("lukas@live.com", "LCC3");
+		assertEquals(sis.consultaLocal("lukas@live.com", "LCC2"), false);
+	}
+	
+	@Test
+	public void testConsultaHorario() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarHorario("lukas@live.com", "15:00", "seg");
+		assertEquals(sis.consultaHorario("lukas@live.com", "15:00", "seg"), true);
+	}
+	
+	@Test
+	public void testConsultaHorarioFalse() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarHorario("lukas@live.com", "15:00", "seg");
+		assertEquals(sis.consultaHorario("lukas@live.com", "15:00", "sex"), false);
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testConsultaHorarioHoraVazio() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarHorario("lukas@live.com", "", "seg");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testConsultaHorarioDiaVazio() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarHorario("lukas@live.com", "15:00", "");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testConsultaHorarioEmailVazio() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarHorario("", "15:00", "seg");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testConsultaHorarioEmailInvalido() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarHorario("lukaslive.com", "15:00", "seg");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testConsultaHorarioHoraEmBranco() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarHorario("lukas@live.com", "  ", "seg");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testConsultaLocalDeAtendimentoLocalInvalido() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarLocalDeAtendimento("lukas@live.com", " ");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testConsultaLocalDeAtendimentoEmailInvalido() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarLocalDeAtendimento("lukaslive.com", "seg");
+	}
+	
+	@Test
+	public void testPedirAjudaPresencial() throws Exception {
+		sis.pedirAjudaPresencial("123", "Calculo 1", "15:00", "seg", "LCC3");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testPedirAjudaPresencialDisciplinaInvalida() throws Exception {
+		sis.pedirAjudaPresencial("123", " ", "15:00", "seg", "LCC3");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testPedirAjudaPresencialHorarioInvalido() throws Exception {
+		sis.pedirAjudaPresencial("123", "Calculo 1", " ", "seg", "LCC3");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testPedirAjudaPresencialMatriculaInvalida() throws Exception {
+		sis.pedirAjudaPresencial(" ", "Calculo 1", "15:00", "seg", "LCC3");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testPedirAjudaPresencialLocalInvalido() throws Exception {
+		sis.pedirAjudaPresencial("123", "Calculo 1", "15:00", "seg", " ");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testPedirAjudaPresencialDiaInvalido() throws Exception {
+		sis.pedirAjudaPresencial("123", "Calculo 1", "15:00", " ", "LCC3");
+	}
+	
+	@Test
+	public void testPedirAjudaOnline() throws Exception {
+		sis.pedirAjudaOnline("123", "P1");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testPedirAjudaOnlineMatriculaInvalida() throws Exception {
+		sis.pedirAjudaOnline(" ", "P1");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testPedirAjudaOnlineDisciplinaInvalida() throws Exception {
+		sis.pedirAjudaOnline("123", " ");
+	}
 }

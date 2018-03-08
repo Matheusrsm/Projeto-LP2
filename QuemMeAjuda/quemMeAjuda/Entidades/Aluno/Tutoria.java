@@ -14,8 +14,8 @@ public class Tutoria {
 	
 	public Tutoria() {
 		this.disciplinas = new ArrayList<>();
-		this.locais = new ArrayList<>();
-		this.horarios = new ArrayList<>();
+		this.locais      = new ArrayList<>();
+		this.horarios    = new ArrayList<>();
 		this.notaDeAvaliacao = 4.0;
 		this.nivel = NivelTutoria.TUTOR;
 		this.bolsa = 0.0;
@@ -26,9 +26,8 @@ public class Tutoria {
 	}
 	
 	public double getProficiencia(String disciplina) {
-		for (Disciplina d : disciplinas) {
+		for (Disciplina d : disciplinas)
 			if (d.getNome().equals(disciplina)) return d.getProficiencia();
-		}
 		return 0;
 	}
 	
@@ -36,12 +35,11 @@ public class Tutoria {
 	 * Método que verifica se o tutor tem a disciplina passada
 	 * @param disciplina
 	 * 				Disciplina a ser consultada
-	 * @return Um booleano 
+	 * @return boolean 
 	 */
 	public boolean temDisciplina(String disciplina) {
-		for (Disciplina d : disciplinas) {
+		for (Disciplina d : disciplinas)
 			if (d.getNome().equals(disciplina)) return true;
-		}
 		return false;
 	}
 	

@@ -1,7 +1,7 @@
 package quemMeAjuda.Excecoes;
 
 /**
- * Classe responsavel por lancar excecao de dados invalidos.
+ * Classe de Exceção de DadoInvalido
  * @author Lukas Nascimento
  *
  */

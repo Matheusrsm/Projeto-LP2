@@ -16,7 +16,7 @@ public class SistemaAlunos{
 	
 	public SistemaAlunos() {
 		SistemaAlunos.alunos = new HashMap<>();
-		this.validacoes = new Validacoes();
+		validacoes = new Validacoes();
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
@@ -62,6 +62,7 @@ public class SistemaAlunos{
 	
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
 		String erroTornarTutor = "Erro na definicao de papel: ";
+		validacoes.disciplinaVazia(disciplina, erroTornarTutor);
 		validacoes.naoEhTutor(matricula, alunos, erroTornarTutor);
 		Aluno alunoViraTutor = alunos.get(matricula);
 		if(alunoViraTutor.isTutor()) {
@@ -82,9 +83,8 @@ public class SistemaAlunos{
 	
 	public String listarTutores() {
 		ArrayList<Aluno> listaDeTutores = new ArrayList<Aluno>();
-		for(Aluno aluno: alunos.values()) {
+		for(Aluno aluno: alunos.values())
 			if(aluno.isTutor()) listaDeTutores.add(aluno);
-		}
 		Collections.sort(listaDeTutores, new ComparadorNomeAluno());
 		String listaTutores = "";
 		for(Aluno aluno: listaDeTutores) listaTutores += aluno.toString() + ", ";

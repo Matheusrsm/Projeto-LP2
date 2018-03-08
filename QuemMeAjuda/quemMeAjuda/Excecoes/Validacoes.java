@@ -39,9 +39,8 @@ public class Validacoes {
 	}
 	
 	public void disciplinaJaEhTutor(String disciplina, List<Disciplina> disciplinas, String msg) throws Exception {
-		for(Disciplina d: disciplinas) {
+		for(Disciplina d: disciplinas)
 			if(d.getNome().equals(disciplina)) throw new DadoInvalidoException(msg + "Ja eh tutor dessa disciplina");
-		}
 	}
 	
 	public void proficienciaInvalida(int proficiencia, String msg) throws Exception{
