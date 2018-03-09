@@ -14,14 +14,14 @@ import quemMeAjuda.Excecoes.Validacoes;
  * @author Lukas Nascimento, Matheus Silva, Wesley Monte
  *
  */
-public class SistemaTutoria {
+public class ControllerTutoria {
 	private Map<String, Aluno> mapaAlunos;
 	private Map<Integer, PedidoDeAjuda> pedidos;
 	private int caixa;
 	private Validacoes validacoes;
 	
-	public SistemaTutoria() {
-		this.mapaAlunos = SistemaAlunos.getAlunos();
+	public ControllerTutoria() {
+		this.mapaAlunos = ControllerAlunos.getAlunos();
 		this.pedidos = new HashMap<>();
 		this.caixa = 0;
 		this.validacoes = new Validacoes();

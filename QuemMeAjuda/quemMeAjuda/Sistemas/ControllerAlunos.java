@@ -9,14 +9,14 @@ import java.util.Map;
 import quemMeAjuda.Entidades.Aluno.*;
 import quemMeAjuda.Excecoes.Validacoes;
 
-public class SistemaAlunos{
+public class ControllerAlunos{
 
 	private static Map<String, Aluno> alunos;
 	private Validacoes validacoes;
 	
-	public SistemaAlunos() {
-		SistemaAlunos.alunos = new HashMap<>();
-		validacoes = new Validacoes();
+	public ControllerAlunos() {
+		ControllerAlunos.alunos = new HashMap<>();
+		this.validacoes = new Validacoes();
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {

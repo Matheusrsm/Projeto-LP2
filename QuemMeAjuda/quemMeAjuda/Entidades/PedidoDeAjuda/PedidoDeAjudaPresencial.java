@@ -1,60 +1,36 @@
 package quemMeAjuda.Entidades.PedidoDeAjuda;
 
 import quemMeAjuda.Entidades.Aluno.*;
-public class PedidoDeAjudaPresencial implements PedidoDeAjuda{
 
-	private String matricula, disciplina, dia, local, horario;
-	private Aluno tutor;
-	private boolean finalizada;
+public class PedidoDeAjudaPresencial extends PedidoDeAjuda {
+
+	private String dia, local, horario;
 	
 	public PedidoDeAjudaPresencial(Aluno tutor, String matricula, String disciplina, String horario, String dia, String local) {
-		this.matricula = matricula;
-		this.disciplina = disciplina;
+		super(tutor, matricula, disciplina);
 		this.horario = horario;
 		this.dia = dia;
 		this.local = local;
-		this.tutor = tutor;
-		this.finalizada = false;
-	}
-
-	@Override
-	public boolean getFinalizacao() {
-		return finalizada;
-	}
-	
-	@Override
-	public void setFinalizacao(boolean fechouOuNao) {
-		this.finalizada = fechouOuNao;
-	}
-	
-	@Override
-	public Aluno getTutor() {
-		return tutor;
 	}
 
 	@Override
 	public String getInfoAjuda(String atributo) {
 		switch(atributo) {
 		case "horario":
-			return this.horario;
+			return horario;
 		case "dia":
-			return this.dia;
+			return dia;
 		case "localInteresse":
-			return this.local;
+			return local;
 		case "disciplina":
-			return this.disciplina;
+			return getDisciplina();
 		default:
 			return null;
 		}
 	}
-
-	@Override
-	public String getMatriculaAluno() {
-		return matricula;
-	}
 	
 	@Override
 	public String toString() {
-		return "Tutor - " + tutor.getMatricula() + ", horario - " + horario + ", dia - " + dia + ", local - " + local + ", disciplina - " + disciplina;
+		return super.toString() + ", horario - " + horario + ", dia - " + dia + ", local - " + local + ", disciplina - " + getDisciplina();
 	}
 }
