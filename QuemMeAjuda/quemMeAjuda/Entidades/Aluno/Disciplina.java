@@ -1,6 +1,12 @@
 package quemMeAjuda.Entidades.Aluno;
 
-public class Disciplina {
+import java.io.Serializable;
+
+public class Disciplina implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4667862378435164134L;
 	private String nome;
 	private double proficiencia;
 	

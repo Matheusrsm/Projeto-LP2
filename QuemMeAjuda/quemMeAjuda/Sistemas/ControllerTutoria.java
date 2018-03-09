@@ -1,5 +1,6 @@
 package quemMeAjuda.Sistemas;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -14,7 +15,11 @@ import quemMeAjuda.Excecoes.Validacoes;
  * @author Lukas Nascimento, Matheus Silva, Wesley Monte
  *
  */
-public class ControllerTutoria {
+public class ControllerTutoria implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3848134710337632641L;
 	private Map<String, Aluno> mapaAlunos;
 	private Map<Integer, PedidoDeAjuda> pedidos;
 	private int caixa;

@@ -1,5 +1,10 @@
 package quemMeAjuda.Sistemas;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Map;
 
 import quemMeAjuda.Entidades.Aluno.Aluno;
@@ -96,6 +101,59 @@ public class Sistema {
 	
 	public int totalDinheiroSistema() {
 		return controladorTutoria.getCaixa();
+	}
+	
+	public void configurarOrdem(String atributo) {
+		controladorAlunos.configurarOrdem(atributo);
+	}
+	
+	////// MATHEUS/LUKAS, ALTEREM O PARAMETRO PARA FICAR NO DIRETORIO DO PROJETO NO PC DE VCS SE NAO DÁ NULLPOINTED////////
+	public void salvar() throws Exception {
+		char s = File.separatorChar;
+		try {
+		    File arquivoAlunos = new File(s + "home" + s + "wesley" + s + "wesley-workspace" + s + "Quem Me Ajuda" + s + "Dados" + s + "alunos.txt");
+		    File arquivoTutores = new File(s + "home" + s + "wesley" + s + "wesley-workspace" + s + "Quem Me Ajuda" + s + "Dados" + s + "tutores.txt");
+		    FileOutputStream fosAlunos = new FileOutputStream(arquivoAlunos);
+		    FileOutputStream fosTutores = new FileOutputStream(arquivoTutores);
+		    ObjectOutputStream writerAlunos = new ObjectOutputStream(fosAlunos);
+		    ObjectOutputStream writerTutores = new ObjectOutputStream(fosTutores);
+		    writerAlunos.writeObject(this.controladorAlunos);
+		    writerTutores.writeObject(this.controladorTutoria);
+		    writerAlunos.flush();
+		    writerAlunos.close();
+		    writerTutores.flush();
+		    writerTutores.close();
+		    fosAlunos.flush();
+		    fosTutores.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	////// MATHEUS/LUKAS, ALTEREM O PARAMETRO PARA FICAR NO DIRETORIO DO PROJETO NO PC DE VCS SE NAO DÁ NULLPOINTED////////
+	//////// CARREGAR COM ALGUM PROBLEMA ACREDITO EU /////
+	public void carregar() {
+		char s = File.separatorChar;
+		File pasta = new File(s + "home" + s + "wesley" + s + "wesley-workspace" + s + "Quem Me Ajuda" + s + "Dados");
+		File[] arquivos = pasta.listFiles();
+		FileInputStream fis = null;  
+		ObjectInputStream reader = null;
+		try {
+			for(File arquivo : arquivos){
+				if (arquivo.getName().equals("alunos.txt")){
+					fis = new FileInputStream(arquivo);
+					reader = new ObjectInputStream(fis);
+					this.controladorAlunos = (ControllerAlunos) reader.readObject();
+				}
+				else if (arquivo.getName().equals("tutores.txt")) {
+					fis = new FileInputStream(arquivo);
+					reader = new ObjectInputStream(fis);
+					this.controladorTutoria = (ControllerTutoria) reader.readObject();
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}	
 	}
 
 	public Map<String, Aluno> getAlunos() {

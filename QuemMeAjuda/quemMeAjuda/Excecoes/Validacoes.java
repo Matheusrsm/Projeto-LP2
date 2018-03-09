@@ -1,5 +1,6 @@
 package quemMeAjuda.Excecoes;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -7,8 +8,13 @@ import java.util.Map;
 import quemMeAjuda.Entidades.Aluno.*;
 import quemMeAjuda.Entidades.PedidoDeAjuda.PedidoDeAjuda;
 
-public class Validacoes {
+public class Validacoes implements Serializable{
 		
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4420266001017456149L;
+
 	public void nomeInvalidoOuNulo(String nome, String msg) throws Exception {
 		if(nome == null) throw new DadoNuloException(msg + "Nome nao pode ser vazio ou nulo");
 		if(nome.trim().isEmpty()) throw new DadoInvalidoException(msg + "Nome nao pode ser vazio ou nulo");

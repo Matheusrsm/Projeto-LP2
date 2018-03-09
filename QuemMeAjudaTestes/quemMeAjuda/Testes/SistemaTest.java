@@ -87,12 +87,34 @@ public class SistemaTest {
 	}
 	
 	@Test
-	public void testListarAlunos() throws Exception {
+	public void testListarAlunosPorNome() throws Exception {
 		String lista = "147258369 - Lukas - 100 - 99998888 - lukas@gmail.com, 100101102 - Matheus - 100 - 987654321 - matheus@gmail.com, "
 				+ "123456789 - Wesley - 100 - wesley@gmail.com";
 		sis.cadastrarAluno("Matheus", "100101102", 100, "987654321", "matheus@gmail.com");
 		sis.cadastrarAluno("Lukas", "147258369", 100, "99998888", "lukas@gmail.com");
 		sis.cadastrarAluno("Wesley", "123456789", 100, "", "wesley@gmail.com");
+		assertEquals(lista, sis.listarAlunos());
+	}
+	
+	@Test
+	public void testListarAlunosPorMatricula() throws Exception {
+		String lista = "123456789 - Wesley - 100 - wesley@gmail.com, 147258369 - Lukas - 100 - 99998888 - lukas@gmail.com, "
+				+ "987654321 - Matheus - 100 - 987654321 - matheus@gmail.com";
+		sis.cadastrarAluno("Matheus", "987654321", 100, "987654321", "matheus@gmail.com");
+		sis.cadastrarAluno("Lukas", "147258369", 100, "99998888", "lukas@gmail.com");
+		sis.cadastrarAluno("Wesley", "123456789", 100, "", "wesley@gmail.com");
+		sis.configurarOrdem("MATRICULA");
+		assertEquals(lista, sis.listarAlunos());
+	}
+	
+	@Test
+	public void testListarAlunosPorEmail() throws Exception {
+		String lista = "123456789 - Wesley - 100 - monte.wesley@gmail.com, 147258369 - Lukas - 100 - 99998888 - nascimento.lukas@gmail.com, "
+				+ "100101102 - Matheus - 100 - 987654321 - silva.matheus@gmail.com";
+		sis.cadastrarAluno("Matheus", "100101102", 100, "987654321", "silva.matheus@gmail.com");
+		sis.cadastrarAluno("Lukas", "147258369", 100, "99998888", "nascimento.lukas@gmail.com");
+		sis.cadastrarAluno("Wesley", "123456789", 100, "", "monte.wesley@gmail.com");
+		sis.configurarOrdem("EMAIL");
 		assertEquals(lista, sis.listarAlunos());
 	}
 	

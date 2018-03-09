@@ -4,6 +4,10 @@ import quemMeAjuda.Entidades.Aluno.*;
 
 public class PedidoDeAjudaPresencial extends PedidoDeAjuda {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 353215511292577905L;
 	private String dia, local, horario;
 	
 	public PedidoDeAjudaPresencial(Aluno tutor, String matricula, String disciplina, String horario, String dia, String local) {

@@ -1,6 +1,12 @@
 package quemMeAjuda.Entidades.Aluno;
 
-public class Aluno implements Comparable<Aluno> {
+import java.io.Serializable;
+
+public class Aluno implements Comparable<Aluno>, Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5632534491723591604L;
 	private String  matricula, nome, email, telefone;
 	private int     codigoCurso, iD;
 	private double  notaDeAvaliacao;

@@ -1,22 +1,33 @@
 package quemMeAjuda.Sistemas;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import Comparadores.ComparadorEmail;
+import Comparadores.ComparadorMatricula;
+import Comparadores.ComparadorNome;
 import quemMeAjuda.Entidades.Aluno.*;
 import quemMeAjuda.Excecoes.Validacoes;
 
-public class ControllerAlunos{
+public class ControllerAlunos implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5902969503242499205L;
 	private static Map<String, Aluno> alunos;
 	private Validacoes validacoes;
+	private Comparator<Aluno> ordem;
 	
 	public ControllerAlunos() {
 		ControllerAlunos.alunos = new HashMap<>();
 		this.validacoes = new Validacoes();
+		this.ordem = new ComparadorNome();
 	}
 	
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
@@ -36,7 +47,7 @@ public class ControllerAlunos{
 	public String listarAlunos() {
 		List<Aluno> listaDeAlunos = new ArrayList<Aluno>();
 		for(Aluno a: alunos.values()) listaDeAlunos.add(a);
-		Collections.sort(listaDeAlunos, new ComparadorNomeAluno());
+		Collections.sort(listaDeAlunos, this.ordem);
 		String listaAlunos = "";
 		for(Aluno a: listaDeAlunos) listaAlunos += a.toString() + ", ";
 		listaAlunos = listaAlunos.substring(0, listaAlunos.length() - 2);
@@ -85,7 +96,7 @@ public class ControllerAlunos{
 		ArrayList<Aluno> listaDeTutores = new ArrayList<Aluno>();
 		for(Aluno aluno: alunos.values())
 			if(aluno.isTutor()) listaDeTutores.add(aluno);
-		Collections.sort(listaDeTutores, new ComparadorNomeAluno());
+		Collections.sort(listaDeTutores, this.ordem);
 		String listaTutores = "";
 		for(Aluno aluno: listaDeTutores) listaTutores += aluno.toString() + ", ";
 		return listaTutores.substring(0, listaTutores.length() - 2);
@@ -150,6 +161,12 @@ public class ControllerAlunos{
 			if(a.isTutor() && a.getEmail().equals(emailTutor))
 				return (int) a.getTutoria().getBolsa();
 		return 0;
+	}
+	
+	public void configurarOrdem(String atributo) {
+		if(atributo.equals("NOME")) this.ordem = new ComparadorNome();
+		else if(atributo.equals("MATRICULA")) this.ordem = new ComparadorMatricula();
+		else if(atributo.equals("EMAIL")) this.ordem = new ComparadorEmail();
 	}
 
 	public static Map<String, Aluno> getAlunos() {

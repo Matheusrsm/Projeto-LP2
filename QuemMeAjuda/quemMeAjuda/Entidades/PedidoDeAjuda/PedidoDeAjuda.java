@@ -1,9 +1,15 @@
 package quemMeAjuda.Entidades.PedidoDeAjuda;
 
+import java.io.Serializable;
+
 import quemMeAjuda.Entidades.Aluno.Aluno;
 
-public abstract class PedidoDeAjuda {
+public abstract class PedidoDeAjuda implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8035229549214584828L;
 	private String matriculaAluno, disciplina;
 	private Aluno tutor;
 	private boolean finalizada;

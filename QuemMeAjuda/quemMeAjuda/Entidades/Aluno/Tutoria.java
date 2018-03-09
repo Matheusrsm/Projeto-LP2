@@ -1,10 +1,15 @@
 package quemMeAjuda.Entidades.Aluno;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Tutoria {
+public class Tutoria implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6980912988371418811L;
 	private List<Disciplina> disciplinas;
 	private List<String> locais;
 	private List<Horario> horarios;
