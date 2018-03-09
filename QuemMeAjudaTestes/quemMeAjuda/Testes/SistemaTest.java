@@ -251,8 +251,60 @@ public class SistemaTest {
 		assertEquals("LCC3", sis.getAlunos().get("123456789").getTutoria().getLocais().get(0));
 	}
 	
+	@Test(expected = DadoInvalidoException.class)
+	public void testCadastrarLocalDeAtendimentoLocalVazio() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarLocalDeAtendimento("wesley@gmail.com", "");
+	}
+	
+	@Test(expected = DadoNuloException.class)
+	public void testCadastrarLocalDeAtendimentoLocalNulo() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarLocalDeAtendimento("wesley@gmail.com", null);
+	}
+	
+	@Test(expected = DadoInvalidoException.class)
+	public void testCadastrarLocalDeAtendimentoEmailVazio() throws Exception {
+		sis.cadastrarLocalDeAtendimento("", "LCC3");
+	}
+	
+	@Test(expected = DadoNuloException.class)
+	public void testCadastrarLocalDeAtendimentoEmailNulo() throws Exception {
+		sis.cadastrarLocalDeAtendimento(null, "LCC3");
+	}
+	
+	@Test(expected = DadoInvalidoException.class)
+	public void testCadastrarLocalDeAtendimentoTutorNaoCadastrado() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarLocalDeAtendimento("matheus@gmail.com", "LCC3");
+	}
+	
 	@Test
-	public void testConsultaLocalDeAtendimento() throws Exception {
+	public void testConsultaHorarioTrue() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarHorario("lukas@live.com", "15:00", "seg");
+		assertEquals(true, sis.consultaHorario("lukas@live.com", "15:00", "seg"));
+	}
+	
+	@Test
+	public void testConsultaHorarioFalse() throws Exception {
+		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
+		sis.tornarTutor("123456789", "Calculo 1", 3);
+		sis.tornarTutor("123456789", "Vetorial", 4);
+		sis.cadastrarHorario("lukas@live.com", "15:00", "seg");
+		assertEquals(false, sis.consultaHorario("lukas@live.com", "15:00", "sex"));
+	}
+	
+	@Test
+	public void testConsultaLocalDeAtendimentoTrue() throws Exception {
 		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
 		sis.tornarTutor("123456789", "Calculo 1", 3);
 		sis.tornarTutor("123456789", "Vetorial", 4);
@@ -266,27 +318,10 @@ public class SistemaTest {
 		sis.tornarTutor("123456789", "Calculo 1", 3);
 		sis.tornarTutor("123456789", "Vetorial", 4);
 		sis.cadastrarLocalDeAtendimento("lukas@live.com", "LCC3");
-		assertEquals(sis.consultaLocal("lukas@live.com", "LCC2"), false);
+		assertEquals(false, sis.consultaLocal("lukas@live.com", "LCC2"));
 	}
 	
-	@Test
-	public void testConsultaHorario() throws Exception {
-		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
-		sis.tornarTutor("123456789", "Calculo 1", 3);
-		sis.tornarTutor("123456789", "Vetorial", 4);
-		sis.cadastrarHorario("lukas@live.com", "15:00", "seg");
-		assertEquals(sis.consultaHorario("lukas@live.com", "15:00", "seg"), true);
-	}
-	
-	@Test
-	public void testConsultaHorarioFalse() throws Exception {
-		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
-		sis.tornarTutor("123456789", "Calculo 1", 3);
-		sis.tornarTutor("123456789", "Vetorial", 4);
-		sis.cadastrarHorario("lukas@live.com", "15:00", "seg");
-		assertEquals(sis.consultaHorario("lukas@live.com", "15:00", "sex"), false);
-	}
-	
+	/*
 	@Test (expected = DadoInvalidoException.class)
 	public void testConsultaHorarioHoraVazio() throws Exception {
 		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
@@ -342,6 +377,7 @@ public class SistemaTest {
 		sis.tornarTutor("123456789", "Vetorial", 4);
 		sis.cadastrarLocalDeAtendimento("lukaslive.com", "seg");
 	}
+	*/
 	
 	@Test
 	public void testPedirAjudaPresencial() throws Exception {
