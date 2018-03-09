@@ -8,9 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Comparadores.ComparadorEmail;
-import Comparadores.ComparadorMatricula;
-import Comparadores.ComparadorNome;
+import quemMeAjuda.Comparadores.ComparadorEmail;
+import quemMeAjuda.Comparadores.ComparadorMatricula;
+import quemMeAjuda.Comparadores.ComparadorNome;
 import quemMeAjuda.Entidades.Aluno.*;
 import quemMeAjuda.Excecoes.Validacoes;
 
