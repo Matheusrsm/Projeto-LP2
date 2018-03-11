@@ -444,4 +444,24 @@ public class SistemaTest {
 	public void testPedirAjudaOnlineDisciplinaInvalida() throws Exception {
 		sis.pedirAjudaOnline("123", " ");
 	}
+	
+	/*@Test 
+	public void testPegarTutor() throws Exception {
+		int a = sis.pedirAjudaOnline("321", "P1");
+		sis.cadastrarAluno("Lukas", "123", 100, "40028922", "lukas@live.com");
+		sis.tornarTutor("123", "P1", 5);
+		sis.tornarTutor("123", "Vetorial", 4);
+		assertEquals(sis.pegarTutor(a), "Tutor - 123, disciplina - P1");
+	}*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

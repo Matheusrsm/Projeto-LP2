@@ -47,7 +47,7 @@ public class ControllerTutoria implements Serializable {
 	 * @param idAjuda int
 	 * 		iD do objeto PedidoDeAjuda registrado no Sistema
 	 * @return String
-	 * 		Objeto Aluno(tutor) em String 
+	 * 		Objeto Aluno(tutor) em String
 	 * @throws Exception
 	 */
 	public String pegaTutor(int idAjuda) throws Exception {
@@ -77,15 +77,15 @@ public class ControllerTutoria implements Serializable {
 	 * Cria um novo objeto PedidoDeAjudaPresencial e implementa qual tutor está sendo associado ao pedido.
 	 * O novo objeto é adicionado à lista de pedidos de ajuda do sistema.
 	 * @param matrAluno String
-	 *		matricula do tutor a ajudar
+	 *		Matricula do aluno a registrar o pedido
 	 * @param disciplina String
-	 * 		disciplina que o aluno deseja ajuda
+	 * 		Disciplina que o aluno deseja ajuda
 	 * @param horario String
-	 * 		horario que o aluno contratante quer a ajuda
+	 * 		Horario que o aluno contratante quer a ajuda
 	 * @param dia String static
-	 * 		dia que o aluno contratante quer a ajuda
+	 * 		Dia que o aluno contratante quer a ajuda
 	 * @param localInteresse
-	 * 		local que o aluno contratante quer a ajuda
+	 * 		Local que o aluno contratante quer a ajuda
 	 * @return
 	 * @throws Exception 
 	 */
@@ -164,7 +164,7 @@ public class ControllerTutoria implements Serializable {
 	/**
 	 * Registra um novo objeto PedidoDeAjudaOnline no sistema, ficando disponível para ajuda
 	 * @param matrAluno String
-	 * 		Matricula do Aluno que registra o pedido
+	 * 		Matricula do aluno a registrar o pedido
 	 * @param disciplina String
 	 * 		Disciplina que o Aluno precisa de ajuda
 	 * @return int

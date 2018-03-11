@@ -251,7 +251,7 @@ public class ControllerAlunos implements Serializable {
 	/**
 	 * Recupera a nota do Aluno(tutor) dado no parametro
 	 * @param matriculaTutor String
-	 * 		Matricula do tutor registrado no sistema
+	 * 		Matricula do tutor
 	 * @return String
 	 */
 	public String pegarNota(String matriculaTutor) {
@@ -263,7 +263,7 @@ public class ControllerAlunos implements Serializable {
 	/**
 	 * Recupera o nível do Aluno(tutor) dado no parametro
 	 * @param matriculaTutor String
-	 * 		Matricula do tutor registrado no sistema
+	 * 		Matricula do tutor
 	 * @return String
 	 */	
 	public String pegarNivel(String matriculaTutor) {
@@ -271,12 +271,6 @@ public class ControllerAlunos implements Serializable {
 		return alunos.get(matriculaTutor).getTutoria().getNivel();
 	}
 	
-	/**
-	 * Recupera o total de dinheiro, em centavos, do Aluno(tutor) dado no parametro
-	 * @param emailTutor String
-	 * 		email do tutor registrado no sistema
-	 * @return String
-	 */
 	public int totalDinheiroTutor(String emailTutor) throws Exception {
 		String erroTotalDinheiroTutor = "Erro na consulta de total de dinheiro do tutor: ";
 		validacoes.emailTutorInvalidoOuNulo(emailTutor, erroTotalDinheiroTutor);
@@ -287,10 +281,6 @@ public class ControllerAlunos implements Serializable {
 		return 0;
 	}
 	
-	/**
-	 * Ordem atribuída aos Alunos do sistema
-	 * @param atributo String
-	 */
 	public void configurarOrdem(String atributo) {
 		if(atributo.equals(Ordem.NOME.getDescricao())) this.ordem = new ComparadorNome();
 		else if(atributo.equals(Ordem.MATRICULA.getDescricao())) this.ordem = new ComparadorMatricula();
