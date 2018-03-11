@@ -25,14 +25,37 @@ public class ControllerAlunos implements Serializable {
 		this.ordem = new ComparadorNome();
 	}
 	
+	/**
+	 * Recupera o mapa de Alunos registrados no Sistema
+	 * @return Map<String, Aluno>
+	 */
 	public static Map<String, Aluno> getAlunos() {
 		return alunos;
 	}
 	
+	/**
+	 * Carrega um novo mapa de Alunos
+	 * @param Map<String, Aluno>
+	 * 		Novo mapa de Alunos 
+	 */
 	public static void carregaMapaAlunos(Map<String, Aluno> novoMapa) {
 		alunos = novoMapa;
 	}
 	
+	/**
+	 * Cadastrar um novo objeto Aluno no Sistema
+	 * @param nome String
+	 * 		Nome do Aluno a ser registrado
+	 * @param matricula String
+	 * 		Matricula do Aluno a ser registrado
+	 * @param codigoCurso int
+	 * 		Codigo do curso do Aluno a ser registrado
+	 * @param telefone String
+	 * 		Telefone do Aluno a ser registrado
+	 * @param email String
+	 * 		E-mail do Aluno a ser registrado
+	 * @throws Exception
+	 */
 	public void cadastrarAluno(String nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
 		String erroCadastrarAluno = "Erro no cadastro de aluno: ";
 		validacoes.emailInvalidoOuNulo(email, erroCadastrarAluno);
@@ -41,12 +64,25 @@ public class ControllerAlunos implements Serializable {
 		alunos.put(matricula, new Aluno(alunos.size() + 1, nome, matricula, codigoCurso, telefone, email));
 	}
 	
+	/**
+	 * Recupera um objeto Aluno registrado no sistema
+	 * @param matricula String
+	 * 		Matricula do Aluno a ser recuperado 
+	 * @return String
+	 * 		Formato String do Aluno a ser recuperado
+	 * 		(matricula + " - " + nome + " - " + codigoCurso + " - " + telefone + " - " +  email)
+	 * @throws Exception
+	 */
 	public String recuperaAluno(String matricula) throws Exception {
 		String erroRecuperaAluno = "Erro na busca por aluno: ";
 		validacoes.alunoNaoCadastrado(matricula, alunos, erroRecuperaAluno);
 		return alunos.get(matricula).toString();
 	}
 	
+	/**
+	 * Lista os Alunos registrados no sistema
+	 * @return String
+	 */
 	public String listarAlunos() {
 		List<Aluno> listaDeAlunos = new ArrayList<Aluno>();
 		for(Aluno a: alunos.values()) listaDeAlunos.add(a);
@@ -57,6 +93,16 @@ public class ControllerAlunos implements Serializable {
 		return listaAlunos;
 	}
 	
+	/**
+	 * Recupera a informação de um Aluno desejada no parâmetro 
+	 * @param matricula String
+	 * 		Matricula do Aluno
+	 * @param atributo String
+	 * 		Informação desejada
+	 * @return String
+	 *		Informação
+	 * @throws Exception
+	 */
 	public String getInfoAluno(String matricula, String atributo) throws Exception {
 		String erroGetInfoAluno = "Erro na obtencao de informacao de aluno: ";
 		validacoes.alunoNaoCadastrado(matricula, alunos, erroGetInfoAluno);
@@ -74,6 +120,16 @@ public class ControllerAlunos implements Serializable {
 		}
 	}
 	
+	/**
+	 * Registra um Aluno (já registrado) do sistema como tutor
+	 * @param matricula String
+	 * 		Matricula do Aluno a se tornar tutor
+	 * @param disciplina String
+	 * 		Disciplina qual o Aluno tornarar-se tutor
+	 * @param proficiencia
+	 * 		Proficiencia do Aluno na disciplina
+	 * @throws Exception
+	 */
 	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
 		String erroTornarTutor = "Erro na definicao de papel: ";
 		validacoes.disciplinaVazia(disciplina, erroTornarTutor);
@@ -88,6 +144,13 @@ public class ControllerAlunos implements Serializable {
 		else alunoViraTutor.tornaAlunoTutor(disciplina, proficiencia);
 	}
 	
+	/**
+	 * Recupera o Aluno, se for tutor, registrado no sistema
+	 * @param matricula String
+	 * 		Matricula do tutor a ser recuperado
+	 * @return String
+	 * @throws Exception
+	 */
 	public String recuperaTutor(String matricula) throws Exception {
 		String erroRecuperaTutor = "Erro na busca por tutor: ";
 		validacoes.naoEhTutor(matricula, alunos, erroRecuperaTutor);
@@ -95,6 +158,10 @@ public class ControllerAlunos implements Serializable {
 		return null;
 	}
 	
+	/**
+	 * Lista todos os Alunos tutores registrados no sistema
+	 * @return String
+	 */
 	public String listarTutores() {
 		ArrayList<Aluno> listaDeTutores = new ArrayList<Aluno>();
 		for(Aluno aluno: alunos.values())
@@ -109,6 +176,17 @@ public class ControllerAlunos implements Serializable {
 		return aluno.getEmail().equals(email) && aluno.isTutor();
 	}
 	
+	/**
+	 * Registra um Horario que o Aluno(tutor) tem disponível para tutoria
+	 * (não relacionado diretamente como o local)
+	 * @param email String
+	 * 		E-mail do tutor a ter o horário registrado
+	 * @param horario String
+	 * 		Horario para atendimento
+	 * @param dia String
+	 * 		Dia para atendimento
+	 * @throws Exception
+	 */
 	public void cadastrarHorario(String email, String horario, String dia) throws Exception {
 		String erroCadastrarHorario = "Erro no cadastrar horario: ";
 		validacoes.emailInvalidoOuNulo(email, erroCadastrarHorario);
@@ -119,6 +197,13 @@ public class ControllerAlunos implements Serializable {
 				aluno.getTutoria().getHorarios().add(new Horario(horario, dia));
 	}
 	
+	/**
+	 * Registra um local de atendimento que o Aluno(tutor) tem disponível para atendimento
+	 * (não relacionado, diretamente com o horário)
+	 * @param email
+	 * @param local
+	 * @throws Exception
+	 */
 	public void cadastrarLocalDeAtendimento(String email, String local) throws Exception {
 		String erroCadastrarLocal = "Erro no cadastrar local de atendimento: ";
 		validacoes.localInvalidoOuNulo(local, erroCadastrarLocal);
@@ -129,6 +214,16 @@ public class ControllerAlunos implements Serializable {
 					aluno.getTutoria().getLocais().add(local);
 	}
 	
+	/**
+	 * Verifica se um Aluno(tutor) tem o horário (parâmetro) disponível 
+	 * @param email String
+	 * 		E-mail do tutor a realizar a verificação
+	 * @param horario String
+	 * 		Hora a verificar
+	 * @param dia String
+	 * 		Dia a verificar
+	 * @return
+	 */
 	public boolean consultaHorario(String email, String horario, String dia) {
 		for(Aluno aluno : alunos.values())
 			if(verificaEmailETutoria(email, aluno))
@@ -138,6 +233,14 @@ public class ControllerAlunos implements Serializable {
 		return false;
 	}
 	
+	/**
+	 * Verifica se um Aluno(tutor) tem o dia (parâmetro) disponível
+	 * @param email String
+	 * 		E-mail do tutor a realizar a verificação
+	 * @param local String
+	 * 		Local a verficar
+	 * @return
+	 */
 	public boolean consultaLocal(String email, String local) {
 		for(Aluno aluno : alunos.values())
 			if(verificaEmailETutoria(email, aluno))
@@ -145,17 +248,35 @@ public class ControllerAlunos implements Serializable {
 		return false;
 	}
 	
+	/**
+	 * Recupera a nota do Aluno(tutor) dado no parametro
+	 * @param matriculaTutor String
+	 * 		Matricula do tutor registrado no sistema
+	 * @return String
+	 */
 	public String pegarNota(String matriculaTutor) {
 		Aluno alunoPossivelTutor = alunos.get(matriculaTutor);
 		if(alunoPossivelTutor.isTutor()) return alunoPossivelTutor.getTutoria().toStringNotaDeAvaliacao();
 		return null;
 	}
 	
+	/**
+	 * Recupera o nível do Aluno(tutor) dado no parametro
+	 * @param matriculaTutor String
+	 * 		Matricula do tutor registrado no sistema
+	 * @return String
+	 */	
 	public String pegarNivel(String matriculaTutor) {
 		alunos.get(matriculaTutor).getTutoria().setNivel();
 		return alunos.get(matriculaTutor).getTutoria().getNivel();
 	}
 	
+	/**
+	 * Recupera o total de dinheiro, em centavos, do Aluno(tutor) dado no parametro
+	 * @param emailTutor String
+	 * 		email do tutor registrado no sistema
+	 * @return String
+	 */
 	public int totalDinheiroTutor(String emailTutor) throws Exception {
 		String erroTotalDinheiroTutor = "Erro na consulta de total de dinheiro do tutor: ";
 		validacoes.emailTutorInvalidoOuNulo(emailTutor, erroTotalDinheiroTutor);
@@ -166,6 +287,10 @@ public class ControllerAlunos implements Serializable {
 		return 0;
 	}
 	
+	/**
+	 * Ordem atribuída aos Alunos do sistema
+	 * @param atributo String
+	 */
 	public void configurarOrdem(String atributo) {
 		if(atributo.equals(Ordem.NOME.getDescricao())) this.ordem = new ComparadorNome();
 		else if(atributo.equals(Ordem.MATRICULA.getDescricao())) this.ordem = new ComparadorMatricula();

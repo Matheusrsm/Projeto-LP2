@@ -42,16 +42,33 @@ public class ControllerTutoria implements Serializable {
 		pedidos = novoMapa;
 	}
 	
+	/**
+	 * Recupera um tutor que está associado ao pedido de ajuda (registrado no sistema)
+	 * @param idAjuda int
+	 * 		iD do objeto PedidoDeAjuda registrado no Sistema
+	 * @return String
+	 * 		Objeto Aluno(tutor) em String 
+	 * @throws Exception
+	 */
 	public String pegaTutor(int idAjuda) throws Exception {
 		String erroPegaTutor = "Erro ao tentar recuperar tutor : ";
 		validacoes.idAjudaInvalido(idAjuda, pedidos, erroPegaTutor);
 		return pedidos.get(idAjuda).toString();
 	}
-
+	
+	/**
+	 * Recupera o caixa do Sistema de Tutoria
+	 * @return int
+	 */
 	public int getCaixa() {
 		return caixa;
 	}
 	
+	/**
+	 * Carrega um novo valor de caixa ao sistema.
+	 * @param novoCaixa int
+	 * 		Novo caixa do sistema
+	 */
 	public void carregaCaixa(int novoCaixa) {
 		this.caixa = novoCaixa;
 	}
@@ -136,17 +153,24 @@ public class ControllerTutoria implements Serializable {
 	private Aluno tutorAdequado(String disciplina) {
 		Aluno tutor = new Aluno(0, "", "", 0, "", "");
 		tutor.tornaAlunoTutor("", 0);
-		for(Aluno a : mapaAlunos.values()) {
-			if(a.isTutor() && a.getTutoria().temDisciplina(disciplina)) {
+		for(Aluno a : mapaAlunos.values()) 
+			if(a.isTutor() && a.getTutoria().temDisciplina(disciplina))
 				if(a.getTutoria().getProficiencia(disciplina) > tutor.getTutoria().getProficiencia(disciplina)) tutor = a;
-				else if(a.getTutoria().getProficiencia(disciplina) == tutor.getTutoria().getProficiencia(disciplina)) {
+				else if(a.getTutoria().getProficiencia(disciplina) == tutor.getTutoria().getProficiencia(disciplina))
 					if(tutor.getID() > a.getID()) tutor = a;
-				}
-			}
-		}
 		return tutor;
 	}
 	
+	/**
+	 * Registra um novo objeto PedidoDeAjudaOnline no sistema, ficando disponível para ajuda
+	 * @param matrAluno String
+	 * 		Matricula do Aluno que registra o pedido
+	 * @param disciplina String
+	 * 		Disciplina que o Aluno precisa de ajuda
+	 * @return int
+	 * 		iD do objeto PedidoDeAjudaOnline registrado
+	 * @throws Exception
+	 */
 	public int pedirAjudaOnline(String matrAluno, String disciplina) throws Exception {
 		String erroPedirAjudaOnline = "Erro no pedido de ajuda online: ";
 		validacoes.matriculaVazia(matrAluno, erroPedirAjudaOnline);
@@ -155,6 +179,16 @@ public class ControllerTutoria implements Serializable {
 		return pedidos.size();
 	}
 	
+	/**
+	 * Recupera a informação desejada (parâmetro) de um objeto PedidoDeAjuda registrado no sistema
+	 * @param idAjuda int
+	 * 		iD do PedidoDeAjuda registrado no sistema
+	 * @param atributo String
+	 * 		Informação do pedido de ajuda desejada
+	 * @return String
+	 * 		Informação pedida
+	 * @throws Exception
+	 */
 	public String getInfoAjuda(int idAjuda, String atributo) throws Exception {
 		String erroGetInfoAjuda = "Erro ao tentar recuperar info da ajuda : ";
 		validacoes.idAjudaInvalido(idAjuda, pedidos, erroGetInfoAjuda);
@@ -162,6 +196,14 @@ public class ControllerTutoria implements Serializable {
 		return pedidos.get(idAjuda).getInfoAjuda(atributo);
 	}
 	
+	/**
+	 * Avalia um Aluno(tutor) que forneceu ajuda
+	 * @param idAjuda int
+	 * 		iD do PedidoDeAjuda que o tutor a ser avaliado prestou serviço
+	 * @param nota int
+	 * 		Nota que o tutor irá receber por seu serviço
+	 * @throws Exception
+	 */
 	public void avaliarTutor(int idAjuda, int nota) throws Exception {
 		String erroAvaliarTutor = "Erro na avaliacao de tutor: ";
 		validacoes.notaInvalida(nota, erroAvaliarTutor);
@@ -170,6 +212,7 @@ public class ControllerTutoria implements Serializable {
 		pedidos.get(idAjuda).getTutor().getTutoria().setNotaDeAvaliacao(nota);
 		pedidos.get(idAjuda).setFinalizacao(true);
 	}
+	
 	
 	private double calculaTaxaTutor(String matriculaTutor) {
 		Aluno tutor = mapaAlunos.get(matriculaTutor);
@@ -189,6 +232,14 @@ public class ControllerTutoria implements Serializable {
 		return taxa;
 	}
 	
+	/**
+	 * Doa a um Aluno(tutor) um valor em centavos
+	 * @param matriculaTutor String
+	 * 		Matricula do tutor a receber a doação
+	 * @param totalCentavos int
+	 * 		Valor da doação em centavos
+	 * @throws Exception
+	 */
 	public void doar(String matriculaTutor, int totalCentavos) throws Exception {
 		String erroDoar = "Erro na doacao para tutor: ";
 		validacoes.totalCentavosInvalido(totalCentavos, erroDoar);
