@@ -2,10 +2,25 @@ package quemMeAjuda.Entidades.Aluno;
 
 import java.io.Serializable;
 
-public class Aluno implements Comparable<Aluno>, Serializable{
-	/**
-	 * 
-	 */
+/**
+ * Classe que representa um Aluno.
+ * Um Aluno tem:
+ * Identificador
+ * Nome
+ * Matricula
+ * Codigo do Curso
+ * Email
+ * Telefone (Opcional)
+ * Nota de Avaliacao (Inicia com 5.0)
+ * Tutoria (caso o Aluno queira se tornar um tutor)
+ * 
+ * A Classe ainda implementa a Interface Comparable para comparar dois Alunos, a fim de ordena-los.
+ * 
+ * @author Matheus Silva, Wesley Monte, Lukas Soares
+ *
+ */
+public class Aluno implements Comparable<Aluno>, Serializable {
+
 	private static final long serialVersionUID = 5632534491723591604L;
 	private String  matricula, nome, email, telefone;
 	private int     codigoCurso, iD;
@@ -23,11 +38,21 @@ public class Aluno implements Comparable<Aluno>, Serializable{
 		this.notaDeAvaliacao = 5.0;
 	}
 	
+	/**
+	 * Método que torna o Aluno um tutor, ou seja, o atributo Tutoria agora passar a nao ser null.
+	 * Ainda adiciona a disciplina a tutoria do Aluno.
+	 * 
+	 * @param disciplina que o Aluno quer virar tutor.
+	 * @param proficiencia do Aluno na disciplina que ira ser tutor.
+	 */
 	public void tornaAlunoTutor(String disciplina, int proficiencia) {
 		tutoria = new Tutoria();
 		tutoria.adicionarDisciplina(disciplina, proficiencia);
 	}
 	
+	/**
+	 * @return boolean que indica se o Aluno eh um tutor, ou seja, se seu atributo tutoria eh null ou nao.
+	 */
 	public boolean isTutor() {
 		if (tutoria == null)
 			return false;
