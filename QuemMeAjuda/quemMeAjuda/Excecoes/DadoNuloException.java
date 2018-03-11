@@ -5,7 +5,7 @@ package quemMeAjuda.Excecoes;
  * @author lukasnascimento
  *
  */
-public class DadoNuloException extends Exception{
+public class DadoNuloException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 	

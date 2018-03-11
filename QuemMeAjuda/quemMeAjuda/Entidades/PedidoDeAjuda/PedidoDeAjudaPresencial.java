@@ -27,7 +27,7 @@ public class PedidoDeAjudaPresencial extends PedidoDeAjuda {
 		case "localInteresse":
 			return local;
 		case "disciplina":
-			return getDisciplina();
+			return disciplina;
 		default:
 			return null;
 		}
@@ -35,6 +35,6 @@ public class PedidoDeAjudaPresencial extends PedidoDeAjuda {
 	
 	@Override
 	public String toString() {
-		return super.toString() + ", horario - " + horario + ", dia - " + dia + ", local - " + local + ", disciplina - " + getDisciplina();
+		return super.toString() + ", horario - " + horario + ", dia - " + dia + ", local - " + local + ", disciplina - " + disciplina;
 	}
 }

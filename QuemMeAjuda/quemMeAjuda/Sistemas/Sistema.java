@@ -3,11 +3,13 @@ package quemMeAjuda.Sistemas;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Map;
 
 import quemMeAjuda.Entidades.Aluno.Aluno;
+import quemMeAjuda.Entidades.PedidoDeAjuda.PedidoDeAjuda;
 
 public class Sistema {
 	
@@ -17,6 +19,10 @@ public class Sistema {
 	public Sistema() {
 		controladorAlunos = new ControllerAlunos();
 		controladorTutoria = new ControllerTutoria();
+	}
+	
+	public Map<String, Aluno> getAlunos() {
+		return ControllerAlunos.getAlunos();
 	}
 	
 	public void cadastrarAluno(String  nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
@@ -107,56 +113,48 @@ public class Sistema {
 		controladorAlunos.configurarOrdem(atributo);
 	}
 	
-	////// MATHEUS/LUKAS, ALTEREM O PARAMETRO PARA FICAR NO DIRETORIO DO PROJETO NO PC DE VCS SE NAO DÁ NULLPOINTED////////
-	public void salvar() throws Exception {
-		char s = File.separatorChar;
+	public void salvar() {
 		try {
-		    File arquivoAlunos = new File(s + "home" + s + "wesley" + s + "wesley-workspace" + s + "Quem Me Ajuda" + s + "Dados" + s + "alunos.txt");
-		    File arquivoTutores = new File(s + "home" + s + "wesley" + s + "wesley-workspace" + s + "Quem Me Ajuda" + s + "Dados" + s + "tutores.txt");
-		    FileOutputStream fosAlunos = new FileOutputStream(arquivoAlunos);
-		    FileOutputStream fosTutores = new FileOutputStream(arquivoTutores);
-		    ObjectOutputStream writerAlunos = new ObjectOutputStream(fosAlunos);
-		    ObjectOutputStream writerTutores = new ObjectOutputStream(fosTutores);
-		    writerAlunos.writeObject(this.controladorAlunos);
-		    writerTutores.writeObject(this.controladorTutoria);
-		    writerAlunos.flush();
-		    writerAlunos.close();
-		    writerTutores.flush();
-		    writerTutores.close();
-		    fosAlunos.flush();
-		    fosTutores.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		    File arquivoAlunosETurores = new File("Quem Me Ajuda - Alunos e Tutores.txt");
+		    File arquivoPedidosDeAjuda = new File("Quem Me Ajuda - Pedidos De Ajuda.txt");
+		    File arquivoCaixa = new File("Quem Me Ajuda - Caixa.txt");
+		    ObjectOutputStream writerAlunosETurores = new ObjectOutputStream(new FileOutputStream(arquivoAlunosETurores));
+		    ObjectOutputStream writerPedidosDeAjuda = new ObjectOutputStream(new FileOutputStream(arquivoPedidosDeAjuda));
+		    ObjectOutputStream writerCaixa = new ObjectOutputStream(new FileOutputStream(arquivoCaixa));
+		    writerAlunosETurores.writeObject(getAlunos());
+		    writerAlunosETurores.close();
+		    writerPedidosDeAjuda.writeObject(controladorTutoria.getPedidos());
+		    writerPedidosDeAjuda.close();
+		    writerCaixa.writeObject(controladorTutoria.getCaixa());
+		    writerCaixa.close();
+		} catch(IOException e) {e.printStackTrace();}
 	}
 	
-	////// MATHEUS/LUKAS, ALTEREM O PARAMETRO PARA FICAR NO DIRETORIO DO PROJETO NO PC DE VCS SE NAO DÁ NULLPOINTED////////
-	//////// CARREGAR COM ALGUM PROBLEMA ACREDITO EU /////
+	@SuppressWarnings("unchecked")
 	public void carregar() {
-		char s = File.separatorChar;
-		File pasta = new File(s + "home" + s + "wesley" + s + "wesley-workspace" + s + "Quem Me Ajuda" + s + "Dados");
-		File[] arquivos = pasta.listFiles();
-		FileInputStream fis = null;  
-		ObjectInputStream reader = null;
+		ObjectInputStream arquivo = null;
 		try {
-			for(File arquivo : arquivos){
-				if (arquivo.getName().equals("alunos.txt")){
-					fis = new FileInputStream(arquivo);
-					reader = new ObjectInputStream(fis);
-					this.controladorAlunos = (ControllerAlunos) reader.readObject();
-				}
-				else if (arquivo.getName().equals("tutores.txt")) {
-					fis = new FileInputStream(arquivo);
-					reader = new ObjectInputStream(fis);
-					this.controladorTutoria = (ControllerTutoria) reader.readObject();
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}	
+			arquivo = new ObjectInputStream(new FileInputStream("Quem Me Ajuda - Alunos e Tutores.txt"));
+			try {ControllerAlunos.carregaMapaAlunos((Map<String, Aluno>) arquivo.readObject());} 
+			catch (ClassNotFoundException e) {e.printStackTrace();}
+			arquivo = new ObjectInputStream(new FileInputStream("Quem Me Ajuda - Pedidos De Ajuda.txt"));
+			try {controladorTutoria.carregaMapaPedidos((Map<Integer, PedidoDeAjuda>) arquivo.readObject());} 
+			catch (ClassNotFoundException e) {e.printStackTrace();}
+			arquivo = new ObjectInputStream(new FileInputStream("Quem Me Ajuda - Caixa.txt"));
+			try {controladorTutoria.carregaCaixa((int) arquivo.readObject());} 
+			catch (ClassNotFoundException e) {e.printStackTrace();}
+		} catch(IOException e) {e.printStackTrace();}	 
 	}
-
-	public Map<String, Aluno> getAlunos() {
-		return ControllerAlunos.getAlunos();
+	
+	public void limpar() {
+		File arquivo = null;
+		try {
+			arquivo = new File("Quem Me Ajuda - Alunos e Tutores.txt");
+			arquivo.delete();
+			arquivo = new File("Quem Me Ajuda - Pedidos De Ajuda.txt");
+			arquivo.delete();
+			arquivo = new File("Quem Me Ajuda - Caixa.txt");
+			arquivo.delete();
+		} catch(Exception e) {e.printStackTrace();}
 	}
 }

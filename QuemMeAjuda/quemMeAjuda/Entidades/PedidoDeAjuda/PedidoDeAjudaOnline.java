@@ -16,12 +16,12 @@ public class PedidoDeAjudaOnline extends PedidoDeAjuda {
 	@Override
 	public String getInfoAjuda(String atributo) {
 		if(atributo.equals("disciplina"))
-			return getDisciplina();
+			return disciplina;
 		return null;
 	}
 
 	@Override
 	public String toString() {
-		return super.toString() + ", disciplina - " + getDisciplina();
+		return super.toString() + ", disciplina - " + disciplina;
 	}
 }

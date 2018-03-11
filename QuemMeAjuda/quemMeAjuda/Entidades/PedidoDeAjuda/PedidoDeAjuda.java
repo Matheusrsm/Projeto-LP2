@@ -10,7 +10,8 @@ public abstract class PedidoDeAjuda implements Serializable{
 	 * 
 	 */
 	private static final long serialVersionUID = 8035229549214584828L;
-	private String matriculaAluno, disciplina;
+	private String matriculaAluno;
+	protected String disciplina;
 	private Aluno tutor;
 	private boolean finalizada;
 	
@@ -39,10 +40,6 @@ public abstract class PedidoDeAjuda implements Serializable{
 		this.finalizada = fechouOuNao;
 	}
 
-	public String getDisciplina() {
-		return disciplina;
-	}
-	
 	@Override
 	public String toString() {
 		return "Tutor - " + tutor.getMatricula();

@@ -15,14 +15,16 @@ import quemMeAjuda.Excecoes.Validacoes;
  * @author Lukas Nascimento, Matheus Silva, Wesley Monte
  *
  */
-public class ControllerTutoria implements Serializable{
-	/**
-	 * 
-	 */
+public class ControllerTutoria implements Serializable {
+	
 	private static final long serialVersionUID = 3848134710337632641L;
 	private Map<String, Aluno> mapaAlunos;
 	private Map<Integer, PedidoDeAjuda> pedidos;
 	private int caixa;
+	public void setCaixa(int caixa) {
+		this.caixa = caixa;
+	}
+
 	private Validacoes validacoes;
 	
 	public ControllerTutoria() {
@@ -30,6 +32,14 @@ public class ControllerTutoria implements Serializable{
 		this.pedidos = new HashMap<>();
 		this.caixa = 0;
 		this.validacoes = new Validacoes();
+	}
+	
+	public Map<Integer, PedidoDeAjuda> getPedidos() {
+		return pedidos;
+	}
+	
+	public void carregaMapaPedidos(Map<Integer, PedidoDeAjuda> novoMapa) {
+		pedidos = novoMapa;
 	}
 	
 	public String pegaTutor(int idAjuda) throws Exception {
@@ -40,6 +50,10 @@ public class ControllerTutoria implements Serializable{
 
 	public int getCaixa() {
 		return caixa;
+	}
+	
+	public void carregaCaixa(int novoCaixa) {
+		this.caixa = novoCaixa;
 	}
 
 	/**

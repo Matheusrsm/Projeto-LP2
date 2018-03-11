@@ -10,9 +10,6 @@ import quemMeAjuda.Entidades.PedidoDeAjuda.PedidoDeAjuda;
 
 public class Validacoes implements Serializable{
 		
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4420266001017456149L;
 
 	public void nomeInvalidoOuNulo(String nome, String msg) throws Exception {

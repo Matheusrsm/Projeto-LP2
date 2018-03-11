@@ -6,7 +6,7 @@ package quemMeAjuda.Excecoes;
  *
  */
 
-public class DadoInvalidoException extends Exception{
+public class DadoInvalidoException extends RuntimeException {
 	
 	private static final long serialVersionUID = 1L;
 
