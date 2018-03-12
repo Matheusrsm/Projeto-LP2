@@ -212,7 +212,7 @@ public class SistemaTest {
 	}
 	
 	@Test
-	public void testListarTutores() throws Exception {
+	public void testListarTutoresPorNome() throws Exception {
 		String lista = "147258369 - Lukas - 100 - 99998888 - lukas@gmail.com, 100101102 - Matheus - 100 - 987654321 - matheus@gmail.com, "
 				+ "123456789 - Wesley - 100 - wesley@gmail.com";
 		sis.cadastrarAluno("Matheus", "100101102", 100, "987654321", "matheus@gmail.com");
@@ -225,6 +225,34 @@ public class SistemaTest {
 	}
 	
 	@Test
+	public void testListarTutoresPorMatricula() throws Exception {
+		String lista = "123456789 - Wesley - 100 - wesley@gmail.com, 147258369 - Lukas - 100 - 99998888 - lukas@gmail.com, "
+				+ "987654321 - Matheus - 100 - 987654321 - matheus@gmail.com";
+		sis.cadastrarAluno("Matheus", "987654321", 100, "987654321", "matheus@gmail.com");
+		sis.cadastrarAluno("Lukas", "147258369", 100, "99998888", "lukas@gmail.com");
+		sis.cadastrarAluno("Wesley", "123456789", 100, "", "wesley@gmail.com");
+		sis.tornarTutor("987654321", "P2", 4);
+		sis.tornarTutor("147258369", "P2", 4);
+		sis.tornarTutor("123456789", "P2", 4);
+		sis.configurarOrdem("MATRICULA");
+		assertEquals(lista, sis.listarTutores());
+	}
+	
+	@Test
+	public void testListarTutoresPorEmail() throws Exception {
+		String lista = "123456789 - Wesley - 100 - monte.wesley@gmail.com, 147258369 - Lukas - 100 - 99998888 - nascimento.lukas@gmail.com, "
+				+ "100101102 - Matheus - 100 - 987654321 - silva.matheus@gmail.com";
+		sis.cadastrarAluno("Matheus", "100101102", 100, "987654321", "silva.matheus@gmail.com");
+		sis.cadastrarAluno("Lukas", "147258369", 100, "99998888", "nascimento.lukas@gmail.com");
+		sis.cadastrarAluno("Wesley", "123456789", 100, "", "monte.wesley@gmail.com");
+		sis.tornarTutor("100101102", "P2", 4);
+		sis.tornarTutor("147258369", "P2", 4);
+		sis.tornarTutor("123456789", "P2", 4);
+		sis.configurarOrdem("EMAIL");
+		assertEquals(lista, sis.listarTutores());
+	}
+	
+	@Test
 	public void testCadastrarHorario() throws Exception {
 		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
 		sis.tornarTutor("123456789", "Calculo 1", 3);
@@ -232,6 +260,11 @@ public class SistemaTest {
 		sis.cadastrarHorario("lukas@live.com", "15:00", "seg");
 		assertEquals("15:00", sis.getAlunos().get("123456789").getTutoria().getHorarios().get(0).getHorario());
 		assertEquals("seg", sis.getAlunos().get("123456789").getTutoria().getHorarios().get(0).getDia());
+	}
+	
+	@Test(expected = DadoInvalidoException.class)
+	public void testCadastrarHorarioEmailVazio() throws Exception{
+		sis.cadastrarHorario(" ", "10:00", "qua");
 	}
 	
 	@Test(expected = DadoInvalidoException.class)
@@ -344,62 +377,6 @@ public class SistemaTest {
 		assertEquals(false, sis.consultaLocal("lukas@live.com", "LCC2"));
 	}
 	
-	@Test (expected = DadoInvalidoException.class)
-	public void testConsultaHorarioHoraVazio() throws Exception {
-		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
-		sis.tornarTutor("123456789", "Calculo 1", 3);
-		sis.tornarTutor("123456789", "Vetorial", 4);
-		sis.cadastrarHorario("lukas@live.com", "", "seg");
-	}
-	
-	@Test (expected = DadoInvalidoException.class)
-	public void testConsultaHorarioDiaVazio() throws Exception {
-		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
-		sis.tornarTutor("123456789", "Calculo 1", 3);
-		sis.tornarTutor("123456789", "Vetorial", 4);
-		sis.cadastrarHorario("lukas@live.com", "15:00", "");
-	}
-	
-	@Test (expected = DadoInvalidoException.class)
-	public void testConsultaHorarioEmailVazio() throws Exception {
-		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
-		sis.tornarTutor("123456789", "Calculo 1", 3);
-		sis.tornarTutor("123456789", "Vetorial", 4);
-		sis.cadastrarHorario("", "15:00", "seg");
-	}
-	
-	@Test (expected = DadoInvalidoException.class)
-	public void testConsultaHorarioEmailInvalido() throws Exception {
-		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
-		sis.tornarTutor("123456789", "Calculo 1", 3);
-		sis.tornarTutor("123456789", "Vetorial", 4);
-		sis.cadastrarHorario("lukaslive.com", "15:00", "seg");
-	}
-	
-	@Test (expected = DadoInvalidoException.class)
-	public void testConsultaHorarioHoraEmBranco() throws Exception {
-		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
-		sis.tornarTutor("123456789", "Calculo 1", 3);
-		sis.tornarTutor("123456789", "Vetorial", 4);
-		sis.cadastrarHorario("lukas@live.com", "  ", "seg");
-	}
-	
-	@Test (expected = DadoInvalidoException.class)
-	public void testConsultaLocalDeAtendimentoLocalInvalido() throws Exception {
-		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
-		sis.tornarTutor("123456789", "Calculo 1", 3);
-		sis.tornarTutor("123456789", "Vetorial", 4);
-		sis.cadastrarLocalDeAtendimento("lukas@live.com", " ");
-	}
-	
-	@Test (expected = DadoInvalidoException.class)
-	public void testConsultaLocalDeAtendimentoEmailInvalido() throws Exception {
-		sis.cadastrarAluno("Lukas", "123456789", 100, "33336666", "lukas@live.com");
-		sis.tornarTutor("123456789", "Calculo 1", 3);
-		sis.tornarTutor("123456789", "Vetorial", 4);
-		sis.cadastrarLocalDeAtendimento("lukaslive.com", "seg");
-	}
-	
 	@Test
 	public void testPedirAjudaPresencial() throws Exception {
 		sis.pedirAjudaPresencial("123", "Calculo 1", "15:00", "seg", "LCC3");
@@ -445,14 +422,224 @@ public class SistemaTest {
 		sis.pedirAjudaOnline("123", " ");
 	}
 	
-	/*@Test 
+	@Test 
 	public void testPegarTutor() throws Exception {
-		int a = sis.pedirAjudaOnline("321", "P1");
 		sis.cadastrarAluno("Lukas", "123", 100, "40028922", "lukas@live.com");
 		sis.tornarTutor("123", "P1", 5);
 		sis.tornarTutor("123", "Vetorial", 4);
+		int a = sis.pedirAjudaOnline("321", "P1");
 		assertEquals(sis.pegarTutor(a), "Tutor - 123, disciplina - P1");
-	}*/
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testPegarTutorIdNegativo() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.pegarTutor(-1);
+	}
+
+	@Test (expected = DadoInvalidoException.class)
+	public void testPegarTutorIdNaoCadastrado() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.pedirAjudaOnline("123456789", "Calculo 2");
+		sis.pegarTutor(3);
+	}
+	
+	@Test
+	public void testAvaliarTutor() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.cadastrarAluno("Henrique", "555", 100, "99996666", "henrique@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.avaliarTutor(1, 5);
+		sis.getAlunos().get("123456789").getTutoria().setNivel();
+		assertEquals("4,17", sis.getAlunos().get("123456789").getTutoria().toStringNotaDeAvaliacao());
+	}
+	
+	@Test(expected = DadoInvalidoException.class)
+	public void testAvaliarTutorNotaInvalida() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.cadastrarAluno("Henrique", "555", 100, "99996666", "henrique@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.avaliarTutor(1, 7);
+	}
+	
+	@Test(expected = DadoInvalidoException.class)
+	public void testAvaliarTutorIdInvalido() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.cadastrarAluno("Henrique", "555", 100, "99996666", "henrique@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.avaliarTutor(0, 5);
+	}
+	
+	@Test(expected = DadoInvalidoException.class)
+	public void testAvaliarTutorAjudaFechada() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.cadastrarAluno("Henrique", "555", 100, "99996666", "henrique@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.avaliarTutor(1, 5);
+		sis.avaliarTutor(1, 5);
+	}
+	
+	@Test
+	public void testPegarNota() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.cadastrarAluno("Henrique", "555", 100, "99996666", "henrique@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.avaliarTutor(1, 5);
+		assertEquals("4,17", sis.pegarNota("123456789"));
+	}
+	
+	@Test(expected = NullPointerException.class)
+	public void testPegarNotaTutorInexistente() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.cadastrarAluno("Henrique", "555", 100, "99996666", "henrique@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.avaliarTutor(1, 5);
+		sis.pegarNota("987654321");
+	}
+	
+	@Test
+	public void testPegarNivel() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.cadastrarAluno("Henrique", "555", 100, "99996666", "henrique@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.avaliarTutor(1, 5);
+		assertEquals("Tutor", sis.pegarNivel("123456789"));
+	}
+	
+	@Test
+	public void testDoarNivelAprendiz() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.cadastrarAluno("Henrique", "555", 100, "99996666", "henrique@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.avaliarTutor(1, 0);
+		sis.avaliarTutor(2, 0);
+		sis.getAlunos().get("123456789").getTutoria().setNivel();
+		sis.doar("123456789", 100);
+		assertEquals("Aprendiz", sis.pegarNivel("123456789"));
+		assertEquals("2,78", sis.pegarNota("123456789"));
+		assertEquals(37, sis.totalDinheiroTutor("wesley@gmail.com"));
+		assertEquals(63,sis.totalDinheiroSistema());
+	}
+	
+	
+	@Test
+	public void testDoarNivelTutor() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.doar("123456789", 100);
+		assertEquals("Tutor", sis.pegarNivel("123456789"));
+		assertEquals(80, sis.totalDinheiroTutor("wesley@gmail.com"));
+		assertEquals(20,sis.totalDinheiroSistema());
+	}
+	
+	@Test
+	public void testDoarNivelTop() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.cadastrarAluno("Henrique", "555", 100, "99996666", "henrique@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.pedirAjudaOnline("555", "Calculo 2");
+		sis.avaliarTutor(1, 5);
+		sis.avaliarTutor(2, 5);
+		sis.avaliarTutor(3, 5);
+		sis.avaliarTutor(4, 5);
+		sis.getAlunos().get("123456789").getTutoria().setNivel();
+		sis.doar("123456789", 100);
+		assertEquals("TOP", sis.pegarNivel("123456789"));
+		assertEquals("4,52", sis.pegarNota("123456789"));
+		assertEquals(90, sis.totalDinheiroTutor("wesley@gmail.com"));
+		assertEquals(10,sis.totalDinheiroSistema());
+	}
+	
+	@Test(expected = DadoInvalidoException.class)
+	public void testDoarValorNegativo() throws Exception{
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.cadastrarAluno("Henrique", "555", 100, "99996666", "henrique@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.doar("123456789", -50);
+	}
+	
+	@Test(expected = DadoInvalidoException.class)
+	public void testDoarTutorInexistente() throws Exception{
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.cadastrarAluno("Henrique", "555", 100, "99996666", "henrique@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.doar("456789123", -50);
+	}
+	
+	@Test
+	public void testTotalDinheiroTutor() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.doar("123456789", 100);
+		assertEquals(80, sis.totalDinheiroTutor("wesley@gmail.com"));
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testTotalDinheiroTutorEmailVazio() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.doar("123456789", 100);
+		sis.totalDinheiroTutor("");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testTotalDinheiroTutorEmailSomenteArroba() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.doar("123456789", 100);
+		sis.totalDinheiroTutor("@");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testTotalDinheiroTutorEmailArrobaNoInicio() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.doar("123456789", 100);
+		sis.totalDinheiroTutor("@wesley.gmail.com");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testTotalDinheiroTutorEmailArrobaNoFinal() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.doar("123456789", 100);
+		sis.totalDinheiroTutor("wesley.gmail.com@");
+	}
+	
+	@Test (expected = DadoInvalidoException.class)
+	public void testTotalDinheiroTutorNaoCadastrado() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.doar("123456789", 100);
+		sis.totalDinheiroTutor("pedro@gmail.com");
+	}
+	
+	@Test (expected = DadoNuloException.class)
+	public void testTotalDinheiroTutorEmailNulo() throws Exception {
+		sis.cadastrarAluno("Wesley", "123456789", 100, "33336666", "wesley@gmail.com");
+		sis.tornarTutor("123456789", "Calculo 2", 3);
+		sis.doar("123456789", 100);
+		sis.totalDinheiroTutor(null);
+	}
+	
+	
+	
+	
+	
 	
 	
 	
