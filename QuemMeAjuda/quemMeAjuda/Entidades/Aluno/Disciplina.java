@@ -2,6 +2,17 @@ package quemMeAjuda.Entidades.Aluno;
 
 import java.io.Serializable;
 
+/**
+ *
+ * Classe Disciplina.
+ * Um objeto Disciplina compõe a classe Tutoria, onde um Aluno é tutor de tal(is) disciplina(s)
+ * Uma Disciplina tem:
+ * Nome
+ * Proficiencia (do tutor na disciplina)
+ *
+ * @author lukasnascimento
+ *
+ */
 public class Disciplina implements Serializable{
 	/**
 	 * 
@@ -22,4 +33,5 @@ public class Disciplina implements Serializable{
 	public double getProficiencia() {
 		return proficiencia;
 	}
+	
 }

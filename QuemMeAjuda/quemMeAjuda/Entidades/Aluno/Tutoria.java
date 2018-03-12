@@ -4,6 +4,18 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Classe Tutoria
+ * Um objeto Tutoria é composta por:
+ * Lista de objetos Disciplina;
+ * Lista de locais de atendimento;
+ * Lista de objetos Horario;
+ * Nota de avaliação (do tutor);
+ * Bolsa (do tutor);
+ * Nível (do tutor);
+ * @author Lukas, Wesley, Matheus
+ *
+ */
 public class Tutoria implements Serializable{
 
 	/**
@@ -90,4 +102,8 @@ public class Tutoria implements Serializable{
 		else if(notaDeAvaliacao > 3.0 && notaDeAvaliacao <= 4.5) this.nivel = NivelTutoria.TUTOR;
 		else if(notaDeAvaliacao > 0.0 && notaDeAvaliacao <= 3.0) this.nivel = NivelTutoria.APRENDIZ;
 	}
+	
+	
+	
+	
 }

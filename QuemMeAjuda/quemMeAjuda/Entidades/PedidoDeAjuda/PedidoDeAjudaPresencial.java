@@ -2,6 +2,19 @@ package quemMeAjuda.Entidades.PedidoDeAjuda;
 
 import quemMeAjuda.Entidades.Aluno.*;
 
+/**
+ * Classe PedidoDeAjudaPresencial (extende PedidoDeAjuda)
+ * Um objeto PedidoDeAjudaPresencial é composto por:
+ * Matricula do Aluno;
+ * Disciplina;
+ * Tutor (objeto Aluno);
+ * Horario;
+ * Dia;
+ * Local;
+ * 
+ * @author Lukas, Wesley, Matheus
+ *
+ */
 public class PedidoDeAjudaPresencial extends PedidoDeAjuda {
 
 	/**
