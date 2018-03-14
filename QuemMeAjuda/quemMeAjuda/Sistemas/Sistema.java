@@ -40,10 +40,8 @@ public class Sistema {
 	 * @throws Exception
 	 */
 	public void cadastrarAluno(String  nome, String matricula, int codigoCurso, String telefone, String email) throws Exception {
-		try{
-			controladorAlunos.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);
-		}catch(Exception e) {
-			throw new Exception(e.getMessage());
+		try{controladorAlunos.cadastrarAluno(nome, matricula, codigoCurso, telefone, email);}
+		catch(Exception e) {throw new Exception(e.getMessage());
 		}
 	}
 	
@@ -51,9 +49,7 @@ public class Sistema {
 	 * Lista os Alunos registrados no sistema
 	 * @return String
 	 */
-	public String listarAlunos() {
-		return controladorAlunos.listarAlunos();
-	}
+	public String listarAlunos() {return controladorAlunos.listarAlunos();}
 	
 	/**
 	 * Recupera um objeto Aluno registrado no sistema
@@ -64,9 +60,7 @@ public class Sistema {
 	 * 		(matricula + " - " + nome + " - " + codigoCurso + " - " + telefone + " - " +  email)
 	 * @throws Exception
 	 */
-	public String recuperaAluno(String matricula) throws Exception {
-		return controladorAlunos.recuperaAluno(matricula);		
-	}
+	public String recuperaAluno(String matricula) throws Exception {return controladorAlunos.recuperaAluno(matricula);}
 	
 	/**
 	 * Recupera a informação de um Aluno desejada no parâmetro 
@@ -78,9 +72,7 @@ public class Sistema {
 	 *		Informação
 	 * @throws Exception
 	 */
-	public String getInfoAluno(String matricula, String atributo) throws Exception {
-		return controladorAlunos.getInfoAluno(matricula, atributo);
-	}
+	public String getInfoAluno(String matricula, String atributo) throws Exception {return controladorAlunos.getInfoAluno(matricula, atributo);}
 	
 	/**
 	 * Registra um Aluno (já registrado) do sistema como tutor
@@ -92,9 +84,7 @@ public class Sistema {
 	 * 		Proficiencia do Aluno na disciplina
 	 * @throws Exception
 	 */
-	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {
-		controladorAlunos.tornarTutor(matricula, disciplina, proficiencia);
-	}
+	public void tornarTutor(String matricula, String disciplina, int proficiencia) throws Exception {controladorAlunos.tornarTutor(matricula, disciplina, proficiencia);}
 	
 	/**
 	 * Recupera o Aluno, se for tutor, registrado no sistema
@@ -103,17 +93,13 @@ public class Sistema {
 	 * @return String
 	 * @throws Exception
 	 */
-	public String recuperaTutor(String matricula) throws Exception {
-		return controladorAlunos.recuperaTutor(matricula).toString();
-	}
+	public String recuperaTutor(String matricula) throws Exception {return controladorAlunos.recuperaTutor(matricula).toString();}
 	
 	/**
 	 * Lista todos os Alunos tutores registrados no sistema
 	 * @return String
 	 */
-	public String listarTutores() {
-		return controladorAlunos.listarTutores();
-	}
+	public String listarTutores() {return controladorAlunos.listarTutores();}
 	
 	/**
 	 * Registra um Horario que o Aluno(tutor) tem disponível para tutoria
@@ -126,9 +112,7 @@ public class Sistema {
 	 * 		Dia para atendimento
 	 * @throws Exception
 	 */
-	public void cadastrarHorario(String email, String horario, String dia) throws Exception {
-		controladorAlunos.cadastrarHorario(email, horario, dia);
-	}
+	public void cadastrarHorario(String email, String horario, String dia) throws Exception {controladorAlunos.cadastrarHorario(email, horario, dia);}
 	
 	/**
 	 * Registra um local de atendimento que o Aluno(tutor) tem disponível para atendimento
@@ -137,9 +121,7 @@ public class Sistema {
 	 * @param local
 	 * @throws Exception
 	 */
-	public void cadastrarLocalDeAtendimento(String email, String local) throws Exception {
-		controladorAlunos.cadastrarLocalDeAtendimento(email, local);
-	}
+	public void cadastrarLocalDeAtendimento(String email, String local) throws Exception {controladorAlunos.cadastrarLocalDeAtendimento(email, local);}
 	
 	/**
 	 * Verifica se um Aluno(tutor) tem o horário (parâmetro) disponível 
@@ -151,9 +133,7 @@ public class Sistema {
 	 * 		Dia a verificar
 	 * @return
 	 */
-	public boolean consultaHorario(String email, String horario, String dia) {
-		return controladorAlunos.consultaHorario(email, horario, dia);
-	}
+	public boolean consultaHorario(String email, String horario, String dia) {return controladorAlunos.consultaHorario(email, horario, dia);}
 	
 	/**
 	 * Verifica se um Aluno(tutor) tem o dia (parâmetro) disponível
@@ -163,9 +143,7 @@ public class Sistema {
 	 * 		Local a verficar
 	 * @return
 	 */
-	public boolean consultaLocal(String email, String local) {
-		return controladorAlunos.consultaLocal(email, local);
-	}
+	public boolean consultaLocal(String email, String local) {return controladorAlunos.consultaLocal(email, local);}
 	
 	/**
 	 * Cria um novo objeto PedidoDeAjudaPresencial e implementa qual tutor está sendo associado ao pedido.
@@ -197,9 +175,7 @@ public class Sistema {
 	 * 		iD do objeto PedidoDeAjudaOnline registrado
 	 * @throws Exception
 	 */
-	public int pedirAjudaOnline(String matrAluno, String disciplina) throws Exception {
-		return controladorTutoria.pedirAjudaOnline(matrAluno, disciplina);
-	}
+	public int pedirAjudaOnline(String matrAluno, String disciplina) throws Exception {return controladorTutoria.pedirAjudaOnline(matrAluno, disciplina);}
 
 	/**
 	 * Recupera um tutor que está associado ao pedido de ajuda (registrado no sistema)
@@ -209,9 +185,7 @@ public class Sistema {
 	 * 		Objeto Aluno(tutor) em String 
 	 * @throws Exception
 	 */
-	public String pegarTutor(int idAjuda) throws Exception {
-		return controladorTutoria.pegaTutor(idAjuda);
-	}
+	public String pegarTutor(int idAjuda) throws Exception {return controladorTutoria.pegaTutor(idAjuda);}
 
 	/**
 	 * Recupera a informação desejada (parâmetro) de um objeto PedidoDeAjuda registrado no sistema
@@ -223,9 +197,7 @@ public class Sistema {
 	 * 		Informação pedida
 	 * @throws Exception
 	 */
-	public String getInfoAjuda(int idAjuda, String atributo) throws Exception {
-		return controladorTutoria.getInfoAjuda(idAjuda, atributo);
-	}
+	public String getInfoAjuda(int idAjuda, String atributo) throws Exception {return controladorTutoria.getInfoAjuda(idAjuda, atributo);}
 
 	/**
 	 * Avalia um Aluno(tutor) que forneceu ajuda
@@ -235,9 +207,7 @@ public class Sistema {
 	 * 		Nota que o tutor irá receber por seu serviço
 	 * @throws Exception
 	 */
-	public void avaliarTutor(int idAjuda, int nota) throws Exception {
-		controladorTutoria.avaliarTutor(idAjuda, nota);
-	}
+	public void avaliarTutor(int idAjuda, int nota) throws Exception {controladorTutoria.avaliarTutor(idAjuda, nota);}
 	
 	/**
 	 * Recupera a nota do Aluno(tutor) dado no parametro
@@ -245,9 +215,7 @@ public class Sistema {
 	 * 		Matricula do tutor registrado no sistema
 	 * @return String
 	 */
-	public String pegarNota(String matriculaTutor) {
-		return controladorAlunos.pegarNota(matriculaTutor);
-	}
+	public String pegarNota(String matriculaTutor) {return controladorAlunos.pegarNota(matriculaTutor);}
 
 	/**
 	 * Recupera o nível do Aluno(tutor) dado no parametro
@@ -255,9 +223,7 @@ public class Sistema {
 	 * 		Matricula do tutor registrado no sistema
 	 * @return String
 	 */	
-	public String pegarNivel(String matriculaTutor) {
-		return controladorAlunos.pegarNivel(matriculaTutor);
-	}
+	public String pegarNivel(String matriculaTutor) {return controladorAlunos.pegarNivel(matriculaTutor);}
 
 	/**
 	 * Doa a um Aluno(tutor) um valor em centavos
@@ -267,9 +233,7 @@ public class Sistema {
 	 * 		Valor da doação em centavos
 	 * @throws Exception
 	 */
-	public void doar(String matriculaTutor, int totalCentavos) throws Exception {
-		controladorTutoria.doar(matriculaTutor, totalCentavos);
-	}
+	public void doar(String matriculaTutor, int totalCentavos) throws Exception {controladorTutoria.doar(matriculaTutor, totalCentavos);}
 
 	/**
 	 * Recupera o total de dinheiro, em centavos, do Aluno(tutor) dado no parametro
@@ -277,25 +241,19 @@ public class Sistema {
 	 * 		email do tutor registrado no sistema
 	 * @return String
 	 */
-	public int totalDinheiroTutor(String emailTutor) throws Exception {
-		return controladorAlunos.totalDinheiroTutor(emailTutor);
-	}
+	public int totalDinheiroTutor(String emailTutor) throws Exception {return controladorAlunos.totalDinheiroTutor(emailTutor);}
 
 	/**
 	 * Recupera o caixa do Sistema de Tutoria
 	 * @return int
 	 */
-	public int totalDinheiroSistema() {
-		return controladorTutoria.getCaixa();
-	}
+	public int totalDinheiroSistema() {return controladorTutoria.getCaixa();}
 
 	/**
 	 * Ordem atribuída aos Alunos do sistema
 	 * @param atributo String
 	 */
-	public void configurarOrdem(String atributo) {
-		controladorAlunos.configurarOrdem(atributo);
-	}
+	public void configurarOrdem(String atributo) {controladorAlunos.configurarOrdem(atributo);}
 	
 	public void salvar() {
 		try {
