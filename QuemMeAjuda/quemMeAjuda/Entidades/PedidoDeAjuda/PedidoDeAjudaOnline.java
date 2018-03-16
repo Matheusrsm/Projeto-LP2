@@ -3,7 +3,7 @@ package quemMeAjuda.Entidades.PedidoDeAjuda;
 import quemMeAjuda.Entidades.Aluno.*;
 
 /**
- * Classe PedidoDeAjudaOnline (extende PedidoDeAJuda)
+ * Classe PedidoDeAjudaOnline (estende PedidoDeAJuda)
  * Um objeto PedidoDeAjudaOnline é composto por:
  * Matricula do Aluno;
  * Disciplina;

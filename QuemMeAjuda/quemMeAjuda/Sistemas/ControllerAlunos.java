@@ -12,6 +12,12 @@ import quemMeAjuda.Comparadores.*;
 import quemMeAjuda.Entidades.Aluno.*;
 import quemMeAjuda.Excecoes.Validacoes;
 
+/**
+ * Controlador de Alunos
+ * 
+ * @author Matheus, Lukas, Wesley
+ *
+ */
 public class ControllerAlunos implements Serializable {
 
 	private static final long serialVersionUID = -5902969503242499205L;

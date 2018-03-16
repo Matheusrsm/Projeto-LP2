@@ -8,6 +8,12 @@ import java.util.Map;
 import quemMeAjuda.Entidades.Aluno.*;
 import quemMeAjuda.Entidades.PedidoDeAjuda.PedidoDeAjuda;
 
+/**
+ * Classe que verifica caminhos de "erro" e lanca excecoes.
+ * 
+ * @author Matheus, Lukas, Wesley
+ *
+ */
 public class Validacoes implements Serializable{
 		
 	private static final long serialVersionUID = -4420266001017456149L;

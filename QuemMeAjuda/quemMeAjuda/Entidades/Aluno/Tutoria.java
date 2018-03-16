@@ -16,11 +16,8 @@ import java.util.List;
  * @author Lukas, Wesley, Matheus
  *
  */
-public class Tutoria implements Serializable{
+public class Tutoria implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6980912988371418811L;
 	private List<Disciplina> disciplinas;
 	private List<String> locais;
@@ -96,6 +93,7 @@ public class Tutoria implements Serializable{
 	}
 	/**
 	 * Calcula e define a nota de avaliacao do Tutor a partir da nota atual e de uma nova avaliação recebida por ele.
+	 * Invoca o metodo setNivel que altera automaticamente o nivel da Tutoria de acordo com a Nota de Avaliacao.
 	 * @param novaAvaliacao double da nota de avaliacao recebida por ele.
 	 */
 	public void setNotaDeAvaliacao(double novaAvaliacao) {

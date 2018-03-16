@@ -36,5 +36,4 @@ public class Disciplina implements Serializable {
 	public double getProficiencia() {
 		return proficiencia;
 	}
-	
 }

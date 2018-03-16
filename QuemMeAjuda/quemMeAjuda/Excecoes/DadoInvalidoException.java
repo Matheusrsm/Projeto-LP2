@@ -2,7 +2,8 @@ package quemMeAjuda.Excecoes;
 
 /**
  * Classe de Exceção de DadoInvalido
- * @author Lukas Nascimento
+ * 
+ * @author Lukas, Matheus, Wesley
  *
  */
 

@@ -2,7 +2,8 @@ package quemMeAjuda.Excecoes;
 
 /**
  * Classe de Exceção de DadoNulo
- * @author lukasnascimento
+ * 
+ * @author Matheus, Lukas, Wesley
  *
  */
 public class DadoNuloException extends RuntimeException {
@@ -17,5 +18,4 @@ public class DadoNuloException extends RuntimeException {
 	public DadoNuloException(String msg) {
 		super(msg);
 	}
-
 }

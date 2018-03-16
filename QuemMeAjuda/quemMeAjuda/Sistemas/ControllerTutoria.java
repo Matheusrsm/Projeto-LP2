@@ -9,8 +9,7 @@ import quemMeAjuda.Entidades.PedidoDeAjuda.*;
 import quemMeAjuda.Excecoes.Validacoes;
 
 /**
- * Classe SistemaTutoria. A classe SistemaTutoria implementa os métodos da interface Sistema
- * em vista de divisão de código e trabalho das classes
+ * Controlador de Tutoria e Pedidos de Ajuda
  * 
  * @author Lukas Nascimento, Matheus Silva, Wesley Monte
  *
@@ -21,6 +20,7 @@ public class ControllerTutoria implements Serializable {
 	private Map<String, Aluno> mapaAlunos;
 	private Map<Integer, PedidoDeAjuda> pedidos;
 	private int caixa;
+	
 	public void setCaixa(int caixa) {
 		this.caixa = caixa;
 	}

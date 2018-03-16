@@ -11,6 +11,13 @@ import java.util.Map;
 import quemMeAjuda.Entidades.Aluno.Aluno;
 import quemMeAjuda.Entidades.PedidoDeAjuda.PedidoDeAjuda;
 
+/**
+ * Classe Sistema que tem os Controllers de Aluno e Tutoria 
+ * e a implementação dos métodos de armazenamento de dados.
+ * 
+ * @author Matheus, Lukas, Wesley
+ *
+ */
 public class Sistema {
 	
 	private ControllerAlunos controladorAlunos;
@@ -260,7 +267,7 @@ public class Sistema {
 	public void configurarOrdem(String atributo) {controladorAlunos.configurarOrdem(atributo);}
 	
 	/**
-	 * Salva o Sistema em um arquivo
+	 * Salva os Alunos, Tutores, Pedidos de Ajuda e Caixa em arquivos distintos.
 	 */
 	public void salvar() {
 		try {
@@ -280,7 +287,7 @@ public class Sistema {
 	}
 	
 	/**
-	 * Carrega um arquivo
+	 * Carrega os arquivos que guardam os Alunos, Tutores, Pedidos de Ajuda e Caixa
 	 */
 	@SuppressWarnings("unchecked")
 	public void carregar() {
@@ -299,7 +306,7 @@ public class Sistema {
 	}
 	
 	/**
-	 * Limpa o arquivo
+	 * Limpa os arquivos que guardam os Alunos, Tutores, Pedidos de Ajuda e Caixa
 	 */
 	public void limpar() {
 		File arquivo = null;
