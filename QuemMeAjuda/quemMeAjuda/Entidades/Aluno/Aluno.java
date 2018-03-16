@@ -110,7 +110,4 @@ public class Aluno implements Comparable<Aluno>, Serializable {
 			return false;
 		return true;
 	}
-
-	
-	
 }

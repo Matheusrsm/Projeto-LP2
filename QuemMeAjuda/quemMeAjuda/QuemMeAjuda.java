@@ -3,7 +3,8 @@ package quemMeAjuda;
 import easyaccept.EasyAccept;
 import quemMeAjuda.Sistemas.*;
 
-public class QuemMeAjuda{
+public class QuemMeAjuda {
+	
 	private Sistema sistema = new Sistema();
 	
 	public static void main(String[] args){

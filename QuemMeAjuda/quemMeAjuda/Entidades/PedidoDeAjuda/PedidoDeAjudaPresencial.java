@@ -17,9 +17,6 @@ import quemMeAjuda.Entidades.Aluno.*;
  */
 public class PedidoDeAjudaPresencial extends PedidoDeAjuda {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 353215511292577905L;
 	private String dia, local, horario;
 	

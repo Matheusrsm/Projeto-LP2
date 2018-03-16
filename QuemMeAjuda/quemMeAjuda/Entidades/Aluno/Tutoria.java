@@ -102,8 +102,4 @@ public class Tutoria implements Serializable{
 		else if(notaDeAvaliacao > 3.0 && notaDeAvaliacao <= 4.5) this.nivel = NivelTutoria.TUTOR;
 		else if(notaDeAvaliacao > 0.0 && notaDeAvaliacao <= 3.0) this.nivel = NivelTutoria.APRENDIZ;
 	}
-	
-	
-	
-	
 }

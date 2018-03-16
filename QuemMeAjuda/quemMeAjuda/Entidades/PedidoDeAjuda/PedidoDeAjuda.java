@@ -15,11 +15,8 @@ import quemMeAjuda.Entidades.Aluno.Aluno;
  * @author Lukas, Wesley, Matheus
  *
  */
-public abstract class PedidoDeAjuda implements Serializable{
+public abstract class PedidoDeAjuda implements Serializable {
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8035229549214584828L;
 	private String matriculaAluno;
 	protected String disciplina;

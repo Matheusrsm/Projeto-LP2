@@ -10,13 +10,11 @@ import java.io.Serializable;
  * Nome
  * Proficiencia (do tutor na disciplina)
  *
- * @author lukasnascimento
+ * @author Lukas, Matheus, Wesley
  *
  */
-public class Disciplina implements Serializable{
-	/**
-	 * 
-	 */
+public class Disciplina implements Serializable {
+
 	private static final long serialVersionUID = 4667862378435164134L;
 	private String nome;
 	private double proficiencia;
