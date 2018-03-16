@@ -211,31 +211,77 @@ public class Validacoes implements Serializable{
 		if(local.trim().isEmpty()) throw new DadoInvalidoException(msg + "local de interesse nao pode ser vazio ou em branco");
 	}
 	
+	/**
+	 * Verifica de o ID de um pedido de ajuda eh invalido.
+	 * Um ID eh invalido se for negativo ou se ja existe um pedido de ajuda com esse ID.
+	 * @param id id a ser verificado
+	 * @param pedidos mapa dos pedidos de ajuda
+	 * @param msg mensagem lancada na excecao.
+	 * @throws Exception
+	 */
 	public void idAjudaInvalido(int id, Map<Integer, PedidoDeAjuda> pedidos, String msg) throws Exception {
 		if(id < 0) throw new DadoInvalidoException(msg + "id nao pode menor que zero ");
 		if(!(pedidos.containsKey(id))) throw new DadoInvalidoException(msg + "id nao encontrado ");
 	}
 	
+	/**
+	 * Verifica se o atributo de um pedido de ajuda passado no parametro eh invalido.
+	 * Ele eh invalido se for vazio ou se não for igual a disciplina, horario, dia ou localInteresse. 
+	 * @param atributo atributo a ser verificado
+	 * @param msg mensagem lancada na excecao.
+	 * @throws Exception
+	 */
 	public void atributoInvalido(String atributo, String msg) throws Exception {
 		if(atributo.trim().isEmpty()) throw new DadoInvalidoException(msg + "atributo nao pode ser vazio ou em branco");
 		if(!atributo.equals("disciplina") && !atributo.equals("horario") && !atributo.equals("dia") && !atributo.equals("localInteresse")) 
 			throw new DadoInvalidoException(msg + "atributo nao encontrado");
 	}
 	
+	/**
+	 * Verifica se uma nota de avaliacao eh invalida.
+	 * Um nota eh invalida quando for negativa ou maior que 5.
+	 * @param nota nota a ser verificada
+	 * @param msg mensagem lancada na excecao.
+	 * @throws Exception
+	 */
 	public void notaInvalida(double nota, String msg) throws Exception {
 		if(nota < 0) throw new DadoInvalidoException(msg + "nota nao pode ser menor que 0");
 		else if(nota > 5) throw new DadoInvalidoException(msg + "nota nao pode ser maior que 5");
 	}
 	
+	/**
+	 * Verifica se um email de um tutor eh invalido ou nulo.
+	 * Um email eh invalido nesse caso, se for vazio.
+	 * Se o email for vazio, lanca um DadoInvalidoException com a mensagem passada no parametro.
+	 * Se o email for nulo, lanca um DadoNuloException com a mensagem passada no parametro.
+	 * @param email email a ser verificado
+	 * @param msg mensagem lancada na excecao.
+	 * @throws Exception
+	 */
 	public void emailTutorInvalidoOuNulo(String email, String msg) throws Exception {
 		if(email == null) throw new DadoNuloException(msg + "emailTutor nao pode ser vazio ou nulo");
 		else if(email.trim().isEmpty()) throw new DadoInvalidoException(msg + "emailTutor nao pode ser vazio ou nulo");
 	}
 	
+	/**
+	 * Verifica se o total de centavos eh negativo.
+	 * Se for negativo, lanca um DadoInvalidoException com a mensagem passada no parametro.
+	 * @param totalCentavos total de centavos(inteiro) a ser verificado.
+	 * @param msg mensagem lancada na excecao.
+	 * @throws Exception
+	 */
 	public void totalCentavosInvalido(int totalCentavos, String msg) throws Exception {
 		if(totalCentavos < 0) throw new DadoInvalidoException(msg + "totalCentavos nao pode ser menor que zero");
 	}
 	
+	/**
+	 * Verifica se a partir do ID se um pedido de ajuda eh fechado ou nao.
+	 * Se for fechado, lanca um DadoInvalidoException com a mensagem passada no parametro.
+	 * @param id id do pedido de ajuda a ser verificado.
+	 * @param pedidos mapa dos pedidos de ajuda.
+	 * @param msg mensagem lancada na excecao.
+	 * @throws Exception
+	 */
 	public void ajudaJaFechada(int id, Map<Integer, PedidoDeAjuda> pedidos, String msg) throws Exception {
 		if(pedidos.get(id).getFinalizacao()) throw new DadoInvalidoException(msg + "Ajuda ja avaliada");
 	}
