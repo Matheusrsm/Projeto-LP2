@@ -6,7 +6,7 @@ import quemMeAjuda.Entidades.Aluno.Aluno;
 
 /**
  * Classe que implementa a interface Comparator.
- * Compara através das Matriculas dos Alunos a serem comparados.
+ * Tem como parametro de comparação a matrícula dos Alunos.
  * 
  * @author Matheus Silva, Wesley Monte
  *

@@ -20,6 +20,17 @@ public class PedidoDeAjudaPresencial extends PedidoDeAjuda {
 	private static final long serialVersionUID = 353215511292577905L;
 	private String dia, local, horario;
 	
+	/**
+	 * Constroi um pedido de ajuda a partir do Tutor que deve atender a essa ajuda,
+	 * a matricula do aluno que a pediu, a disciplina que o aluno deseja receber ajuda e
+	 * o horario, dia e local que o aluno determinou.
+	 * @param tutor objeto do Tutor que deve atender a essa ajuda.
+	 * @param matricula matricula do aluno que pediu ajuda.
+	 * @param disciplina nome da disciplina que o aluno pediu ajuda.
+	 * @param horario representacao textual da hora que deseja ser atendido
+	 * @param dia dia da semana que o aluno prefere
+	 * @param local local que o aluno prefere
+	 */
 	public PedidoDeAjudaPresencial(Aluno tutor, String matricula, String disciplina, String horario, String dia, String local) {
 		super(tutor, matricula, disciplina);
 		this.horario = horario;

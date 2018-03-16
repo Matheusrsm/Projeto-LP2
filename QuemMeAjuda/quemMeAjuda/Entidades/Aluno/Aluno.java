@@ -27,7 +27,15 @@ public class Aluno implements Comparable<Aluno>, Serializable {
 	private double  notaDeAvaliacao;
 	private Tutoria tutoria;
 	
-			
+	/**
+	 * Constroi um Aluno a partir do ID, matricula, codigo do curso, telefone e email 
+	 * @param iD inteiro identificador do Aluno.
+	 * @param nome nome do aluno.
+	 * @param matricula matricula do aluno.
+	 * @param codigoCurso codigo de curso do aluno.
+	 * @param telefone telefone do aluno.
+	 * @param email email do aluno.
+	 */
 	public Aluno(int iD, String nome, String matricula, int codigoCurso, String telefone, String email) {
 		this.iD = iD;
 		this.nome = nome;
@@ -42,8 +50,8 @@ public class Aluno implements Comparable<Aluno>, Serializable {
 	 * Método que torna o Aluno um tutor, ou seja, o atributo Tutoria agora passar a nao ser null.
 	 * Ainda adiciona a disciplina a tutoria do Aluno.
 	 * 
-	 * @param disciplina que o Aluno quer virar tutor.
-	 * @param proficiencia do Aluno na disciplina que ira ser tutor.
+	 * @param disciplina disciplina que o Aluno quer virar tutor.
+	 * @param proficiencia proficiencia do Aluno na disciplina que ira ser tutor.
 	 */
 	public void tornaAlunoTutor(String disciplina, int proficiencia) {
 		tutoria = new Tutoria();

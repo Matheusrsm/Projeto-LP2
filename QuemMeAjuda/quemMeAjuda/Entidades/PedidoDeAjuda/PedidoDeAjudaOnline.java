@@ -19,7 +19,7 @@ public class PedidoDeAjudaOnline extends PedidoDeAjuda {
 	public PedidoDeAjudaOnline(Aluno tutor, String matricula, String disciplina) {
 		super(tutor, matricula, disciplina);
 	}
-
+	
 	@Override
 	public String getInfoAjuda(String atributo) {
 		if(atributo.equals("disciplina"))
