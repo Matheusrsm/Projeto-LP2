@@ -172,6 +172,13 @@ public class ControllerAlunos implements Serializable {
 		return listaTutores.substring(0, listaTutores.length() - 2);
 	}
 	
+	/**
+	 * Verifica, ao mesmo tempo, se o email do parametro é igual do Aluno e 
+	 * se o Aluno é tutor.
+	 * @param email String
+	 * @param aluno Aluno
+	 * @return Se tudo for verdadeiro, retorna true. Senão, retorna false.
+	 */
 	private boolean verificaEmailETutoria(String email, Aluno aluno) {
 		return aluno.getEmail().equals(email) && aluno.isTutor();
 	}
@@ -271,6 +278,13 @@ public class ControllerAlunos implements Serializable {
 		return alunos.get(matriculaTutor).getTutoria().getNivel();
 	}
 	
+	/**
+	 * Verifica o total de dinheiro no caixa do Aluno(tutor) registrado no sistema
+	 * através do email do parametro
+	 * @param emailTutor String
+	 * @return int Se o email for válido e o Aluno é tutor, retorna a bolsa do tutor. Senão, retorna 0
+	 * @throws Exception
+	 */
 	public int totalDinheiroTutor(String emailTutor) throws Exception {
 		String erroTotalDinheiroTutor = "Erro na consulta de total de dinheiro do tutor: ";
 		validacoes.emailTutorInvalidoOuNulo(emailTutor, erroTotalDinheiroTutor);
@@ -281,6 +295,10 @@ public class ControllerAlunos implements Serializable {
 		return 0;
 	}
 	
+	/**
+	 * Configura a ordem de exibição dos alunos e tutores
+	 * @param atributo String
+	 */
 	public void configurarOrdem(String atributo) {
 		if(atributo.equals(Ordem.NOME.getDescricao())) this.ordem = new ComparadorNome();
 		else if(atributo.equals(Ordem.MATRICULA.getDescricao())) this.ordem = new ComparadorMatricula();

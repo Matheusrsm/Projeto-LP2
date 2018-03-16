@@ -34,10 +34,17 @@ public class ControllerTutoria implements Serializable {
 		this.validacoes = new Validacoes();
 	}
 	
+	/**
+	 * Retorna o mapa de pedidos registrados no sistema
+	 * @return
+	 */
 	public Map<Integer, PedidoDeAjuda> getPedidos() {
 		return pedidos;
 	}
-	
+	/**
+	 * Registra um novo mapa de PedidoDeAjuda no sistema
+	 * @param novoMapa
+	 */
 	public void carregaMapaPedidos(Map<Integer, PedidoDeAjuda> novoMapa) {
 		pedidos = novoMapa;
 	}
@@ -213,7 +220,11 @@ public class ControllerTutoria implements Serializable {
 		pedidos.get(idAjuda).setFinalizacao(true);
 	}
 	
-	
+	/**
+	 * Calcula a taxa do Aluno(tutor) através do seu nível
+	 * @param matriculaTutor String matricula do tutor registrado no sistema
+	 * @return double taxa do tutor
+	 */
 	private double calculaTaxaTutor(String matriculaTutor) {
 		Aluno tutor = mapaAlunos.get(matriculaTutor);
 		double taxa = 0;

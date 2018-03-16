@@ -21,6 +21,10 @@ public class Sistema {
 		controladorTutoria = new ControllerTutoria();
 	}
 	
+	/**
+	 * Recupera o mapa de alunos do ControllerAlunos
+	 * @return Map<String, Alunos> 
+	 */
 	public Map<String, Aluno> getAlunos() {
 		return ControllerAlunos.getAlunos();
 	}
@@ -255,6 +259,9 @@ public class Sistema {
 	 */
 	public void configurarOrdem(String atributo) {controladorAlunos.configurarOrdem(atributo);}
 	
+	/**
+	 * Salva o Sistema em um arquivo
+	 */
 	public void salvar() {
 		try {
 		    File arquivoAlunosETurores = new File("Quem Me Ajuda - Alunos e Tutores.txt");
@@ -272,6 +279,9 @@ public class Sistema {
 		} catch(IOException e) {e.printStackTrace();}
 	}
 	
+	/**
+	 * Carrega um arquivo
+	 */
 	@SuppressWarnings("unchecked")
 	public void carregar() {
 		ObjectInputStream arquivo = null;
@@ -288,6 +298,9 @@ public class Sistema {
 		} catch(IOException e) {e.printStackTrace();}	 
 	}
 	
+	/**
+	 * Limpa o arquivo
+	 */
 	public void limpar() {
 		File arquivo = null;
 		try {

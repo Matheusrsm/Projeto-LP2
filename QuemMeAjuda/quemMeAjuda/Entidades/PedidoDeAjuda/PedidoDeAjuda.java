@@ -44,6 +44,10 @@ public abstract class PedidoDeAjuda implements Serializable {
 		return finalizado;
 	}
 	
+	/**
+	 * Define se o objeto PedidoDEAjuda foi, ou não, finalizado
+	 * @param fechouOuNao
+	 */
 	public void setFinalizacao(boolean fechouOuNao) {
 		this.finalizado = fechouOuNao;
 	}
